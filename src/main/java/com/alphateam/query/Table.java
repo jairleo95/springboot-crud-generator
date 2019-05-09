@@ -1,31 +1,38 @@
 package com.alphateam.query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by JairL on 9/24/2018.
  */
 public class Table {
-    private String tableName;
-    private String columnName;
-    private String dataType;
-    private String attributeNumber;
+    private String name;
+    private List<Column> column;
+
     private String numColumns;
 
     private String constraintName;
-
-    private String foreignTable;
     private String foreignColumn;
+    private String foreignTable;
 
     public Table() {
-        this.tableName = "";
+        this.name = "";
         this.numColumns = "";
-        this.dataType = "";
-        this.attributeNumber = "";
-        this.columnName="";
+        this.column = new ArrayList<>();
 
         this.constraintName="";
 
         this.foreignTable="";
         this.foreignColumn="";
+    }
+
+    public List<Column> getColumn() {
+        return column;
+    }
+
+    public void setColumn(List<Column> column) {
+        this.column = column;
     }
 
     public String getForeignTable() {
@@ -52,36 +59,12 @@ public class Table {
         this.constraintName = constraintName;
     }
 
-    public String getAttributeNumber() {
-        return attributeNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setAttributeNumber(String attributeNumber) {
-        this.attributeNumber = attributeNumber;
-    }
-
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
-
-    public String getColumnName() {
-        return columnName;
-    }
-
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getNumColumns() {
@@ -90,5 +73,17 @@ public class Table {
 
     public void setNumColumns(String numColumns) {
         this.numColumns = numColumns;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "name='" + name + '\'' +
+                ", numColumns='" + numColumns + '\'' +
+                ", constraintName='" + constraintName + '\'' +
+                ", foreignColumn='" + foreignColumn + '\'' +
+                ", foreignTable='" + foreignTable + '\'' +
+                '}';
     }
 }

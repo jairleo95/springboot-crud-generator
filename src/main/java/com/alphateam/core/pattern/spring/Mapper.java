@@ -18,11 +18,11 @@ public class Mapper extends Template {
 
     public void build() {
         init();
-        for (int g = 0; g < listTableXNumColumns.size(); g++) {
-            Table tnc = listTableXNumColumns.get(g);
-           // String tableNameTNC = listTableXNumColumns.get(g).getTableName();
+        for (int g = 0; g < table.size(); g++) {
+            Table tnc = table.get(g);
+           // String tableNameTNC = table.get(g).getName();
             // String numColumnsTNC = getWithColumnsNumber.get(g).get("NumColumns");
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
+            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
 
             /*one or more IDS*/
             String content = "";
@@ -30,7 +30,7 @@ public class Mapper extends Template {
 
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             String beanName = tableEntity + "Bean ";
-            System.out.println("//TABLA :" + tnc.getTableName());
+            System.out.println("//TABLA :" + tnc.getName());
             /*Print */
             content += ("package org.proyecto.mapper." + tableName + ";");
             content += ("import ToJava.util.List;");

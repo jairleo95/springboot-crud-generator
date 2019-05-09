@@ -6,6 +6,8 @@ package com.alphateam;/*
 
  
 import com.alphateam.core.pattern.spring.JavaBeans;
+import com.alphateam.core.pattern.spring.StoreProcedure;
+import com.alphateam.core.template.Template;
 
 /**
  *
@@ -14,7 +16,7 @@ import com.alphateam.core.pattern.spring.JavaBeans;
 public class testCrud {
 
      public static void main(String args[]) throws Exception {
-         JavaBeans j = new JavaBeans();
-         j.build();
+         StoreProcedure x = new StoreProcedure();
+         x.build();
      }
 }

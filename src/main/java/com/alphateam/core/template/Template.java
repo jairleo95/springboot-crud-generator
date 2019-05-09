@@ -5,17 +5,28 @@
  */
 package com.alphateam.core.template;
 
+import ch.qos.logback.classic.db.names.ColumnName;
 import com.alphateam.connection.Factory;
-import com.alphateam.convert.ToSql;
+import com.alphateam.query.Column;
 import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
-import com.alphateam.utiles.Conversor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author JAIR
  */
-public class Template extends Core {
+interface Methods {
+    void column(Table table);
+    void foreignKeys(Table table,Table fk);
+    void primaryKeys(Table table,Table pk);
+
+    void buildParameters(Table table);
+    void buildMethods(Table tnc, List<String> pks);
+}
+public class Template extends Core implements Methods{
 
     @Override
     public void init() {
@@ -23,147 +34,164 @@ public class Template extends Core {
         returnId = false;
         conn = Factory.open(database);
         dao = new DAO();
-        listTableXNumColumns = dao.getWithColumnsNumber();
-        listTableXColumsP = dao.getColumsProperties();
+        tables = dao.getWithColumnsNumber();
+        //columns = dao.getColumsProperties();
         listPrimaryKey = dao.getPrimaryKeys();
         listForeignKey = dao.getForeignKeys();
     }
 
-    public void build() {
 
-        for (int r = 0; r < listTableXNumColumns.size(); r++) {
-            /*one or more IDs*/
-            Entity e = new Entity();
-            /*table name - columns*/
-            Table tnc = listTableXNumColumns.get(r);
-            e.setTableNameTNC(tnc.getTableName());
-            e.setTableName(Conversor.toJavaFormat(e.getTableNameTNC(), "_"));
-            e.setTableEntity(Conversor.firstCharacterToUpper(e.getTableName()));
-            String content = "";
-            /*
-            String makeAssociatonColumns = "";
-            String content = "";
-            List<String> pksCurrentTable = new ArrayList<String>();*/
-            String makeColumns = "", makeAllParamsMethods = "", makeParamsUpdate = "", makeParamsMethods = "", paramsPrimaryKey = "", makeColumnsTable = "";
+    public void build2() {
+        init();
+        //System.out.println("table: "+ table.toString());
+        for (int r = 0; r < tables.size(); r++) {
+            /*one or more ids (pk for current table)*/
+            List<String> pks = new ArrayList<>();
+            Table table = this.tables.get(r);
 
-            System.out.println("/*TABLA :" + e.getTableNameTNC() + " */");
+            table.setColumn(dao.getColumsProperties(table.getName()));
 
-            for (int h = 0; h < listTableXColumsP.size(); h++) {
+
+            System.out.println("/*TABLE :" + table.getName() + " */");
+            /*iterate columns*/
+            for (int h = 0; h < table.getColumn().size(); h++) {
                 /*table-column-property (TCP)*/
-                Table tcp = listTableXColumsP.get(h);
+                Column c = table.getColumn().get(h);
+
                 /*Compare DAO*/
-                if (e.getTableNameTNC().equals(tcp.getTableName())) {
-                    /*Variables*/
-                    String columna = Conversor.toJavaFormat(tcp.getColumnName(), "_");
-                    String dataType = "";
+                //if (table.getName().equals(tcp.getName())) {
+                 table.setColumn(columns.get(h).getColumn());
+                    /*Llaves Primarias*/
                     Boolean isForean = false;
                     Boolean isPrimaryKey = false;
-                    dataType = tcp.getDataType();
-                    /*Llaves Primarias*/
-                    String parametersProcedure = "sp" + Conversor.firstCharacterToUpper(columna);
-                    for (int g = 0; g < listPrimaryKey.size(); g++) {
-                        /*primary keys*/
-                        Table pk = listPrimaryKey.get(g);
+                    /*do a listener for column*/
+                    column(c);
 
-                        // System.err.println(e.getTableNameTNC() + " : " + pkTableName);
-                        if (e.getTableNameTNC().equalsIgnoreCase(pk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(pk.getColumnName())) {
-                            e.getPksCurrentTable().add(pk.getColumnName());
-                            paramsPrimaryKey += pk.getColumnName() + " " + ToSql.getDataType(dataType, database) + ",";
-                            isPrimaryKey = true;
+                   List<Column> foreign =  dao.getForeignKeys(table.getName(),c.getName());
+                     isPrimaryKey =  dao.getPrimaryKeys(table.getName(),c.getName());
+
+
+                    /*Do something with primary keys*/
+                    //for (int g = 0; g < listPrimaryKey.size(); g++) {
+                     /*primary keys*/
+                        //Table pk = listPrimaryKey.get(g);
+                     //   if (table.getName().equalsIgnoreCase(pk.getName()) & c.getName().equalsIgnoreCase(pk.getColumn().getName())) {
+                            pks.add(c.getName());
+                            //customized
+                            primaryKeys(table, pk);
+                            //isPrimaryKey = true;
+                            c.setPrimaryKey(isPrimaryKey);
+                        //}
+                    //}
+                    /*Do something with foreign keys*/
+                    if (!isPrimaryKey) {
+                        /*Llaves Foraneas*/
+                        for (int d = 0; d < foreign.size(); d++) {
+                            Table fk = listForeignKey.get(d);
+                            if (table.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
+                                isForean = true;
+                                c.setForeignKey(isForean);
+                                foreignKeys(tcp,fk);
+                            }
                         }
                     }
+                      /*Do something with parameters*/
+                    if (!isForean & !isPrimaryKey) {
+                        buildParameters(tcp);
+                    }
+               // }
+            }
+            buildMethods(table, pks);
+        }
 
+    }
+
+
+    public void build() {
+        init();
+        //System.out.println("table: "+ table.toString());
+        for (int r = 0; r < tables.size(); r++) {
+            /*one or more ids (pk for current table)*/
+            List<String> pks = new ArrayList<>();
+            Table table = this.tables.get(r);
+            //table.setColumn(dao.getColumsProperties(table.getName()));
+
+
+
+            System.out.println("/*TABLE :" + table.getName() + " */");
+            /*iterate columns*/
+            for (int h = 0; h < columns.size(); h++) {
+                /*table-column-property (TCP)*/
+                Table tcp = columns.get(h);
+
+                /*Compare DAO*/
+                if (table.getName().equals(tcp.getName())) {
+                    table.setColumn(columns.get(h).getColumn());
+                    /*Llaves Primarias*/
+                    Boolean isForean = false;
+                    Boolean isPrimaryKey = false;
+                    /*do a listener for column*/
+                    column(tcp);
+
+                    /*Do something with primary keys*/
+                    for (int g = 0; g < listPrimaryKey.size(); g++) {
+                     /*primary keys*/
+                        Table pk = listPrimaryKey.get(g);
+                        if (table.getName().equalsIgnoreCase(pk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(pk.getColumn().getName())) {
+                            pks.add(pk.getColumn().getName());
+                            //customized
+                            primaryKeys(table, pk);
+                            isPrimaryKey = true;
+                            table.getColumn().setPrimaryKey(isPrimaryKey);
+                        }
+                    }
+                    /*Do something with foreign keys*/
                     if (!isPrimaryKey) {
                         /*Llaves Foraneas*/
                         for (int d = 0; d < listForeignKey.size(); d++) {
                             Table fk = listForeignKey.get(d);
-                            if (e.getTableNameTNC().equalsIgnoreCase(fk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(fk.getColumnName())) {
-                                // String ColumnaBean = Conversor.toJavaFormat(columna, "_");
+                            if (table.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
                                 isForean = true;
-
-                                /*MAKE HEADER PARAMETERS*/
-                                makeParamsMethods += ToSql.headerParamsProcedure(parametersProcedure, ToSql.getDataType(dataType, database), tcp.getAttributeNumber(), database);
-
-                                makeColumns += "sp" + Conversor.firstCharacterToUpper(columna) + ",";
-                                makeColumnsTable += tcp.getColumnName() + ",";
-                                makeParamsUpdate += tcp.getColumnName() + "=" + parametersProcedure + ", ";
+                                table.getColumn().setForeignKey(isForean);
+                                foreignKeys(tcp,fk);
                             }
                         }
                     }
+                      /*Do something with parameters*/
                     if (!isForean & !isPrimaryKey) {
-                        makeColumns += parametersProcedure + ",";
-
-                        makeParamsMethods += ToSql.headerParamsProcedure(parametersProcedure, ToSql.getDataType(dataType, database), tcp.getAttributeNumber(), database);
-
-                        makeColumnsTable += tcp.getColumnName() + ",";
-                        makeParamsUpdate += tcp.getColumnName() + "=" + parametersProcedure + ", ";
+                        buildParameters(tcp);
                     }
-
-                    makeAllParamsMethods += "sp" + Conversor.firstCharacterToUpper(columna) + " " + ToSql.getDataType(dataType, database);
-
-                    makeParamsUpdate += tcp.getColumnName() + "=" + "sp" + Conversor.firstCharacterToUpper(columna) + ",";
                 }
             }
-
-            /*PARAMS SEQUENCE*/
-            if (!makeParamsMethods.equals("")) {
-                makeParamsMethods = makeParamsMethods.substring(0, (makeParamsMethods.length() - 1));
-            }
-            if (!paramsPrimaryKey.equals("")) {
-                paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
-            }
-            if (!makeColumns.equals("")) {
-                makeColumns = makeColumns.substring(0, (makeColumns.length() - 1));
-            }
-            if (!makeColumnsTable.equals("")) {
-                makeColumnsTable = makeColumnsTable.substring(0, (makeColumnsTable.length() - 1));
-            }
-            if (!makeParamsUpdate.equals("")) {
-                makeParamsUpdate = makeParamsUpdate.substring(0, (makeParamsUpdate.length() - 1));
-            }
-
-            /*Insert record procedure */
-            content += ToSql.headerProcedure("spi_" + e.getTableNameTNC(), makeParamsMethods, database);
-            content += "INSERT INTO " + e.getTableNameTNC() + "(" + makeColumnsTable + ") values (" + makeColumns + ")";
-
-            /*ruturn id*/
-            if (e.getPksCurrentTable().size() == 1 & returnId) {
-                content += " returning " + e.getPksCurrentTable().get(0) + " into result ;";
-            } else {
-                content += ";";
-            }
-            content += ToSql.footerProcedure("spi_" + e.getTableNameTNC(), database);
-
-            //*EDIT procedure*/
-            content += ToSql.headerProcedure("spu_" + e.getTableNameTNC(), makeParamsMethods, database);
-            /*procedure body*/
-            content += "UPDATE " + e.getTableNameTNC() + " set " + makeParamsUpdate + " where ";
-            for (int t = 0; t < e.getPksCurrentTable().size(); t++) {
-                if (t == 0) {
-                    content += e.getPksCurrentTable().get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(e.getPksCurrentTable().get(t), "_"));
-                } else {
-                    content += " and " + e.getPksCurrentTable().get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(e.getPksCurrentTable().get(t), "_"));
-                }
-            }
-            content += ";";
-            content += ToSql.footerProcedure("spi_" + e.getTableNameTNC(), database);
-            /*DELETE procedure*/
-            content += ToSql.headerProcedure("spd_" + e.getTableNameTNC(), paramsPrimaryKey, database);
-            /*DELETE body*/
-            content += "UPDATE " + e.getTableNameTNC() + " set recordStatus=0 where ";
-            for (int t = 0; t < e.getPksCurrentTable().size(); t++) {
-                if (t == 0) {
-                    content += e.getPksCurrentTable().get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(e.getPksCurrentTable().get(t), "_"));
-                } else {
-                    content += " and " + e.getPksCurrentTable().get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(e.getPksCurrentTable().get(t), "_"));
-                }
-            }
-            content += ";";
-            content += ToSql.footerProcedure("spi_" + e.getTableNameTNC(), database);
-            /*Print */
-            System.out.println(content);
-            /*Contructor*/
+            buildMethods(table, pks);
         }
+
+    }
+
+    @Override
+    public void column(Table table) {
+       // System.out.println("column callback:"+table.toString());
+    }
+
+    @Override
+    public void foreignKeys(Table tcp, Table fk) {
+        //System.out.println("foreignKeys callback TABLE:"+tcp.toString());
+        //System.out.println("foreignKeys callback FK:"+fk.toString());
+    }
+
+    @Override
+    public void primaryKeys(Table table, Table pk) {
+        //System.out.println("foreignKeys callback PK:"+pk.toString());
+    }
+
+    @Override
+    public void buildParameters(Table table) {
+
+    }
+
+    @Override
+    public void buildMethods(Table tnc, List<String> pks) {
+
     }
 
     public String header(SyntaxType opc) {
@@ -179,5 +207,12 @@ public class Template extends Core {
     public enum SyntaxType {
         SP_MYSQL,
         FORM_VIEW
+    }
+
+   public  String clearLastComma(String string){
+        if (!string.equals("")) {
+            string = string.substring(0, (string.length() - 1));
+        }
+        return string;
     }
 }

@@ -18,17 +18,17 @@ public class SpringService extends Template {
 
     public void build() {
         init();
-        for (int g = 0; g < listTableXNumColumns.size(); g++) {
+        for (int g = 0; g < table.size(); g++) {
             /*table name - columns*/
-            Table tnc = listTableXNumColumns.get(g);
+            Table tnc = table.get(g);
             // String numColumnsTNC = getWithColumnsNumber.get(g).get("NumColumns");
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
+            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             /*one or more IDS*/
             String content = "";
 
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             String beanName = tableEntity + "Bean ";
-            System.out.println("//TABLA :" + tnc.getTableName());
+            System.out.println("//TABLA :" + tnc.getName());
             /*Print */
             content += ("package org.proyecto.services." + tableName + ";");
             content += ("import ToJava.util.List;");

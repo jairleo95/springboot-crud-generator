@@ -20,32 +20,32 @@ public class JavaBeans extends Template {
 
     public void build() {
         init();
-        for (int g = 0; g < listTableXNumColumns.size(); g++) {
-            Table tnc = listTableXNumColumns.get(g);
+        for (int g = 0; g < table.size(); g++) {
+            Table tnc = table.get(g);
             //   String numColumnsTNC = getWithColumnsNumber.get(g).get("NumColumns");
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
+            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String beanName = Conversor.firstCharacterToUpper(tableName + "Bean");
-            System.out.println("//TABLA :" + tnc.getTableName());
+            System.out.println("//TABLA :" + tnc.getName());
 
             String makeInstanceBean = "";
             String makeSettersAndGetters = "";
             String makeImports = "";
             String makeColumns = "";
 
-            for (int h = 0; h < listTableXColumsP.size(); h++) {
+            for (int h = 0; h < columns.size(); h++) {
                /*table-column-property (TCP)*/
-                Table tcp = listTableXColumsP.get(h);
-                if (tnc.getTableName().equals(tcp.getTableName())) {
+                Table tcp = columns.get(h);
+                if (tnc.getName().equals(tcp.getName())) {
                     /*Variables*/
-                    String columna = Conversor.toJavaFormat(tcp.getColumnName(), "_");
+                    String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
                     Boolean isForean = false;
 
                     /*Llaves Foraneas*/
                     for (int d = 0; d < listForeignKey.size(); d++) {
                         Table fk = listForeignKey.get(d);
 
-                        System.err.println(tnc.getTableName() + ":" + fk.getTableName());
-                        if (tnc.getTableName().equalsIgnoreCase(fk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(fk.getColumnName())) {
+                        System.err.println(tnc.getName() + ":" + fk.getName());
+                        if (tnc.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
                             System.err.println("here!");
                             // String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(ForeignTable.substring(6), "_")) + "Bean";
                             String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_")) + "Bean";
@@ -64,7 +64,7 @@ public class JavaBeans extends Template {
                     /*columnas*/
                     String dataType = "";
                     if (!isForean) {
-                        dataType = ToJava.getDataType(tcp.getDataType(), Factory.getDefaultDatabase());
+                        dataType = ToJava.getDataType(tcp.getColumn().getDataType(), Factory.getDefaultDatabase());
                         makeColumns += ("private " + dataType + " " + columna + ";");
                         makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){"
                                 + "this." + columna + "=" + columna + ";}");

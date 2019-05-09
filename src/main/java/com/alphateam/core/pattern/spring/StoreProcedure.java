@@ -7,7 +7,7 @@ package com.alphateam.core.pattern.spring;
 
 import com.alphateam.convert.ToSql;
 import com.alphateam.core.template.Template;
-import java.util.ArrayList;
+
 import java.util.List;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -18,144 +18,115 @@ import com.alphateam.utiles.Conversor;
  */
 public class StoreProcedure extends Template {
 
-    public void build() {
-        init();
-        for (int r = 0; r < listTableXNumColumns.size(); r++) {
-            /*one or more ids*/
-            List<String> pksCurrentTable = new ArrayList<>();
 
-            Table tnc = listTableXNumColumns.get(r);
-           // String tableNameTNC = listTableXNumColumns.get(r).getTableName();
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
-            String tableEntity = Conversor.firstCharacterToUpper(tableName);
-            String makeAssociatonColumns = "";
-            String makeColumns = "";
-            String makeMethods = "";
-            String makeParamsMethods = "";
-            String makeAllParamsMethods = "";
-            String makeParamsUpdate = "";
-            String paramsPrimaryKey = "";
-            String makeColumnsTable = "";
-            System.out.println("/*TABLE :" + tnc.getTableName() + " */");
+    String params = "";
 
-            for (int h = 0; h < listTableXColumsP.size(); h++) {
-                /*table-column-property (TCP)*/
-                Table tcp = listTableXColumsP.get(h);
-                /*Compare DAO*/
-                if (tnc.getTableName().equals(tcp.getTableName())) {
-                    /*Variables*/
-                    String columna = Conversor.toJavaFormat(tcp.getColumnName(), "_");
-                    String dataType = "";
-                    Boolean isForean = false;
-                    Boolean isPrimaryKey = false;
-                    dataType = tcp.getDataType();
-                    /*Llaves Primarias*/
+    String methodParams="";
+    String makeColumns = "";
+    String methods = "";
+    String pkParams = "";
 
-                    //customized
-                    String parametersProcedure = "sp" + Conversor.firstCharacterToUpper(columna);
-
-                    for (int g = 0; g < listPrimaryKey.size(); g++) {
-                     /*primary keys*/
-                        Table pk = listPrimaryKey.get(g);
-                        // System.err.println(tableNameTNC + " : " + pkTableName);
-                        if (tnc.getTableName().equalsIgnoreCase(pk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(pk.getColumnName())) {
-                            pksCurrentTable.add(pk.getColumnName());
-                            //customized
-                            paramsPrimaryKey += pk.getColumnName() + " " + ToSql.getDataType(dataType, database) + ",";
-
-                            isPrimaryKey = true;
-                        }
-                    }
-                    if (!isPrimaryKey) {
-                        /*Llaves Foraneas*/
-                        for (int d = 0; d < listForeignKey.size(); d++) {
-                            Table fk = listForeignKey.get(d);
-                            if (tnc.getTableName().equalsIgnoreCase(fk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(fk.getColumnName())) {
-                                // String ColumnaBean = Conversor.toJavaFormat(columna, "_");
-                                isForean = true;
-                                //customized
-                                /*MAKE HEADER PARAMETERS*/
-                                makeParamsMethods += ToSql.headerParamsProcedure(parametersProcedure, ToSql.getDataType(dataType, database), tcp.getAttributeNumber(), database);
-                                makeColumns += "sp" + Conversor.firstCharacterToUpper(columna) + ",";
-                                makeColumnsTable += tcp.getColumnName() + ",";
-                                makeParamsUpdate += tcp.getColumnName() + "=" + parametersProcedure + ", ";
-                                //end customized
-                            }
-                        }
-                    }
-                    if (!isForean & !isPrimaryKey) {
-                        //customized
-                        makeColumns += parametersProcedure + ",";
-                        makeParamsMethods += ToSql.headerParamsProcedure(parametersProcedure, ToSql.getDataType(dataType, database), tcp.getAttributeNumber(), database);
-                        makeColumnsTable += tcp.getColumnName() + ",";
-                        makeParamsUpdate += tcp.getColumnName() + "=" + parametersProcedure + ", ";
-
-                        //end customized
-                    }
-                    makeAllParamsMethods += "sp" + Conversor.firstCharacterToUpper(columna) + " " + ToSql.getDataType(dataType, database);
-                    makeParamsUpdate += tcp.getColumnName() + "=" + "sp" + Conversor.firstCharacterToUpper(columna) + ",";
-                }
-            }
-
-            if (!makeParamsMethods.equals("")) {
-                makeParamsMethods = makeParamsMethods.substring(0, (makeParamsMethods.length() - 1));
-            }
-            if (!paramsPrimaryKey.equals("")) {
-                paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
-            }
-            if (!makeColumns.equals("")) {
-                makeColumns = makeColumns.substring(0, (makeColumns.length() - 1));
-            }
-            if (!makeColumnsTable.equals("")) {
-                makeColumnsTable = makeColumnsTable.substring(0, (makeColumnsTable.length() - 1));
-            }
-            if (!makeParamsUpdate.equals("")) {
-                makeParamsUpdate = makeParamsUpdate.substring(0, (makeParamsUpdate.length() - 1));
-            }
-            //end customized
-            /*Insert record procedure */
-            makeMethods += ToSql.headerProcedure("spi_" + tnc.getTableName(), makeParamsMethods, database);
-            makeMethods += "INSERT INTO " + tnc.getTableName() + "(" + makeColumnsTable + ") values (" + makeColumns + ")";
-
-            /*ruturn id*/
-            if (pksCurrentTable.size() == 1 & returnId) {
-                makeMethods += " returning " + pksCurrentTable.get(0) + " into result ;";
-            } else {
-                makeMethods += ";";
-            }
-            makeMethods += ToSql.footerProcedure("spi_" + tnc.getTableName(), database);
-            //*EDIT procedure*/
-            makeMethods += ToSql.headerProcedure("spu_" + tnc.getTableName(), makeParamsMethods, database);
-            /*procedure body*/
-            makeMethods += "UPDATE " + tnc.getTableName() + " set " + makeParamsUpdate + " where ";
-
-            for (int t = 0; t < pksCurrentTable.size(); t++) {
-                if (t == 0) {
-                    makeMethods += pksCurrentTable.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pksCurrentTable.get(t), "_"));
-                } else {
-                    makeMethods += " and " + pksCurrentTable.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pksCurrentTable.get(t), "_"));
-                }
-            }
-            makeMethods += ";";
-            makeMethods += ToSql.footerProcedure("spi_" + tnc.getTableName(), database);
-            /*DELETE procedure*/
-            makeMethods += ToSql.headerProcedure("spd_" + tnc.getTableName(), paramsPrimaryKey, database);
-            /*DELETE body*/
-            makeMethods += "UPDATE " + tnc.getTableName() + " set recordStatus=0 where ";
-            for (int t = 0; t < pksCurrentTable.size(); t++) {
-                if (t == 0) {
-                    makeMethods += pksCurrentTable.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pksCurrentTable.get(t), "_"));
-                } else {
-                    makeMethods += " and " + pksCurrentTable.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pksCurrentTable.get(t), "_"));
-                }
-            }
-            makeMethods += ";";
-            makeMethods += ToSql.footerProcedure("spi_" + tnc.getTableName(), database);
-            //end customized
-            /*Print */
-            System.out.println(makeMethods);
-            /*Contructor*/
-        }
+    String column ="";
+    String tableColumns = "";
+    String updateComparission = "";
+    @Override
+    public void column(Table tcp) {
+        super.column(tcp);
+         /*Variables*/
+         column = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
+        //customized
+        methodParams = "sp" + Conversor.firstCharacterToUpper(column);
+        updateComparission += tcp.getColumn().getName() + "=" + methodParams + ",";
+        methods = "";
     }
 
+    @Override
+    public void buildParameters(Table tcp) {
+        super.buildParameters(tcp);
+            makeColumns += methodParams + ",";
+            params += ToSql.headerParamsProcedure(methodParams, tcp.getColumn().getDataType(), tcp.getColumn().getAttributeNumber(), database);
+            tableColumns += tcp.getColumn().getName() + ",";
+            updateComparission += tcp.getColumn().getName() + "=" + methodParams + ", ";
+    }
+
+    @Override
+    public void primaryKeys(Table tcp, Table pk) {
+        super.primaryKeys(tcp, pk);
+            pkParams += pk.getColumn().getName() + " " + ToSql.getDataType(tcp.getColumn().getDataType(), database) + ",";
+
+    }
+
+    @Override
+    public void foreignKeys(Table tcp, Table fk) {
+        super.foreignKeys(tcp, fk);
+            params += ToSql.headerParamsProcedure(methodParams, tcp.getColumn().getDataType(), tcp.getColumn().getAttributeNumber(), database);
+            makeColumns += methodParams+ ",";
+            tableColumns += tcp.getColumn().getName() + ",";
+            updateComparission += tcp.getColumn().getName() + "=" + methodParams + ", ";
+    }
+
+    @Override
+    public void build() {
+        super.build();
+
+            /*Remove commas from params*/
+            clearLastComma(params);
+            clearLastComma(pkParams);
+            clearLastComma(makeColumns);
+            clearLastComma(tableColumns);
+            clearLastComma(updateComparission);
+    }
+
+    @Override
+    public void buildMethods(Table tnc, List<String> pks) {
+        super.buildMethods(tnc, pks);
+              /*Insert record procedure */
+            methods += ToSql.headerProcedure("spi_" + tnc.getName(), params, database);
+            methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + makeColumns + ")";
+
+                /*ruturn id*/
+            if (pks.size() == 1 & returnId) {
+                methods += " returning " + pks.get(0) + " into result ;";
+            } else {
+                methods += ";";
+            }
+
+            methods += ToSql.footerProcedure("spi_" + tnc.getName(), database);
+                /*END Insert procedure*/
+
+                /*Update procedure*/
+            methods += ToSql.headerProcedure("spu_" + tnc.getName(), params, database);
+                /*procedure body*/
+            methods += "UPDATE " + tnc.getName() + " set " + updateComparission + " where ";
+
+            for (int t = 0; t < pks.size(); t++) {
+                if (t == 0) {
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                } else {
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                }
+            }
+            methods += ";";
+            methods += ToSql.footerProcedure("spi_" + tnc.getName(), database);
+                /*END Update procedure*/
+
+                /*DELETE procedure*/
+            methods += ToSql.headerProcedure("spd_" + tnc.getName(), pkParams, database);
+                /*body*/
+            methods += "UPDATE " + tnc.getName() + " set recordStatus=0 where ";
+            for (int t = 0; t < pks.size(); t++) {
+                if (t == 0) {
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                } else {
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                }
+            }
+            methods += ";";
+            methods += ToSql.footerProcedure("spi_" + tnc.getName(), database);
+               /*END DELETE procedure*/
+
+                /*Print all*/
+            System.out.println(methods);
+
+    }
 }

@@ -23,17 +23,17 @@ public class SpringController extends Template {
 
     public void build() {
         init();
-        for (int r = 0; r < listTableXNumColumns.size(); r++) {
+        for (int r = 0; r < table.size(); r++) {
             /*one or more ids*/
             List<String> pksCurrentTable = new ArrayList<String>();
-            Table tnc = listTableXNumColumns.get(r);
+            Table tnc = table.get(r);
             // String tableName = Conversor.toJavaFormat(tableNameTNC.substring(6), "_");
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
+            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
             List<String> listIdOfTbale = new ArrayList<String>();
             String content = "";
-            System.out.println("//TABLA :" + tnc.getTableName());
+            System.out.println("//TABLA :" + tnc.getName());
             String makeAssociatonColumns = "";
             String makeColumns = "";
             String makeMethods = "";
@@ -43,7 +43,7 @@ public class SpringController extends Template {
             String paramsPrimaryKey = "";
             String makeColumnsTable = "";
             String makeImports = "";
-            String originalTableName = tnc.getTableName();
+            String originalTableName = tnc.getName();
 
             String beanName = tableEntity + "Bean ";
             String tableEntityService = tableEntity + "SpringService";
@@ -86,11 +86,11 @@ public class SpringController extends Template {
             content += ("} ");
             content += (" else if (opc.equals(\"save\") || opc.equals(\"edit\")) {");
             /*Tipos de datos*/
-            for (int h = 0; h < listTableXColumsP.size(); h++) {
-                String tableNameTCP = listTableXColumsP.get(h).getTableName();
-                String columnNameTCP = listTableXColumsP.get(h).getColumnName();
-                String dataTypeColumnTCP = listTableXColumsP.get(h).getDataType();
-                String bytes = listTableXColumsP.get(h).getAttributeNumber();
+            for (int h = 0; h < columns.size(); h++) {
+                String tableNameTCP = columns.get(h).getName();
+                String columnNameTCP = columns.get(h).getColumn().getName();
+                String dataTypeColumnTCP = columns.get(h).getColumn().getDataType();
+                String bytes = columns.get(h).getColumn().getAttributeNumber();
                 //for (String[] listTableColumn1 : listTableColumn) {
                 if (originalTableName.equals(tableNameTCP)) {
                     /*Variables*/
@@ -105,9 +105,9 @@ public class SpringController extends Template {
                         /*primary keys*/
                         Table pk = listPrimaryKey.get(g);
 
-                        if (tnc.getTableName().equals(pk.getTableName()) & columna.equals(pk.getColumnName())) {
-                            listIdOfTbale.add(pk.getColumnName());
-                            paramsPrimaryKey += pk.getColumnName() + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";
+                        if (tnc.getName().equals(pk.getName()) & columna.equals(pk.getColumn().getName())) {
+                            listIdOfTbale.add(pk.getColumn().getName());
+                            paramsPrimaryKey += pk.getColumn().getName() + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";
                             isPrimaryKey = true;
                         }
                     }
@@ -120,8 +120,8 @@ public class SpringController extends Template {
                             String column = String.valueOf(listForeignKey.get(d).get("ColumnName"));
                             String ForeignTable = String.valueOf(listForeignKey.get(d).get("ForeignTable"));
                             String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));*/
-                            if (tnc.getTableName().equals(fk.getTableName()) & columnNameTCP.equals(fk.getColumnName())) {
-                                // String ColumnaBean = Conversor.toJavaFormat(columna, "_");
+                            if (tnc.getName().equals(fk.getName()) & columnNameTCP.equals(fk.getColumn().getName())) {
+                                // String ColumnaBean = Conversor.toJavaFormat(column, "_");
                                 String ForeignColumnEnty = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_"));
                                 isForean = true;
                                 makeParamsMethods += parametersProcedure + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";

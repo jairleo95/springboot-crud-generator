@@ -37,6 +37,8 @@ public class ToSql {
 
     public static String headerParamsProcedure(String parametersProcedure, String dataType, String bytes, int database) {
         String sql = "";
+
+        dataType = getDataType(dataType,database);
         switch (database) {
             case Factory.POSGRESQL:
                 sql += parametersProcedure + " " + dataType + ",";

@@ -33,6 +33,7 @@ bootRepackage {
 repositories {
             mavenCentral()
 }
+
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.6'

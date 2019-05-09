@@ -22,37 +22,37 @@ public class MapperXml extends Template {
     public void build() {
         init();
 
-        for (int f = 0; f < listTableXNumColumns.size(); f++) {
+        for (int f = 0; f < table.size(); f++) {
             /*one or more ids*/
             List<String> pksCurrentTable = new ArrayList<String>();
-            Table tnc = listTableXNumColumns.get(f);
+            Table tnc = table.get(f);
             // String tableName = Conversor.toJavaFormat(List11[0].substring(6), "_");
-            String tableName = Conversor.toJavaFormat(tnc.getTableName(), "_");
+            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             //String beanName = tableEntity + "Bean ";
-            System.out.println("/*TABLA :" + tnc.getTableName() + " */");
+            System.out.println("/*TABLA :" + tnc.getName() + " */");
             String makeAssociatonColumns = "";
             String makeColumns = "";
             String makeMethods = "";
             String makeParamsMethods = "";
             String paramsPrimaryKey = "";
-            for (int h = 0; h < listTableXColumsP.size(); h++) {
+            for (int h = 0; h < columns.size(); h++) {
               /*table-column-property (TCP)*/
-                Table tcp = listTableXColumsP.get(h);
+                Table tcp = columns.get(h);
                 /*Compare DAO*/
-                if (tnc.getTableName().equals(tcp.getTableName())) {
+                if (tnc.getName().equals(tcp.getName())) {
                     /*Variables*/
-                    String columna = Conversor.toJavaFormat(tcp.getColumnName(), "_");
+                    String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
                     Boolean isForean = false;
                     Boolean isPrimaryKey = false;
                     /*Llaves Foraneas*/
                     for (int g = 0; g < listPrimaryKey.size(); g++) {
                        /*primary keys*/
                         Table pk = listPrimaryKey.get(g);
-                        if (tnc.getTableName().equalsIgnoreCase(pk.getTableName())& tcp.getColumnName().equalsIgnoreCase(pk.getColumnName())) {
-                            makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getColumnName() + "\" />");
-                            pksCurrentTable.add(pk.getColumnName());
-                            paramsPrimaryKey += "#{" + pk.getColumnName() + "},";
+                        if (tnc.getName().equalsIgnoreCase(pk.getName())& tcp.getColumn().getName().equalsIgnoreCase(pk.getColumn().getName())) {
+                            makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getColumn().getName() + "\" />");
+                            pksCurrentTable.add(pk.getColumn().getName());
+                            paramsPrimaryKey += "#{" + pk.getColumn().getName() + "},";
                             isPrimaryKey = true;
                         }
                     }
@@ -65,19 +65,19 @@ public class MapperXml extends Template {
                             String ForeignTable = String.valueOf(listForeignKey.get(d).get("ForeignTable"));
                             String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));*/
 
-                            if (tnc.getTableName().equalsIgnoreCase(fk.getTableName()) & tcp.getColumnName().equalsIgnoreCase(fk.getColumnName())) {
+                            if (tnc.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
                                 // String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(ForeignTable.substring(6), "_"));
                                 String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"));
                                 String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
-                                // String ColumnaBean = Conversor.toJavaFormat(columna, "_");
+                                // String ColumnaBean = Conversor.toJavaFormat(column, "_");
                                 makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + foreignTableEntity + "\">";
-                                for (int hh = 0; hh < listTableXColumsP.size(); hh++) {
-                                    String tableNameFk = listTableXColumsP.get(h).getTableName();
-                                    String columnNameFk = listTableXColumsP.get(h).getColumnName();
+                                for (int hh = 0; hh < columns.size(); hh++) {
+                                    String tableNameFk = columns.get(h).getName();
+                                    String columnNameFk = columns.get(h).getColumn().getName();
                                     if (tableNameFk.equals(fk.getForeignColumn())) {
-                                        makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumnName(), "_") + "\"></id>";
+                                        makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumn().getName(), "_") + "\"></id>";
                                     } else {
-                                        makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumnName(), "_") + "\"></result>";
+                                        makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumn().getName(), "_") + "\"></result>";
                                     }
                                 }
 
@@ -88,7 +88,7 @@ public class MapperXml extends Template {
                         }
                     }
                     if (!isForean & !isPrimaryKey) {
-                        makeColumns += ("<result property=\"" + columna + "\" column=\"" + tcp.getColumnName() + "\" />");
+                        makeColumns += ("<result property=\"" + columna + "\" column=\"" + tcp.getColumn().getName() + "\" />");
                         makeParamsMethods += "#{" + columna + "},";
                     }
                 }
@@ -104,25 +104,25 @@ public class MapperXml extends Template {
             /*Save Method */
             makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
 
-            makeMethods += "select spi_" + tnc.getTableName() + "(" + makeParamsMethods + ");";
+            makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
             //*EDIT METHOD*/
             makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-            makeMethods += "select spu_" + tnc.getTableName() + "(" + makeParamsMethods + ");";
+            makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
             //*DELETE METHOD*/
             makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-            makeMethods += "select spd_" + tnc.getTableName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
+            makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
             makeMethods += "</select>";
 
             //*LIST METHOD*/
             makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
-            makeMethods += "select * from " + tnc.getTableName() + ";";
+            makeMethods += "select * from " + tnc.getName() + ";";
             makeMethods += "</select>";
 
             //*FIND BY ID*/
             makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
-            makeMethods += "select * from " + tnc.getTableName() + " where ";
+            makeMethods += "select * from " + tnc.getName() + " where ";
             for (int ii = 0; ii < pksCurrentTable.size(); ii++) {
                 if (ii == 0) {
                     makeMethods += pksCurrentTable.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pksCurrentTable.get(ii), "_") + "} ";
