@@ -22,7 +22,7 @@ public abstract class Connection {
     abstract java.sql.Connection open();
 
     public ResultSet query(String sql) {
-        System.out.println("query  :" + sql);
+        //System.out.println("query  :" + sql);
         Statement st;
         ResultSet rs = null;
         try {

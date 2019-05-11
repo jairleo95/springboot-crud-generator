@@ -22,21 +22,15 @@ public class DAO {
     Connection conn;
     int database = Factory.getDefaultDatabase();
 
-    public List<Column> getForeignKeys(String table, String column) {
-        List<Column> x = new ArrayList<>();
+    public Boolean getForeignKeys(String table, String column) {
+        Boolean x;
         String sql = Query.getTableColumnsForeignProperties(database);
+        sql = sql.replace("{schema}",Factory.getSchema());
         sql +="  and TABLE_NAME ='"+table+"' AND column_name ='"+column+"'";
         try {
             this.conn = Factory.open(database);
             ResultSet rs = this.conn.query(sql);
-            while (rs.next()) {
-                Column rpta = new Column();
-                //rpta.setName(rs.getString(1));
-                rpta.setName(rs.getString(2));
-                rpta.setForeignTable(rs.getString(3));
-                rpta.setForeignColumn(rs.getString(4));
-                x.add(rpta);
-            }
+            x = rs.next();
             rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
@@ -53,21 +47,14 @@ public class DAO {
     }
 
     public Boolean getPrimaryKeys(String table, String column) {
-       // List<Table> x = new ArrayList<>();
-        boolean x= false;
+        boolean x;
         String sql = Query.getTableColumnsPrimaryKeyProperties(database);
+        sql = sql.replace("{schema}",Factory.getSchema());
         sql += " and TABLE_NAME ='"+table+"' AND column_name ='"+column+"'";
         try {
             this.conn = Factory.open(database);
             ResultSet rs = this.conn.query(sql);
-
                 x = rs.next();
-                //Table rpta = new Table();
-               // rpta.setConstraintName(rs.getString("constraintname"));
-                //rpta.setName(rs.getString("tablename"));
-                //rpta.getColumn().setName(rs.getString("columnname"));
-               // x.add(rpta);
-
             rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
@@ -88,7 +75,8 @@ public class DAO {
         String sql = Query.getTableXColumsProperties(database);
         try {
             this.conn = Factory.open(database);
-            sql += " and table_name ='"+tableName+"'";
+            sql = sql.replace("{schema}",Factory.getSchema());
+            sql = sql.replace("{tableName}",tableName);
             ResultSet rs = this.conn.query(sql);
             while (rs.next()) {
                // Table table = new Table();
@@ -113,13 +101,14 @@ public class DAO {
         }
         return x;
     }
-
+    //ready
     public List<Table> getWithColumnsNumber() {
         String sql =  Query.getSQLTableXNumColums(database);
         List<Table> x = new ArrayList<>();
         try {
             this.conn = Factory.open(database);
             System.out.println("tipo bd:" + database);
+            sql = sql.replace("{schema}",Factory.getSchema());
             ResultSet rs = this.conn.query(sql);
 
             while (rs.next()) {

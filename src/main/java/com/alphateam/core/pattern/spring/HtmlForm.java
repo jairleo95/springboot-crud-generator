@@ -17,21 +17,22 @@ import com.alphateam.utiles.FileBuilder;
  *
  * @author Jairleo95
  */
+/*
 public class HtmlForm extends Template {
 
   public void build() {
         init();
 
-        for (int f = 0; f < table.size(); f++) {
-            /*one or more ids*/
+        for (int f = 0; f < tables.size(); f++) {
+            /*one or more ids
             List<String> pksCurrentTable = new ArrayList<>();
-            Table tnc = table.get(f);
+            Table tnc = tables.get(f);
 
             String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
             //String beanName = tableEntity + "Bean ";
-            System.out.println("/*TABLA :" + tnc.getName() + " */");
+            System.out.println("/*TABLA :" + tnc.getName() + " ");
 
             String makeAssociatonColumns = "";
             String makeColumns = "";
@@ -39,20 +40,20 @@ public class HtmlForm extends Template {
             String makeParamsMethods = "";
             String paramsPrimaryKey = "";
 
-            for (int h = 0; h < columns.size(); h++) {
-                 /*table-column-property (TCP)*/
-                Table tcp = columns.get(h);
-                /*Compare DAO*/
+            for (int h = 0; h < columnList.size(); h++) {
+                 /*table-column-property (TCP)
+                Table tcp = columnList.get(h);
+                /*Compare DAO
                 if (tnc.getName().equals(tcp.getName())) {
-                    /*Variables*/
+                    /*Variables
                     String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
                     String dataType = "";
                     Boolean isForean = false;
                     Boolean isPrimaryKey = false;
                     dataType = tcp.getColumn().getDataType();
-                    /*Llaves Primarias*/
+                    /*Llaves Primarias
                     for (int g = 0; g < listPrimaryKey.size(); g++) {
-                        /*primary keys*/
+                        /*primary keys
                         Table pk = listPrimaryKey.get(g);
                         if (tnc.getName().equals(pk.getColumn().getName()) & tcp.getColumn().getName().equals(pk.getColumn().getName())) {
                             makeColumns += ("<input name='" + columna + "' type='hidden' />");
@@ -62,7 +63,7 @@ public class HtmlForm extends Template {
                             isForean = false;
                         }
                     }
-                    /*llaves foraneas*/
+                    /*llaves foraneas
                     if (!isPrimaryKey) {
                         for (int d = 0; d < listForeignKey.size(); d++) {
 
@@ -73,9 +74,9 @@ public class HtmlForm extends Template {
                                 String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
                                 // String ColumnaBean = Conversor.toJavaFormat(column, "_");
                                 makeAssociatonColumns += "<select name='" + columna + "' javaType=\"" + foreignTableEntity + "\">";
-                                for (int hh = 0; hh < columns.size(); hh++) {
-                                    String tableNameFk = columns.get(h).getName();
-                                    String columnNameFk = columns.get(h).getColumn().getName();
+                                for (int hh = 0; hh < columnList.size(); hh++) {
+                                    String tableNameFk = columnList.get(h).getName();
+                                    String columnNameFk = columnList.get(h).getColumn().getName();
                                     if (tableNameFk.equals(fk.getForeignTable())) {
                                         if (columnNameFk.equals(fk.getForeignColumn())) {
                                             makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>";
@@ -106,23 +107,23 @@ public class HtmlForm extends Template {
             if (!paramsPrimaryKey.equals("")) {
                 paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
             }
-            /*Save Method */
+            /*Save Method 
             makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
             makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
-            //*EDIT METHOD*/
+            //*EDIT METHOD
             makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
             makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
-            //*DELETE METHOD*/
+            //*DELETE METHOD
             makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
             makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
             makeMethods += "</select>";
-            //*LIST METHOD*/
+            //*LIST METHOD
             makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
             makeMethods += "select * from " + tnc.getName() + ";";
             makeMethods += "</select>";
-            //*FIND BY ID*/
+            //*FIND BY ID
             makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
             makeMethods += "select * from " + tnc.getName() + " where ";
             for (int ii = 0; ii < pksCurrentTable.size(); ii++) {
@@ -192,3 +193,4 @@ public class HtmlForm extends Template {
     }
 
 }
+*/

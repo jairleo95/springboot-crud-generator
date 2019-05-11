@@ -5,7 +5,6 @@
  */
 package com.alphateam.core.template;
 
-import ch.qos.logback.classic.db.names.ColumnName;
 import com.alphateam.connection.Factory;
 import com.alphateam.query.Column;
 import com.alphateam.query.DAO;
@@ -19,13 +18,16 @@ import java.util.List;
  * @author JAIR
  */
 interface Methods {
-    void column(Table table);
-    void foreignKeys(Table table,Table fk);
-    void primaryKeys(Table table,Table pk);
+    void table(Table table);
+    void column(Column column);
+    void foreignKeys(Table table,Column fk);
+    void primaryKeys(Table table,Column pk);
 
-    void buildParameters(Table table);
+    void buildParameters(Table table,Column column);
     void buildMethods(Table tnc, List<String> pks);
+    void resetValues();
 }
+
 public class Template extends Core implements Methods{
 
     @Override
@@ -35,15 +37,11 @@ public class Template extends Core implements Methods{
         conn = Factory.open(database);
         dao = new DAO();
         tables = dao.getWithColumnsNumber();
-        //columns = dao.getColumsProperties();
-        listPrimaryKey = dao.getPrimaryKeys();
-        listForeignKey = dao.getForeignKeys();
     }
 
-
-    public void build2() {
+    //refactoring
+    public void build() {
         init();
-        //System.out.println("table: "+ table.toString());
         for (int r = 0; r < tables.size(); r++) {
             /*one or more ids (pk for current table)*/
             List<String> pks = new ArrayList<>();
@@ -51,147 +49,80 @@ public class Template extends Core implements Methods{
 
             table.setColumn(dao.getColumsProperties(table.getName()));
 
-
-            System.out.println("/*TABLE :" + table.getName() + " */");
-            /*iterate columns*/
+            System.out.println("/*Table :" + table.getName() + " */");
+            System.out.println("/*table.getColumn().size() :" + table.getColumn().size() + " */");
+            table(table);
+            /*iterate columnList*/
             for (int h = 0; h < table.getColumn().size(); h++) {
                 /*table-column-property (TCP)*/
-                Column c = table.getColumn().get(h);
+                Column column = table.getColumn().get(h);
 
-                /*Compare DAO*/
-                //if (table.getName().equals(tcp.getName())) {
-                 table.setColumn(columns.get(h).getColumn());
-                    /*Llaves Primarias*/
-                    Boolean isForean = false;
-                    Boolean isPrimaryKey = false;
-                    /*do a listener for column*/
-                    column(c);
+                /*do a listener for column iteration*/
 
-                   List<Column> foreign =  dao.getForeignKeys(table.getName(),c.getName());
-                     isPrimaryKey =  dao.getPrimaryKeys(table.getName(),c.getName());
-
-
+                Boolean isForeignKey =  dao.getForeignKeys(table.getName(),column.getName());
+                Boolean isPrimaryKey =  dao.getPrimaryKeys(table.getName(),column.getName());
+                // System.out.println("isForeignKey:"+isForeignKey+", isPrimaryKey:"+isPrimaryKey);
                     /*Do something with primary keys*/
-                    //for (int g = 0; g < listPrimaryKey.size(); g++) {
-                     /*primary keys*/
-                        //Table pk = listPrimaryKey.get(g);
-                     //   if (table.getName().equalsIgnoreCase(pk.getName()) & c.getName().equalsIgnoreCase(pk.getColumn().getName())) {
-                            pks.add(c.getName());
-                            //customized
-                            primaryKeys(table, pk);
-                            //isPrimaryKey = true;
-                            c.setPrimaryKey(isPrimaryKey);
-                        //}
-                    //}
-                    /*Do something with foreign keys*/
-                    if (!isPrimaryKey) {
-                        /*Llaves Foraneas*/
-                        for (int d = 0; d < foreign.size(); d++) {
-                            Table fk = listForeignKey.get(d);
-                            if (table.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
-                                isForean = true;
-                                c.setForeignKey(isForean);
-                                foreignKeys(tcp,fk);
-                            }
-                        }
+                    if (isPrimaryKey){
+                        pks.add(column.getName());
+                        column.setPrimaryKey(isPrimaryKey);
+                        //listener
+                        primaryKeys(table, column);
+
+                   } else if (isForeignKey) {
+                        column.setForeignKey(isForeignKey);
+                        //listener
+                        foreignKeys(table,column);
+                    }else if (!isForeignKey && !isPrimaryKey) {
+                        buildParameters(table,column);
                     }
-                      /*Do something with parameters*/
-                    if (!isForean & !isPrimaryKey) {
-                        buildParameters(tcp);
-                    }
-               // }
+                    System.out.println("build().column:"+column.toString());
+
+                    //setting new data
+                column(column);
+               // table.getColumn().set(h, column);
             }
             buildMethods(table, pks);
-        }
-
-    }
-
-
-    public void build() {
-        init();
-        //System.out.println("table: "+ table.toString());
-        for (int r = 0; r < tables.size(); r++) {
-            /*one or more ids (pk for current table)*/
-            List<String> pks = new ArrayList<>();
-            Table table = this.tables.get(r);
-            //table.setColumn(dao.getColumsProperties(table.getName()));
-
-
-
-            System.out.println("/*TABLE :" + table.getName() + " */");
-            /*iterate columns*/
-            for (int h = 0; h < columns.size(); h++) {
-                /*table-column-property (TCP)*/
-                Table tcp = columns.get(h);
-
-                /*Compare DAO*/
-                if (table.getName().equals(tcp.getName())) {
-                    table.setColumn(columns.get(h).getColumn());
-                    /*Llaves Primarias*/
-                    Boolean isForean = false;
-                    Boolean isPrimaryKey = false;
-                    /*do a listener for column*/
-                    column(tcp);
-
-                    /*Do something with primary keys*/
-                    for (int g = 0; g < listPrimaryKey.size(); g++) {
-                     /*primary keys*/
-                        Table pk = listPrimaryKey.get(g);
-                        if (table.getName().equalsIgnoreCase(pk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(pk.getColumn().getName())) {
-                            pks.add(pk.getColumn().getName());
-                            //customized
-                            primaryKeys(table, pk);
-                            isPrimaryKey = true;
-                            table.getColumn().setPrimaryKey(isPrimaryKey);
-                        }
-                    }
-                    /*Do something with foreign keys*/
-                    if (!isPrimaryKey) {
-                        /*Llaves Foraneas*/
-                        for (int d = 0; d < listForeignKey.size(); d++) {
-                            Table fk = listForeignKey.get(d);
-                            if (table.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
-                                isForean = true;
-                                table.getColumn().setForeignKey(isForean);
-                                foreignKeys(tcp,fk);
-                            }
-                        }
-                    }
-                      /*Do something with parameters*/
-                    if (!isForean & !isPrimaryKey) {
-                        buildParameters(tcp);
-                    }
-                }
-            }
-            buildMethods(table, pks);
+            //setting new data
+            resetValues();
         }
 
     }
 
     @Override
-    public void column(Table table) {
-       // System.out.println("column callback:"+table.toString());
+    public void table(Table table) {
+
     }
 
     @Override
-    public void foreignKeys(Table tcp, Table fk) {
+    public void column(Column column) {
+        //System.out.println("column callback:"+column.toString());
+    }
+
+    @Override
+    public void foreignKeys(Table tcp, Column fk) {
         //System.out.println("foreignKeys callback TABLE:"+tcp.toString());
         //System.out.println("foreignKeys callback FK:"+fk.toString());
     }
 
     @Override
-    public void primaryKeys(Table table, Table pk) {
+    public void primaryKeys(Table table, Column pk) {
         //System.out.println("foreignKeys callback PK:"+pk.toString());
     }
 
     @Override
-    public void buildParameters(Table table) {
+    public void buildParameters(Table table, Column column) {
+        System.out.println("Building something - buildParameters callback column:"+column.toString());
 
     }
 
     @Override
     public void buildMethods(Table tnc, List<String> pks) {
-
+       System.out.println("Building something - primaryKeys callback PK:"+pks.toString());
+    }
+    @Override
+    public void resetValues() {
+         System.out.println("Building something - resetValues callback ");
     }
 
     public String header(SyntaxType opc) {

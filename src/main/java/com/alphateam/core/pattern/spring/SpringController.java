@@ -19,14 +19,15 @@ import com.alphateam.utiles.FileBuilder;
  *
  * @author Jairleo95
  */
+/*
 public class SpringController extends Template {
 
     public void build() {
         init();
-        for (int r = 0; r < table.size(); r++) {
-            /*one or more ids*/
+        for (int r = 0; r < tables.size(); r++) {
+            /*one or more ids
             List<String> pksCurrentTable = new ArrayList<String>();
-            Table tnc = table.get(r);
+            Table tnc = tables.get(r);
             // String tableName = Conversor.toJavaFormat(tableNameTNC.substring(6), "_");
             String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
@@ -85,24 +86,24 @@ public class SpringController extends Template {
             content += ("resultado =" + tableName + "SpringService.delete(" + tableName + ");rpta.put(\"id\", resultado);");
             content += ("} ");
             content += (" else if (opc.equals(\"save\") || opc.equals(\"edit\")) {");
-            /*Tipos de datos*/
-            for (int h = 0; h < columns.size(); h++) {
-                String tableNameTCP = columns.get(h).getName();
-                String columnNameTCP = columns.get(h).getColumn().getName();
-                String dataTypeColumnTCP = columns.get(h).getColumn().getDataType();
-                String bytes = columns.get(h).getColumn().getAttributeNumber();
+            /*Tipos de datos
+            for (int h = 0; h < columnList.size(); h++) {
+                String tableNameTCP = columnList.get(h).getName();
+                String columnNameTCP = columnList.get(h).getColumn().getName();
+                String dataTypeColumnTCP = columnList.get(h).getColumn().getDataType();
+                String bytes = columnList.get(h).getColumn().getAttributeNumber();
                 //for (String[] listTableColumn1 : listTableColumn) {
                 if (originalTableName.equals(tableNameTCP)) {
-                    /*Variables*/
+                    /*Variables
                     String columna = Conversor.toJavaFormat(columnNameTCP, "_");
                     String dataType = "";
                     Boolean isForean = false;
                     Boolean isPrimaryKey = false;
                     dataType = dataTypeColumnTCP;
-                    /*Llaves Primarias*/
+                    /*Llaves Primarias
                     String parametersProcedure = "sp" + Conversor.firstCharacterToUpper(columna);
                     for (int g = 0; g < listPrimaryKey.size(); g++) {
-                        /*primary keys*/
+                        /*primary keys
                         Table pk = listPrimaryKey.get(g);
 
                         if (tnc.getName().equals(pk.getName()) & columna.equals(pk.getColumn().getName())) {
@@ -112,14 +113,14 @@ public class SpringController extends Template {
                         }
                     }
                     if (!isPrimaryKey) {
-                        /*Llaves Foraneas*/
+                        /*Llaves Foraneas
                         for (int d = 0; d < listForeignKey.size(); d++) {
                             Table fk = listForeignKey.get(d);
 
                            /* String table = String.valueOf(listForeignKey.get(d).get("TableName"));
                             String column = String.valueOf(listForeignKey.get(d).get("ColumnName"));
                             String ForeignTable = String.valueOf(listForeignKey.get(d).get("ForeignTable"));
-                            String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));*/
+                            String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));
                             if (tnc.getName().equals(fk.getName()) & columnNameTCP.equals(fk.getColumn().getName())) {
                                 // String ColumnaBean = Conversor.toJavaFormat(column, "_");
                                 String ForeignColumnEnty = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_"));
@@ -155,3 +156,4 @@ public class SpringController extends Template {
         }
     }
 }
+*/

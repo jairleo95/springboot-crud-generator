@@ -22,6 +22,7 @@ public abstract class Core {
     protected int database;
     protected boolean returnId;
     protected DAO dao;
-    protected List<Table> tables /*table*/, columns/*column*/,listPrimaryKey, listForeignKey;
+
+    protected List<Table> tables /*table*/, columnList/*column*/,listPrimaryKey, listForeignKey;
     protected abstract void init();
 }

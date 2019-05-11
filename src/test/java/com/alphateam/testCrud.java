@@ -5,7 +5,10 @@ package com.alphateam;/*
  */
 
  
+
 import com.alphateam.core.pattern.spring.JavaBeans;
+import com.alphateam.core.pattern.spring.Mapper;
+import com.alphateam.core.pattern.spring.SpringService;
 import com.alphateam.core.pattern.spring.StoreProcedure;
 import com.alphateam.core.template.Template;
 
@@ -16,7 +19,10 @@ import com.alphateam.core.template.Template;
 public class testCrud {
 
      public static void main(String args[]) throws Exception {
-         StoreProcedure x = new StoreProcedure();
+        /* SpringService x = new SpringService();
+         x.build();*/
+        JavaBeans x = new JavaBeans();
          x.build();
+
      }
 }

@@ -25,12 +25,14 @@ public class Query {
             + " ORDER BY UPPER(conname), UPPER(relname), UPPER(pg_catalog.pg_attribute.attname)";
 
     /*MYSQL*/
-    public static final String allTablesMysql = "SELECT TABLE_NAME, 0 FROM INFORMATION_SCHEMA.table WHERE TABLE_SCHEMA='alpha_analytics'";
-    public static final String tableXColumsPropertiesMysql = "SELECT table_name,column_name,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,ORDINAL_POSITION FROM INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA='alpha_analytics' ORDER by TABLE_NAME ,ORDINAL_POSITION";
+    public static final String allTablesMysql = "SELECT TABLE_NAME, 0 FROM INFORMATION_SCHEMA.tables WHERE TABLE_SCHEMA='{schema}'";
+    public static final String tableXColumsPropertiesMysql = "SELECT table_name,column_name,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,ORDINAL_POSITION FROM INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA='{schema}' and table_name ='{tableName}' ORDER by TABLE_NAME ,ORDINAL_POSITION";
 
-    public static final String tableColumnsForeignPropertiesMYSQL = "SELECT TABLE_NAME as tabla, column_name as columna, referenced_table_name as tabla_foranea, referenced_column_name as columna_foranea FROM information_schema.key_column_usage WHERE referenced_table_name IS NOT NULL and constraint_schema='alpha_analytics'";
+    public static final String tableColumnsForeignPropertiesMYSQL = "SELECT TABLE_NAME as tabla, column_name as columna, referenced_table_name as tabla_foranea, referenced_column_name as columna_foranea FROM information_schema.key_column_usage WHERE referenced_table_name IS NOT NULL and constraint_schema='{schema}'";
 
-    public static final String tableColumnsPrimaryKeyPropertiesMYSQL = "SELECT TABLE_NAME as tablename, column_name as columnname, referenced_table_name as constraintname, referenced_column_name as columna_foranea FROM information_schema.key_column_usage where CONSTRAINT_name='PRIMARY' AND CONSTRAINT_SCHEMA='alpha_analytics'";
+    public static final String tableColumnsPrimaryKeyPropertiesMYSQL = "SELECT TABLE_NAME as tablename, column_name as columnname, referenced_table_name as constraintname, referenced_column_name as columna_foranea FROM information_schema.key_column_usage where CONSTRAINT_name='PRIMARY' AND CONSTRAINT_SCHEMA='{schema}'";
+
+   /*Oracle*/
 
     public static String getSQLTableXNumColums(int database) {
         String sql = "";

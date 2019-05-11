@@ -91,4 +91,18 @@ public class Column {
     public void setLength(String length) {
         this.length = length;
     }
+
+    @Override
+    public String toString() {
+        return "Column{" +
+                "name='" + name + '\'' +
+                ", dataType='" + dataType + '\'' +
+                ", length='" + length + '\'' +
+                ", attributeNumber='" + attributeNumber + '\'' +
+                ", foreignKey=" + foreignKey +
+                ", foreignTable='" + foreignTable + '\'' +
+                ", foreignColumn='" + foreignColumn + '\'' +
+                ", primaryKey=" + primaryKey +
+                '}';
+    }
 }

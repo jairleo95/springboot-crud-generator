@@ -11,7 +11,6 @@ public class Table {
     private List<Column> column;
 
     private String numColumns;
-
     private String constraintName;
     private String foreignColumn;
     private String foreignTable;
@@ -22,7 +21,6 @@ public class Table {
         this.column = new ArrayList<>();
 
         this.constraintName="";
-
         this.foreignTable="";
         this.foreignColumn="";
     }

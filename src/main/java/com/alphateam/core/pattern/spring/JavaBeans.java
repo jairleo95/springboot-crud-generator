@@ -9,8 +9,11 @@ import com.alphateam.connection.Factory;
 
 import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
+import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+
+import java.util.List;
 
 /**
  *
@@ -18,78 +21,75 @@ import com.alphateam.utiles.Conversor;
  */
 public class JavaBeans extends Template {
 
-    public void build() {
-        init();
-        for (int g = 0; g < table.size(); g++) {
-            Table tnc = table.get(g);
-            //   String numColumnsTNC = getWithColumnsNumber.get(g).get("NumColumns");
-            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
-            String beanName = Conversor.firstCharacterToUpper(tableName + "Bean");
-            System.out.println("//TABLA :" + tnc.getName());
 
-            String makeInstanceBean = "";
-            String makeSettersAndGetters = "";
-            String makeImports = "";
-            String makeColumns = "";
+    String makeColumns = "";
+    String makeInstanceBean = "";
+    String makeSettersAndGetters = "";
+    String makeImports = "";
+    String content = "";
 
-            for (int h = 0; h < columns.size(); h++) {
-               /*table-column-property (TCP)*/
-                Table tcp = columns.get(h);
-                if (tnc.getName().equals(tcp.getName())) {
-                    /*Variables*/
-                    String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
-                    Boolean isForean = false;
+    @Override
+    public void foreignKeys(Table tcp, Column column) {
+        super.foreignKeys(tcp, column);
 
-                    /*Llaves Foraneas*/
-                    for (int d = 0; d < listForeignKey.size(); d++) {
-                        Table fk = listForeignKey.get(d);
-
-                        System.err.println(tnc.getName() + ":" + fk.getName());
-                        if (tnc.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
-                            System.err.println("here!");
-                            // String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(ForeignTable.substring(6), "_")) + "Bean";
-                            String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_")) + "Bean";
-                            String ColumnaBean = Conversor.toJavaFormat(columna, "_");
-                            makeColumns += ("private " + TableBean + " " + ColumnaBean + ";");
-                            // s++;
-                            isForean = true;
-                            makeInstanceBean += ColumnaBean + " = new " + TableBean + "();";
-                            makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(ColumnaBean) + "(" + TableBean + " " + ColumnaBean + "){"
-                                    + "this." + ColumnaBean + "=" + ColumnaBean + ";}");
-                            makeSettersAndGetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(ColumnaBean) + "(){"
-                                    + "return " + ColumnaBean + ";}";
-                            makeImports += " import org.proyecto.bean." + Conversor.toJavaFormat(fk.getForeignTable(), "_") + "" + TableBean + ";";
-                        }
-                    }
-                    /*columnas*/
-                    String dataType = "";
-                    if (!isForean) {
-                        dataType = ToJava.getDataType(tcp.getColumn().getDataType(), Factory.getDefaultDatabase());
-                        makeColumns += ("private " + dataType + " " + columna + ";");
-                        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){"
-                                + "this." + columna + "=" + columna + ";}");
-                        makeSettersAndGetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columna) + "(){"
-                                + "return " + columna + ";}";
-                        makeImports += ToJava.getImportsByDataType(dataType);
-                        makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + ";";
-                    }
-                }
-            }
-
-            String content = "";
-            content += ("package org.proyecto.bean." + tableName + ";");
-            content += (makeImports);
-            content += ("public class " + beanName + " {");
-            content += (makeColumns);
-            /*Contructor*/
-            content += ("public " + beanName + "(){");
-            content += (makeInstanceBean);
-            content += ("}");
-            content += (makeSettersAndGetters);
-            content += ("}");
-            //FileBuilder.writeFolderAndFile("org\\proyecto\\bean\\" + tableName + "\\", beanName + ".ToJava", content);
-            System.out.println(content);
-        }
+        String columna = Conversor.toJavaFormat(column.getName(), "_");
+        System.out.println("Enter to foreignKeys method");
+        String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(column.getForeignTable(), "_")) + "Bean";
+        String ColumnaBean = Conversor.toJavaFormat(columna, "_");
+        makeColumns += ("private " + TableBean + " " + ColumnaBean + ";");
+        // s++;
+        //isForean = true;
+        makeInstanceBean += ColumnaBean + " = new " + TableBean + "();";
+        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(ColumnaBean) + "(" + TableBean + " " + ColumnaBean + "){"
+                + "this." + ColumnaBean + "=" + ColumnaBean + ";}");
+        makeSettersAndGetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(ColumnaBean) + "(){"
+                + "return " + ColumnaBean + ";}";
+        makeImports += " import org.proyecto.bean." + Conversor.toJavaFormat(column.getForeignTable(), "_") + "" + TableBean + ";";
     }
 
+
+    @Override
+    public void buildParameters(Table table, Column column) {
+        super.buildParameters(table, column);
+        String dataType = "";
+        String columna = Conversor.toJavaFormat(column.getName(), "_");
+        dataType = ToJava.getDataType(column.getDataType(), Factory.getDefaultDatabase());
+        makeColumns += ("private " + dataType + " " + columna + ";");
+        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){"
+                + "this." + columna + "=" + columna + ";}");
+        makeSettersAndGetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columna) + "(){"
+                + "return " + columna + ";}";
+        makeImports += ToJava.getImportsByDataType(dataType);
+        makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + ";";
+    }
+
+    @Override
+    public void buildMethods(Table table, List<String> pks) {
+        super.buildMethods(table, pks);
+        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String beanName = Conversor.firstCharacterToUpper(tableName + "Bean");
+
+        content += ("package org.proyecto.bean." + tableName + ";");
+        content += (makeImports);
+        content += ("public class " + beanName + " {");
+        content += (makeColumns);
+        //Contructor
+        content += ("public " + beanName + "(){");
+        content += (makeInstanceBean);
+        content += ("}");
+        content += (makeSettersAndGetters);
+        content += ("}");
+        //FileBuilder.writeFolderAndFile("org\\proyecto\\bean\\" + tableName + "\\", beanName + ".ToJava", content);
+        System.out.println(content);
+    }
+
+    @Override
+    public void resetValues() {
+        super.resetValues();
+         makeColumns = "";
+         makeInstanceBean = "";
+         makeSettersAndGetters = "";
+         makeImports = "";
+         content = "";
+    }
 }

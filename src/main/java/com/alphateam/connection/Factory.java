@@ -26,6 +26,9 @@ public class Factory {
     public static int getDefaultDatabase() {
         return MYSQL;
     }
+    public static String getSchema(){
+        return Global.DATABASE_MYSQL;
+    }
 
     public static Connection open(int typeDB) {
         switch (typeDB) {

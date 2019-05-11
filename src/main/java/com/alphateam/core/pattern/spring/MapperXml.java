@@ -2,12 +2,12 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ 
 package com.alphateam.core.pattern.spring;
 
 import java.util.ArrayList;
 import java.util.List;
-
+*/
 import com.alphateam.core.template.Template;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -17,37 +17,40 @@ import com.alphateam.utiles.FileBuilder;
  *
  * @author Jairleo95
  */
+
+/*
+
 public class MapperXml extends Template {
 
     public void build() {
         init();
 
-        for (int f = 0; f < table.size(); f++) {
-            /*one or more ids*/
+        for (int f = 0; f < tables.size(); f++) {
+            /*one or more ids
             List<String> pksCurrentTable = new ArrayList<String>();
-            Table tnc = table.get(f);
+            Table tnc = tables.get(f);
             // String tableName = Conversor.toJavaFormat(List11[0].substring(6), "_");
             String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             //String beanName = tableEntity + "Bean ";
-            System.out.println("/*TABLA :" + tnc.getName() + " */");
+            System.out.println("/*TABLA :" + tnc.getName() + " ");
             String makeAssociatonColumns = "";
             String makeColumns = "";
             String makeMethods = "";
             String makeParamsMethods = "";
             String paramsPrimaryKey = "";
-            for (int h = 0; h < columns.size(); h++) {
-              /*table-column-property (TCP)*/
-                Table tcp = columns.get(h);
-                /*Compare DAO*/
+            for (int h = 0; h < columnList.size(); h++) {
+              /*table-column-property (TCP)
+                Table tcp = columnList.get(h);
+                /*Compare DAO
                 if (tnc.getName().equals(tcp.getName())) {
-                    /*Variables*/
+                    /*Variables
                     String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
                     Boolean isForean = false;
                     Boolean isPrimaryKey = false;
-                    /*Llaves Foraneas*/
+                    /*Llaves Foraneas
                     for (int g = 0; g < listPrimaryKey.size(); g++) {
-                       /*primary keys*/
+                       /*primary keys
                         Table pk = listPrimaryKey.get(g);
                         if (tnc.getName().equalsIgnoreCase(pk.getName())& tcp.getColumn().getName().equalsIgnoreCase(pk.getColumn().getName())) {
                             makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getColumn().getName() + "\" />");
@@ -63,7 +66,7 @@ public class MapperXml extends Template {
                             /*String table = String.valueOf(listForeignKey.get(d).get("TableName"));
                             String column = String.valueOf(listForeignKey.get(d).get("ColumnName"));
                             String ForeignTable = String.valueOf(listForeignKey.get(d).get("ForeignTable"));
-                            String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));*/
+                            String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));
 
                             if (tnc.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
                                 // String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(ForeignTable.substring(6), "_"));
@@ -71,9 +74,9 @@ public class MapperXml extends Template {
                                 String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
                                 // String ColumnaBean = Conversor.toJavaFormat(column, "_");
                                 makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + foreignTableEntity + "\">";
-                                for (int hh = 0; hh < columns.size(); hh++) {
-                                    String tableNameFk = columns.get(h).getName();
-                                    String columnNameFk = columns.get(h).getColumn().getName();
+                                for (int hh = 0; hh < columnList.size(); hh++) {
+                                    String tableNameFk = columnList.get(h).getName();
+                                    String columnNameFk = columnList.get(h).getColumn().getName();
                                     if (tableNameFk.equals(fk.getForeignColumn())) {
                                         makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumn().getName(), "_") + "\"></id>";
                                     } else {
@@ -101,26 +104,26 @@ public class MapperXml extends Template {
                 paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
             }
 
-            /*Save Method */
+            /*Save Method 
             makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
 
             makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
-            //*EDIT METHOD*/
+            //*EDIT METHOD
             makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
             makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
             makeMethods += "</select>";
-            //*DELETE METHOD*/
+            //*DELETE METHOD
             makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
             makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
             makeMethods += "</select>";
 
-            //*LIST METHOD*/
+            //*LIST METHOD
             makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
             makeMethods += "select * from " + tnc.getName() + ";";
             makeMethods += "</select>";
 
-            //*FIND BY ID*/
+            //*FIND BY ID
             makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
             makeMethods += "select * from " + tnc.getName() + " where ";
             for (int ii = 0; ii < pksCurrentTable.size(); ii++) {
@@ -135,7 +138,7 @@ public class MapperXml extends Template {
             makeMethods += "</select>";
             String content = "";
 
-            /*Print */
+            /*Print 
             System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
             content += ("<mapper namespace=\"org.proyecto.mapper." + tableName + "" + Conversor.firstCharacterToUpper(tableName) + "Mapper\">");
@@ -152,3 +155,4 @@ public class MapperXml extends Template {
     }
 
 }
+*/
