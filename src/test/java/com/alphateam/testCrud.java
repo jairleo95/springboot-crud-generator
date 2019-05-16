@@ -6,10 +6,7 @@ package com.alphateam;/*
 
  
 
-import com.alphateam.core.pattern.spring.JavaBeans;
-import com.alphateam.core.pattern.spring.Mapper;
-import com.alphateam.core.pattern.spring.SpringService;
-import com.alphateam.core.pattern.spring.StoreProcedure;
+import com.alphateam.core.pattern.spring.*;
 import com.alphateam.core.template.Template;
 
 /**
@@ -21,7 +18,13 @@ public class testCrud {
      public static void main(String args[]) throws Exception {
         /* SpringService x = new SpringService();
          x.build();*/
-        JavaBeans x = new JavaBeans();
+        /*JavaBeans x = new JavaBeans();
+         x.build();*/
+        /* HtmlForm x = new HtmlForm();
+         x.build();*/
+         /*MapperXml x =  new MapperXml();
+         x.build();*/
+         SpringController x =  new SpringController();
          x.build();
 
      }

@@ -67,10 +67,6 @@ public class StoreProcedure extends Template {
             updateComparission += fk.getName() + "=" + methodParams + ", ";
     }
 
-    /*@Override
-    public void build() {
-        super.build();
-    }*/
 
     @Override
     public void buildMethods(Table tnc, List<String> pks) {

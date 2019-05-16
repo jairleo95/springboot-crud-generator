@@ -59,8 +59,8 @@ public class Template extends Core implements Methods{
 
                 /*do a listener for column iteration*/
 
-                Boolean isForeignKey =  dao.getForeignKeys(table.getName(),column.getName());
-                Boolean isPrimaryKey =  dao.getPrimaryKeys(table.getName(),column.getName());
+                Boolean isForeignKey =  dao.isForeignKey(table.getName(),column.getName());
+                Boolean isPrimaryKey =  dao.isPrimaryKey(table.getName(),column.getName());
                 // System.out.println("isForeignKey:"+isForeignKey+", isPrimaryKey:"+isPrimaryKey);
                     /*Do something with primary keys*/
                     if (isPrimaryKey){
@@ -71,12 +71,15 @@ public class Template extends Core implements Methods{
 
                    } else if (isForeignKey) {
                         column.setForeignKey(isForeignKey);
+                        Column fkColumn =  dao.getForeignKey(table.getName(),column.getName());
+                        column.setForeignColumn(fkColumn.getForeignColumn());
+                        column.setForeignTable(fkColumn.getForeignTable());
                         //listener
                         foreignKeys(table,column);
                     }else if (!isForeignKey && !isPrimaryKey) {
                         buildParameters(table,column);
                     }
-                    System.out.println("build().column:"+column.toString());
+                    //System.out.println("build().column:"+column.toString());
 
                     //setting new data
                 column(column);
@@ -112,17 +115,18 @@ public class Template extends Core implements Methods{
 
     @Override
     public void buildParameters(Table table, Column column) {
-        System.out.println("Building something - buildParameters callback column:"+column.toString());
+       // System.out.println("Building something - buildParameters callback column:"+column.toString());
 
     }
 
     @Override
     public void buildMethods(Table tnc, List<String> pks) {
-       System.out.println("Building something - primaryKeys callback PK:"+pks.toString());
+      // System.out.println("Building something - primaryKeys callback PK:"+pks.toString());
     }
     @Override
     public void resetValues() {
-         System.out.println("Building something - resetValues callback ");
+
+        //System.out.println("Building something - resetValues callback ");
     }
 
     public String header(SyntaxType opc) {

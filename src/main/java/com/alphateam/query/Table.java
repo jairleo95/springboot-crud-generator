@@ -11,18 +11,18 @@ public class Table {
     private List<Column> column;
 
     private String numColumns;
-    private String constraintName;
-    private String foreignColumn;
-    private String foreignTable;
+    //private String constraintName;
+    //private String foreignColumn;
+   // private String foreignTable;
 
     public Table() {
         this.name = "";
         this.numColumns = "";
         this.column = new ArrayList<>();
 
-        this.constraintName="";
-        this.foreignTable="";
-        this.foreignColumn="";
+       // this.constraintName="";
+        //this.foreignTable="";
+        //this.foreignColumn="";
     }
 
     public List<Column> getColumn() {
@@ -33,7 +33,7 @@ public class Table {
         this.column = column;
     }
 
-    public String getForeignTable() {
+    /*public String getForeignTable() {
         return foreignTable;
     }
 
@@ -57,6 +57,7 @@ public class Table {
         this.constraintName = constraintName;
     }
 
+    */
     public String getName() {
         return name;
     }
@@ -79,9 +80,9 @@ public class Table {
         return "Table{" +
                 "name='" + name + '\'' +
                 ", numColumns='" + numColumns + '\'' +
-                ", constraintName='" + constraintName + '\'' +
+             /*   ", constraintName='" + constraintName + '\'' +
                 ", foreignColumn='" + foreignColumn + '\'' +
-                ", foreignTable='" + foreignTable + '\'' +
+                ", foreignTable='" + foreignTable + '\'' +*/
                 '}';
     }
 }

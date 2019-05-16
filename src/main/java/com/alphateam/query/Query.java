@@ -33,6 +33,13 @@ public class Query {
     public static final String tableColumnsPrimaryKeyPropertiesMYSQL = "SELECT TABLE_NAME as tablename, column_name as columnname, referenced_table_name as constraintname, referenced_column_name as columna_foranea FROM information_schema.key_column_usage where CONSTRAINT_name='PRIMARY' AND CONSTRAINT_SCHEMA='{schema}'";
 
    /*Oracle*/
+    public static final String allTablesORACLE = "";
+    public static final String tableXColumsPropertiesORACLE = "";
+
+    public static final String tableColumnsForeignPropertiesORACLE= "";
+
+    public static final String tableColumnsPrimaryKeyPropertiesORACLE = "";
+
 
     public static String getSQLTableXNumColums(int database) {
         String sql = "";
@@ -42,6 +49,9 @@ public class Query {
                 return sql;
             case Factory.POSGRESQL:
                 sql = tableXNumColumsPOSGRESQL;
+                return sql;
+            case Factory.ORACLE:
+                sql = allTablesORACLE;
                 return sql;
             default:
                 return "";
@@ -58,6 +68,9 @@ public class Query {
             case Factory.POSGRESQL:
                 sql = tableXColumsPropertiesPOSGRESQL;
                 return sql;
+            case Factory.ORACLE:
+                sql = tableXColumsPropertiesORACLE;
+                return sql;
             default:
                 return sql;
         }
@@ -72,6 +85,9 @@ public class Query {
             case Factory.POSGRESQL:
                 sql = tableColumnsForeignPropertiesPOSGRESQL;
                 return sql;
+            case Factory.ORACLE:
+                sql = tableColumnsForeignPropertiesORACLE;
+                return sql;
             default:
                 return sql;
         }
@@ -84,6 +100,9 @@ public class Query {
                 return sql;
             case Factory.POSGRESQL:
                 sql = tableColumnsPrimaryKeyPropertiesPOSGRESQL;
+                return sql;
+            case Factory.ORACLE:
+                sql = tableColumnsPrimaryKeyPropertiesORACLE;
                 return sql;
             default:
                 return sql;

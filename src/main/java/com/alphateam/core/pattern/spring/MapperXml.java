@@ -1,4 +1,4 @@
-/*
+package com.alphateam.core.pattern.spring;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,150 +9,139 @@ import java.util.ArrayList;
 import java.util.List;
 */
 import com.alphateam.core.template.Template;
+import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
+
+import java.util.List;
 
 /**
  *
  * @author Jairleo95
  */
 
-/*
+
 
 public class MapperXml extends Template {
 
-    public void build() {
-        init();
+    String makeAssociatonColumns = "";
+    String makeColumns = "";
+    String makeMethods = "";
+    String makeParamsMethods = "";
+    String paramsPrimaryKey = "";
 
-        for (int f = 0; f < tables.size(); f++) {
-            /*one or more ids
-            List<String> pksCurrentTable = new ArrayList<String>();
-            Table tnc = tables.get(f);
-            // String tableName = Conversor.toJavaFormat(List11[0].substring(6), "_");
-            String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
-            String tableEntity = Conversor.firstCharacterToUpper(tableName);
-            //String beanName = tableEntity + "Bean ";
-            System.out.println("/*TABLA :" + tnc.getName() + " ");
-            String makeAssociatonColumns = "";
-            String makeColumns = "";
-            String makeMethods = "";
-            String makeParamsMethods = "";
-            String paramsPrimaryKey = "";
-            for (int h = 0; h < columnList.size(); h++) {
-              /*table-column-property (TCP)
-                Table tcp = columnList.get(h);
-                /*Compare DAO
-                if (tnc.getName().equals(tcp.getName())) {
-                    /*Variables
-                    String columna = Conversor.toJavaFormat(tcp.getColumn().getName(), "_");
-                    Boolean isForean = false;
-                    Boolean isPrimaryKey = false;
-                    /*Llaves Foraneas
-                    for (int g = 0; g < listPrimaryKey.size(); g++) {
-                       /*primary keys
-                        Table pk = listPrimaryKey.get(g);
-                        if (tnc.getName().equalsIgnoreCase(pk.getName())& tcp.getColumn().getName().equalsIgnoreCase(pk.getColumn().getName())) {
-                            makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getColumn().getName() + "\" />");
-                            pksCurrentTable.add(pk.getColumn().getName());
-                            paramsPrimaryKey += "#{" + pk.getColumn().getName() + "},";
-                            isPrimaryKey = true;
-                        }
-                    }
-                    if (!isPrimaryKey) {
-                        for (int d = 0; d < listForeignKey.size(); d++) {
-                            Table fk = listForeignKey.get(d);
-
-                            /*String table = String.valueOf(listForeignKey.get(d).get("TableName"));
-                            String column = String.valueOf(listForeignKey.get(d).get("ColumnName"));
-                            String ForeignTable = String.valueOf(listForeignKey.get(d).get("ForeignTable"));
-                            String ForeignColumn = String.valueOf(listForeignKey.get(d).get("ForeignColumn"));
-
-                            if (tnc.getName().equalsIgnoreCase(fk.getName()) & tcp.getColumn().getName().equalsIgnoreCase(fk.getColumn().getName())) {
-                                // String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(ForeignTable.substring(6), "_"));
-                                String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"));
-                                String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
-                                // String ColumnaBean = Conversor.toJavaFormat(column, "_");
-                                makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + foreignTableEntity + "\">";
-                                for (int hh = 0; hh < columnList.size(); hh++) {
-                                    String tableNameFk = columnList.get(h).getName();
-                                    String columnNameFk = columnList.get(h).getColumn().getName();
-                                    if (tableNameFk.equals(fk.getForeignColumn())) {
-                                        makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumn().getName(), "_") + "\"></id>";
-                                    } else {
-                                        makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(tcp.getColumn().getName(), "_") + "\"></result>";
-                                    }
-                                }
-
-                                makeAssociatonColumns += "</association>";
-                                isForean = true;
-                                makeParamsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
-                            }
-                        }
-                    }
-                    if (!isForean & !isPrimaryKey) {
-                        makeColumns += ("<result property=\"" + columna + "\" column=\"" + tcp.getColumn().getName() + "\" />");
-                        makeParamsMethods += "#{" + columna + "},";
-                    }
-                }
-            }
-
-            if (!makeParamsMethods.equals("")) {
-                makeParamsMethods = makeParamsMethods.substring(0, (makeParamsMethods.length() - 1));
-            }
-            if (!paramsPrimaryKey.equals("")) {
-                paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
-            }
-
-            /*Save Method 
-            makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-
-            makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
-            makeMethods += "</select>";
-            //*EDIT METHOD
-            makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-            makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
-            makeMethods += "</select>";
-            //*DELETE METHOD
-            makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-            makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
-            makeMethods += "</select>";
-
-            //*LIST METHOD
-            makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
-            makeMethods += "select * from " + tnc.getName() + ";";
-            makeMethods += "</select>";
-
-            //*FIND BY ID
-            makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
-            makeMethods += "select * from " + tnc.getName() + " where ";
-            for (int ii = 0; ii < pksCurrentTable.size(); ii++) {
-                if (ii == 0) {
-                    makeMethods += pksCurrentTable.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pksCurrentTable.get(ii), "_") + "} ";
-                } else {
-                    makeMethods += " and " + pksCurrentTable.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pksCurrentTable.get(ii), "_") + "} ";
-                }
-
-            }
-            makeMethods += ";";
-            makeMethods += "</select>";
-            String content = "";
-
-            /*Print 
-            System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
-            content += ("<mapper namespace=\"org.proyecto.mapper." + tableName + "" + Conversor.firstCharacterToUpper(tableName) + "Mapper\">");
-            content += ("<resultMap id=\"" + Conversor.firstCharacterToUpper(tableName) + "Map\" type=\"" + Conversor.firstCharacterToUpper(tableName) + "\">");
-            content += (makeColumns);
-            content += (makeAssociatonColumns);
-            content += ("</resultMap>");
-            content += (makeMethods);
-
-            content += ("</mapper>");
-            FileBuilder.writeFolderAndFile("org\\proyecto\\resources\\xml\\mapper\\" + tableName + "\\", tableName + "-mapper.xml", content);
-            System.out.println(content);
-        }
+    @Override
+    public void primaryKeys(Table table, Column pk) {
+        super.primaryKeys(table, pk);
+        String columna = Conversor.toJavaFormat(pk.getName(), "_");
+        makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getName() + "\" />");
+        paramsPrimaryKey += "#{" + pk.getName() + "},";
     }
 
+    @Override
+    public void foreignKeys(Table tcp, Column fk) {
+        super.foreignKeys(tcp, fk);
+
+        String columna = Conversor.toJavaFormat(fk.getName(), "_");
+        String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"));
+            String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
+            makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + foreignTableEntity + "\">";
+            List<Column> foreignColumns =  dao.getColumsProperties(fk.getForeignTable());
+            for (int hh = 0; hh < foreignColumns.size(); hh++) {
+                //String tableNameFk = foreignColumns.get(h).getName();
+                String columnNameFk = foreignColumns.get(hh).getName();
+                if (columnNameFk.equals(fk.getForeignColumn())) {
+                    makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>";
+                } else {
+                    makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>";
+                }
+            }
+
+            makeAssociatonColumns += "</association>";
+            makeParamsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
+
+    }
+
+    @Override
+    public void buildParameters(Table table, Column column) {
+        super.buildParameters(table, column);
+        String columna = Conversor.toJavaFormat(column.getName(), "_");
+
+        makeColumns += ("<result property=\"" + columna + "\" column=\"" + table.getName() + "\" />");
+        makeParamsMethods += "#{" + columna + "},";
+    }
+
+    @Override
+    public void buildMethods(Table tnc, List<String> pks) {
+        super.buildMethods(tnc, pks);
+
+        String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
+        String tableEntity = Conversor.firstCharacterToUpper(tableName);
+
+
+        if (!makeParamsMethods.equals("")) {
+            makeParamsMethods = makeParamsMethods.substring(0, (makeParamsMethods.length() - 1));
+        }
+        if (!paramsPrimaryKey.equals("")) {
+            paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
+        }
+
+        //Save Method
+        makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
+
+        makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
+        makeMethods += "</select>";
+        //*EDIT METHOD
+        makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
+        makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
+        makeMethods += "</select>";
+        //*DELETE METHOD
+        makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
+        makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
+        makeMethods += "</select>";
+
+        //*LIST METHOD
+        makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
+        makeMethods += "select * from " + tnc.getName() + ";";
+        makeMethods += "</select>";
+
+        //*FIND BY ID
+        makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
+        makeMethods += "select * from " + tnc.getName() + " where ";
+        for (int ii = 0; ii < pks.size(); ii++) {
+            if (ii == 0) {
+                makeMethods += pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
+            } else {
+                makeMethods += " and " + pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
+            }
+
+        }
+        makeMethods += ";";
+        makeMethods += "</select>";
+        String content = "";
+
+        //Print
+        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
+        content += ("<mapper namespace=\"org.proyecto.mapper." + tableName + "" + Conversor.firstCharacterToUpper(tableName) + "Mapper\">");
+        content += ("<resultMap id=\"" + Conversor.firstCharacterToUpper(tableName) + "Map\" type=\"" + Conversor.firstCharacterToUpper(tableName) + "\">");
+        content += (makeColumns);
+        content += (makeAssociatonColumns);
+        content += ("</resultMap>");
+        content += (makeMethods);
+
+        content += ("</mapper>");
+        //FileBuilder.writeFolderAndFile("org\\proyecto\\resources\\xml\\mapper\\" + tableName + "\\", tableName + "-mapper.xml", content);
+        System.out.println(content);
+    }
+    @Override
+    public void resetValues() {
+        super.resetValues();
+         makeAssociatonColumns = "";
+         makeColumns = "";
+         makeMethods = "";
+         makeParamsMethods = "";
+         paramsPrimaryKey = "";
+    }
 }
-*/
