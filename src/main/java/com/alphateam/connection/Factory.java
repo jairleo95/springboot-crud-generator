@@ -24,10 +24,10 @@ public class Factory {
     public static String[] configPOSGRESQL = {Global.HOSTNAME_PS, Global.DATABASE_PS, Global.USER_PS, Global.PWD_PS};
 
     public static int getDefaultDatabase() {
-        return MYSQL;
+        return ORACLE;
     }
     public static String getSchema(){
-        return Global.DATABASE_MYSQL;
+        return Global.USER;
     }
 
     public static Connection open(int typeDB) {

@@ -18,11 +18,11 @@ public class Global {
     public static String VERSION_JS = "2.3.1";
 
     /*oracle bd connection */
-    public static final String HOSTNAME = "192.168.1.19";
-    public static final String USER = "procesosrh";
-    public static final String USER_PWD = "gestionrrhh";
+    public static final String HOSTNAME = "192.168.1.63";
+    public static final String USER = "SDSPMAIN001";
+    public static final String USER_PWD = "SDSPMAIN001";
     public static final String PORT = "1521";
-    public static final String SID = "xe";
+    public static final String SID = "orcl";
 
     /*Mysql*/
     public static final String HOSTNAME_MYSQL = "localhost";

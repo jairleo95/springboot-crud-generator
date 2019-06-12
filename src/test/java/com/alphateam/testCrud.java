@@ -20,12 +20,12 @@ public class testCrud {
          x.build();*/
         /*JavaBeans x = new JavaBeans();
          x.build();*/
-        /* HtmlForm x = new HtmlForm();
-         x.build();*/
+         HtmlForm x = new HtmlForm();
+         x.build();
          /*MapperXml x =  new MapperXml();
          x.build();*/
-         SpringController x =  new SpringController();
-         x.build();
+        /* SpringController x =  new SpringController();
+         x.build();*/
 
      }
 }

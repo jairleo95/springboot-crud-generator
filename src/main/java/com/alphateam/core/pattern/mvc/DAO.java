@@ -41,10 +41,10 @@ public class DAO {
         int i = 0;
         while (rs.next()) {
 
-            List1[i][0] = rs.getString(1);
-            List1[i][1] = rs.getString(2);
-            i++;
-        }
+        List1[i][0] = rs.getString(1);
+        List1[i][1] = rs.getString(2);
+        i++;
+    }
 
         int j = 0;
         while (rs2.next()) {

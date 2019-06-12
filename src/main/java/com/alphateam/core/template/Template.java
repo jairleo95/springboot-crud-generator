@@ -12,6 +12,8 @@ import com.alphateam.query.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
@@ -42,41 +44,54 @@ public class Template extends Core implements Methods{
     //refactoring
     public void build() {
         init();
+        List<Column> columns = dao.getColumsProperties("");
         for (int r = 0; r < tables.size(); r++) {
             /*one or more ids (pk for current table)*/
             List<String> pks = new ArrayList<>();
             Table table = this.tables.get(r);
 
-            table.setColumn(dao.getColumsProperties(table.getName()));
+            ///table.setColumn(dao.getColumsProperties(table.getName()));
 
             System.out.println("/*Table :" + table.getName() + " */");
-            System.out.println("/*table.getColumn().size() :" + table.getColumn().size() + " */");
+            System.out.println("/*table.getColumn().size() :" + columns.size() + " */");
             table(table);
             /*iterate columnList*/
-            for (int h = 0; h < table.getColumn().size(); h++) {
+            for (int h = 0; h < columns.size(); h++) {
+                if (columns.get(h).getTableName().equals(table.getName())){
+
+                //threads
+               /* ExecutorService service = Executors.newFixedThreadPool(10);
+                service.submit(new Task(table));*/
+
                 /*table-column-property (TCP)*/
-                Column column = table.getColumn().get(h);
+                Column column = columns.get(h);
 
                 /*do a listener for column iteration*/
+                //todo:refactor this methods for ORACLE
 
-                Boolean isForeignKey =  dao.isForeignKey(table.getName(),column.getName());
-                Boolean isPrimaryKey =  dao.isPrimaryKey(table.getName(),column.getName());
+                //Boolean isForeignKey =  dao.isForeignKey(table.getName(),column.getName());
+               /*if (database!= Factory.ORACLE) {  dao.isPrimaryKey(table.getName(),column.getName());}
+                else{
+                   isPrimaryKey = column.isPrimaryKey();
+               }*/
                 // System.out.println("isForeignKey:"+isForeignKey+", isPrimaryKey:"+isPrimaryKey);
                     /*Do something with primary keys*/
-                    if (isPrimaryKey){
+                    if (column.isPrimaryKey()){
                         pks.add(column.getName());
-                        column.setPrimaryKey(isPrimaryKey);
+                        //column.setPrimaryKey(isPrimaryKey);
                         //listener
                         primaryKeys(table, column);
 
-                   } else if (isForeignKey) {
-                        column.setForeignKey(isForeignKey);
-                        Column fkColumn =  dao.getForeignKey(table.getName(),column.getName());
-                        column.setForeignColumn(fkColumn.getForeignColumn());
-                        column.setForeignTable(fkColumn.getForeignTable());
+                   } else if (column.isForeignKey()) {
+
+                           // column.setForeignKey(isForeignKey);
+                           // Column fkColumn =  dao.getForeignKey(table.getName(),column.getName());
+                           // column.setForeignColumn(fkColumn.getForeignColumn());
+                           // column.setForeignTable(fkColumn.getForeignTable());
+
                         //listener
                         foreignKeys(table,column);
-                    }else if (!isForeignKey && !isPrimaryKey) {
+                    }else if (!column.isForeignKey() && !column.isPrimaryKey()) {
                         buildParameters(table,column);
                     }
                     //System.out.println("build().column:"+column.toString());
@@ -84,6 +99,7 @@ public class Template extends Core implements Methods{
                     //setting new data
                 column(column);
                // table.getColumn().set(h, column);
+            }
             }
             buildMethods(table, pks);
             //setting new data
@@ -149,5 +165,22 @@ public class Template extends Core implements Methods{
             string = string.substring(0, (string.length() - 1));
         }
         return string;
+    }
+}
+final class Task implements Runnable
+{
+    private Table table;
+
+    public Task(Table table)
+    {
+        this.table = table;
+    }
+
+    @Override
+    public void run()
+    {
+
+        System.out.println("Task ID : " + this.table.toString() + " performed by "
+                + Thread.currentThread().getName());
     }
 }

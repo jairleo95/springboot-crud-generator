@@ -5,6 +5,7 @@ package com.alphateam.query;
  */
 public class Column {
 
+    private String tableName;
     private String name;
     private String dataType;
     private String length;
@@ -17,6 +18,7 @@ public class Column {
     private boolean primaryKey;
 
     public Column() {
+        this.tableName = "";
         this.name = "";
         this.dataType = "";
         this.length = "";
@@ -26,6 +28,14 @@ public class Column {
 
         this.foreignColumn= "";
         this.foreignTable= "";
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public String getForeignColumn() {

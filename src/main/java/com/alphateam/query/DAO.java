@@ -26,22 +26,23 @@ public class DAO {
         Column c  = new Column();
         String sql = Query.getTableColumnsForeignProperties(database);
         sql = sql.replace("{schema}",Factory.getSchema());
-        sql +="  and TABLE_NAME ='"+table+"' AND column_name ='"+column+"'";
-        try {
-            this.conn = Factory.open(database);
-            ResultSet rs = this.conn.query(sql);
-            while (rs.next()) {
-                c.setName(rs.getString(1));
-                c.setForeignTable(rs.getString(3));
-                c.setForeignColumn(rs.getString(4));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException("ERROR");
-        } finally {
-            try {
+        sql = sql.replace("{table}",table);
+        sql = sql.replace("{column}",column);
+                try {
+                    this.conn = Factory.open(database);
+                    ResultSet rs = this.conn.query(sql);
+                    while (rs.next()) {
+                        c.setName(rs.getString(1));
+                        c.setForeignTable(rs.getString(3));
+                        c.setForeignColumn(rs.getString(4));
+                    }
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e.getMessage());
+                } catch (Exception e) {
+                    throw new RuntimeException("ERROR");
+                } finally {
+                    try {
                 this.conn.close();
             } catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
@@ -49,12 +50,12 @@ public class DAO {
         }
         return c;
     }
-    //todo: refactor this method, delete and replace in place of getForeignKey
     public Boolean isForeignKey(String table, String column) {
         Boolean x;
         String sql = Query.getTableColumnsForeignProperties(database);
         sql = sql.replace("{schema}",Factory.getSchema());
-        sql +="  and TABLE_NAME ='"+table+"' AND column_name ='"+column+"'";
+        sql = sql.replace("{table}",table);
+        sql = sql.replace("{column}",column);
         try {
             this.conn = Factory.open(database);
             ResultSet rs = this.conn.query(sql);
@@ -78,7 +79,8 @@ public class DAO {
         boolean x;
         String sql = Query.getTableColumnsPrimaryKeyProperties(database);
         sql = sql.replace("{schema}",Factory.getSchema());
-        sql += " and TABLE_NAME ='"+table+"' AND column_name ='"+column+"'";
+        sql = sql.replace("{table}",table);
+        sql = sql.replace("{column}",column);
         try {
             this.conn = Factory.open(database);
             ResultSet rs = this.conn.query(sql);
@@ -104,15 +106,19 @@ public class DAO {
         try {
             this.conn = Factory.open(database);
             sql = sql.replace("{schema}",Factory.getSchema());
-            sql = sql.replace("{tableName}",tableName);
+            //sql = sql.replace("{tableName}",tableName);
             ResultSet rs = this.conn.query(sql);
             while (rs.next()) {
-               // Table table = new Table();
                 Column c  = new Column();
-               // c.setName(rs.getString(1));/*table name*/
+                c.setTableName(rs.getString(1));/*table name*/
                 c.setName(rs.getString(2));
                 c.setDataType(rs.getString(3));
                 c.setAttributeNumber(rs.getString(4));
+                c.setPrimaryKey(Boolean.parseBoolean(rs.getString("PK_COLUMN")));
+                c.setForeignKey(Boolean.parseBoolean(rs.getString("fk_column")));
+                c.setForeignTable(rs.getString("r_table_name"));
+                c.setForeignColumn(rs.getString("pk_column"));
+
                 x.add(c);
             }
             rs.close();
