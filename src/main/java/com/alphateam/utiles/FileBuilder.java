@@ -30,6 +30,8 @@ public class FileBuilder {
             x = true;
             //Cerramos la conexion
             escribir.close();
+            System.out.println("file generated:"+ubicacion + directory + file);
+
         } //Si existe un problema al escribir entra aqui
         catch (Exception e) {
             System.out.println("Error " + e.getMessage());

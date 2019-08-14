@@ -37,7 +37,7 @@ public class StoreProcedure extends Template {
          //Variables
         column = Conversor.toJavaFormat(tcp.getName(), "_");
         //customized
-        methodParams = "sp" + Conversor.firstCharacterToUpper(column);
+
         //updateComparission += tcp.getName() + "=" + methodParams + ",";
         methods = "";
     }
@@ -46,6 +46,7 @@ public class StoreProcedure extends Template {
     public void buildParameters(Table table, Column c) {
         super.buildParameters(table, c);
             makeColumns += methodParams + ",";
+            methodParams = "sp" + Conversor.firstCharacterToUpper(column);
             params += ToSql.headerParamsProcedure(methodParams, c.getDataType(), c.getAttributeNumber(), database);
             tableColumns += c.getName() + ",";
             updateComparission += c.getName() + "=" + methodParams + ", ";
@@ -60,7 +61,6 @@ public class StoreProcedure extends Template {
     @Override
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
-
             params += ToSql.headerParamsProcedure(methodParams, fk.getDataType(), fk.getAttributeNumber(), database);
             makeColumns += methodParams+ ",";
             tableColumns += fk.getName() + ",";
@@ -83,7 +83,7 @@ public class StoreProcedure extends Template {
         methods += ToSql.headerProcedure("spi_" + tnc.getName(), params, database);
         methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + makeColumns + ")";
 
-                //ruturn id
+        //ruturn id
         System.out.println("buildMethods.pks.size():"+pks.size());
             if (pks.size() == 1 & returnId) {
                 methods += " returning " + pks.get(0) + " into result ;";
@@ -127,7 +127,9 @@ public class StoreProcedure extends Template {
                //END DELETE procedure
 
             //Print all
-            System.out.println(methods);
+        content = methods;
+        generateProject("sql\\", tnc.getName() + ".sql");
+        System.out.println(methods);
 
     }
 

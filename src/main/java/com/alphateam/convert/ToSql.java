@@ -28,6 +28,9 @@ public class ToSql {
             case Factory.MYSQL:
 
                 break;
+            case Factory.ORACLE:
+
+                break;
             default:
                 break;
         }
@@ -63,12 +66,15 @@ public class ToSql {
                         break;
                 }
                 return sql;
+            case Factory.ORACLE:
+                sql += parametersProcedure + " " + dataType + ",";
+                return sql;
             default:
                 return sql;
         }
 
     }
-
+    //todo write oracle scripts
     public static String headerProcedure(String procedureName, String params, int database) {
         String sql = "";
         switch (database) {
@@ -82,6 +88,12 @@ public class ToSql {
                 sql += "DELIMITER  // CREATE OR REPLACE PROCEDURE " + procedureName + "(";
                 sql += params;
                 sql += ")  begin ";
+                return sql;
+            case Factory.ORACLE:
+                sql += "CREATE OR REPLACE PROCEDURE " + procedureName + "(";
+                sql += params;
+                sql += ") ";
+                //sql += ") returns integer AS $BODY$ declare result integer; " + "begin ";
                 return sql;
             default:
                 return sql;
@@ -98,6 +110,9 @@ public class ToSql {
             case Factory.MYSQL:
                 sql += " END //\n"
                         + "DELIMITER ;";
+                return sql;
+            case Factory.ORACLE:
+                sql += " END;";
                 return sql;
             default:
                 return sql;

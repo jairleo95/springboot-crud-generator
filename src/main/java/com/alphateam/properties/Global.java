@@ -11,17 +11,17 @@ package com.alphateam.properties;
  */
 public class Global {
 
-    public static final String DEFAULT_PROJECT_LOCATION = "E:\\AlphaProjects\\AlphaAnalytics\\";
+    public static final String DEFAULT_PROJECT_LOCATION = "H:\\Files\\Software Development\\Projects\\Web Applications\\CRUD Generator\\generated-projects\\";
 
     /*change when update server (for cache conflicts)*/
     public static String VERSION_CSS = "2.0.3";
     public static String VERSION_JS = "2.3.1";
 
     /*oracle bd connection */
-    public static final String HOSTNAME = "192.168.1.63";
+    public static final String HOSTNAME = "DESKTOP-MS5NN2M";
     public static final String USER = "SDSPMAIN001";
     public static final String USER_PWD = "SDSPMAIN001";
-    public static final String PORT = "1521";
+    public static final String PORT = "1522";
     public static final String SID = "orcl";
 
     /*Mysql*/

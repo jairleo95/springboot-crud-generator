@@ -34,7 +34,7 @@ public class SpringController extends Template {
 
     String dataType = "";
 
-    String content = "";
+   // String content = "";
 
 
     @Override
@@ -155,8 +155,9 @@ public class SpringController extends Template {
         content += ("rpta.put(\"status\", true);"
                 + "} }catch (Exception e) {System.out.println(\"1ER - ERROR \" + e.getStackTrace()); System.out.println(\"2DO - ERROR \" + e.getMessage());rpta.put(\"status\", false);}return gson.toJson(rpta);}");
         content += ("}");
-        //FileBuilder.writeFolderAndFile("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.ToJava", content);
+      //  FileBuilder.writeFolderAndFile("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.ToJava", content);
+        generateProject("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.java");
         System.out.println(content);
-        content = "";
+        //content = "";
     }
 }

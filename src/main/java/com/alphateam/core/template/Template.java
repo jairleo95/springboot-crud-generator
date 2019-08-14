@@ -9,6 +9,7 @@ import com.alphateam.connection.Factory;
 import com.alphateam.query.Column;
 import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
+import com.alphateam.utiles.FileBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ interface Methods {
     void buildParameters(Table table,Column column);
     void buildMethods(Table tnc, List<String> pks);
     void resetValues();
+    void generateProject(String path,String filename);
 }
 
 public class Template extends Core implements Methods{
@@ -102,6 +104,7 @@ public class Template extends Core implements Methods{
             }
             }
             buildMethods(table, pks);
+            //generateProject("","");
             //setting new data
             resetValues();
         }
@@ -141,8 +144,14 @@ public class Template extends Core implements Methods{
     }
     @Override
     public void resetValues() {
-
+        content = "";
         //System.out.println("Building something - resetValues callback ");
+    }
+
+    @Override
+    public void generateProject(String path,String filename) {
+        //path = "org\\proyecto\\views\\" + filename + "\\";
+        FileBuilder.writeFolderAndFile(path, filename, content);
     }
 
     public String header(SyntaxType opc) {

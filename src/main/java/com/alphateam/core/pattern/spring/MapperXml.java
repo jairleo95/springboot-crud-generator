@@ -119,7 +119,7 @@ public class MapperXml extends Template {
         }
         makeMethods += ";";
         makeMethods += "</select>";
-        String content = "";
+       // String content = "";
 
         //Print
         System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -132,7 +132,7 @@ public class MapperXml extends Template {
         content += (makeMethods);
 
         content += ("</mapper>");
-        //FileBuilder.writeFolderAndFile("org\\proyecto\\resources\\xml\\mapper\\" + tableName + "\\", tableName + "-mapper.xml", content);
+        generateProject("org\\proyecto\\resources\\xml\\mapper\\" + tableName + "\\", tableName + "-mapper.xml");
         System.out.println(content);
     }
     @Override

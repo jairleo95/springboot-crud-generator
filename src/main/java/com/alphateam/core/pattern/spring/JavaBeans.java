@@ -26,7 +26,7 @@ public class JavaBeans extends Template {
     String makeInstanceBean = "";
     String makeSettersAndGetters = "";
     String makeImports = "";
-    String content = "";
+   //String content = "";
 
     @Override
     public void foreignKeys(Table tcp, Column column) {
@@ -79,8 +79,9 @@ public class JavaBeans extends Template {
         content += ("}");
         content += (makeSettersAndGetters);
         content += ("}");
-        //FileBuilder.writeFolderAndFile("org\\proyecto\\bean\\" + tableName + "\\", beanName + ".ToJava", content);
+        generateProject("org\\proyecto\\bean\\" + tableName + "\\", beanName  + ".java");
         System.out.println(content);
+
     }
 
     @Override

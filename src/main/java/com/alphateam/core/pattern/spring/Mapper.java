@@ -24,7 +24,7 @@ public class Mapper extends Template {
         String tableName = Conversor.toJavaFormat(table.getName(), "_");
 
         //one or more IDS
-        String content = "";
+        //String content = "";
 
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
         String beanName = tableEntity + "Bean ";
@@ -44,6 +44,7 @@ public class Mapper extends Template {
         content += ("public Integer edit(" + beanName + " " + tableName + ");");
         content += ("}");
         //FileBuilder.writeFolderAndFile("org\\proyecto\\mapper\\" + tableName + "\\", tableEntity + "Mapper.ToJava", content);
+        generateProject("org\\proyecto\\mapper\\" + tableName + "\\", tableEntity + "Mapper.java");
         System.out.println(content);
     }
 

@@ -82,7 +82,7 @@ public class HtmlForm extends Template {
         makeMethods += ";";
         makeMethods += "</select>";
 
-        String content = "";
+        //String content = "";
 
         content += ("<div class=\"row\">");
         content += ("<div class=\"col-sm-12\">");
@@ -118,7 +118,7 @@ public class HtmlForm extends Template {
         content += ("\n");
         content += ("</form>");
 
-        String html = "<!DOCTYPE html>\n"
+         content = "<!DOCTYPE html>\n"
                 + "<html>\n"
                 + "<head>\n"
                 + "<meta charset=\"UTF-8\">\n"
@@ -130,8 +130,8 @@ public class HtmlForm extends Template {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-      //FileBuilder.writeFolderAndFile("org\\proyecto\\views\\" + tableName + "\\", tableName + ".html", html);
-        System.out.println(html);
+        generateProject("org\\proyecto\\views\\" + tableName + "\\", tableName + ".html");
+       System.out.println(content);
     }
 
     @Override

@@ -16,16 +16,17 @@ import com.alphateam.core.template.Template;
 public class testCrud {
 
      public static void main(String args[]) throws Exception {
-        /* SpringService x = new SpringService();
-         x.build();*/
-        /*JavaBeans x = new JavaBeans();
-         x.build();*/
-         HtmlForm x = new HtmlForm();
-         x.build();
-         /*MapperXml x =  new MapperXml();
-         x.build();*/
-        /* SpringController x =  new SpringController();
-         x.build();*/
-
+         /*SpringService s = new SpringService();
+         s.build();*/
+         /*JavaBeans j = new JavaBeans();
+         j.build();
+         HtmlForm h = new HtmlForm();
+         h.build();
+          MapperXml m =  new MapperXml();
+         m.build();
+         SpringController sc =  new SpringController();
+         sc.build();*/
+         StoreProcedure sp = new StoreProcedure();
+         sp.build();
      }
 }

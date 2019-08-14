@@ -27,7 +27,7 @@ public class SpringService extends Template {
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
         String beanName = tableEntity + "Bean ";
         System.out.println("//TABLA :" + table.getName());
-            /*Print */
+        /*Print*/
         content += ("package org.proyecto.services." + tableName + ";");
         content += ("import ToJava.util.List;");
         content += ("import org.springframework.beans.factory.annotation.Autowired;");
@@ -38,7 +38,7 @@ public class SpringService extends Template {
         content += (" public class " + tableEntity + "SpringService" + " {");
         content += ("@Autowired");
         content += (" private " + tableEntity + "Mapper " + tableName + "Mapper;");
-            /*Methods*/
+        /*Methods*/
         content += ("public List<" + beanName + "> list(){");
         content += ("return " + tableName + "Mapper.getAll();");
         content += ("}");
@@ -55,7 +55,8 @@ public class SpringService extends Template {
         content += ("return " + tableName + "Mapper.edit(" + tableName + ");");
         content += ("}");
         content += ("}");
-        //FileBuilder.writeFolderAndFile("org\\proyecto\\services\\" + tableName + "\\", tableEntity + "SpringService.ToJava", content);
+
+        generateProject("org\\proyecto\\services\\" + tableName + "\\", tableEntity + "SpringService.java");
         System.out.println(content);
 
     }

@@ -13,7 +13,7 @@ public class Conversor {
 
     public static String toJavaFormat(String wordConvert, String split) {
 
-        String[] word = wordConvert.split(split);
+        String[] word = wordConvert.toLowerCase().split(split);
         String acum = "";
         for (int ff = 0; ff < word.length; ff++) {
             if (ff == 0) {
