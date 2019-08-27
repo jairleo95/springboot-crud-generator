@@ -42,6 +42,24 @@ public class ToJava {
                     dataType = "character varying";
                 }
                 break;
+            case Factory.ORACLE:
+                /*mysql*/
+                if (dataType.equalsIgnoreCase("NUMBER")) {
+                    dataType = "Integer";
+                } else if (dataType.equalsIgnoreCase("VARCHAR2")) {
+                    dataType = "String";
+                } /*else if (dataType.equalsIgnoreCase("tinyint")) {
+                    dataType = "Boolean";
+                }*/else if (dataType.equalsIgnoreCase("char")) {
+                    dataType = "String";
+                } else if (dataType.equalsIgnoreCase("decimal")) {
+                    dataType = "Double";
+                } else if (dataType.equalsIgnoreCase("date")) {
+                    dataType = "Date";
+                } else {
+                    dataType = "character varying";
+                }
+                break;
             default:
                 break;
         }

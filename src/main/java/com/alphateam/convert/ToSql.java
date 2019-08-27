@@ -6,6 +6,9 @@
 package com.alphateam.convert;
 
 import com.alphateam.connection.Factory;
+import com.alphateam.properties.Global;
+import com.alphateam.query.Column;
+import com.alphateam.utiles.Conversor;
 
 /**
  *
@@ -38,8 +41,10 @@ public class ToSql {
         return dataType;
     }
 
-    public static String headerParamsProcedure(String parametersProcedure, String dataType, String bytes, int database) {
+    public static String headerParamsProcedure(String parametersProcedure, Column c, int database) {
         String sql = "";
+        String dataType = c.getDataType();
+        String bytes = c.getAttributeNumber();
 
         dataType = getDataType(dataType,database);
         switch (database) {
@@ -67,7 +72,7 @@ public class ToSql {
                 }
                 return sql;
             case Factory.ORACLE:
-                sql += parametersProcedure + " " + dataType + ",";
+                sql += parametersProcedure + " " + c.getTableName()+"."+c.getName()+"%type" + ",";
                 return sql;
             default:
                 return sql;
@@ -90,9 +95,9 @@ public class ToSql {
                 sql += ")  begin ";
                 return sql;
             case Factory.ORACLE:
-                sql += "CREATE OR REPLACE PROCEDURE " + procedureName + "(";
+                sql += "CREATE OR REPLACE PROCEDURE " + namingIdentifier(procedureName,database) + "(";
                 sql += params;
-                sql += ") ";
+                sql += ") IS BEGIN ";
                 //sql += ") returns integer AS $BODY$ declare result integer; " + "begin ";
                 return sql;
             default:
@@ -112,10 +117,29 @@ public class ToSql {
                         + "DELIMITER ;";
                 return sql;
             case Factory.ORACLE:
-                sql += " END;";
+                sql += " END;\n/\n";
                 return sql;
             default:
                 return sql;
+        }
+
+    }
+
+    public static String namingIdentifier(String name, int database) {
+        //String sql = "";
+        switch (database) {
+            case Factory.POSGRESQL:
+                //
+                return name;
+            case Factory.MYSQL:
+                //
+                return name;
+            case Factory.ORACLE:
+                //restrictions(max characteres)
+               name = Conversor.extractCharacters(name, Global.MAX_CHARACTER_IDENTIFIER);
+                return name;
+            default:
+                return name;
         }
 
     }

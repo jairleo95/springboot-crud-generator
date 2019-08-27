@@ -7,7 +7,6 @@ package com.alphateam.core.template;
 
 import com.alphateam.connection.Connection;
 import java.util.List;
-import java.util.Map;
 
 import com.alphateam.query.DAO;
 import com.alphateam.query.Table;

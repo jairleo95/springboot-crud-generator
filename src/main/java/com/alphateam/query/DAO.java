@@ -113,7 +113,7 @@ public class DAO {
                 c.setTableName(rs.getString(1));/*table name*/
                 c.setName(rs.getString(2));
                 c.setDataType(rs.getString(3));
-                c.setAttributeNumber(rs.getString(4));
+                c.setLength(rs.getString(4));
                 c.setPrimaryKey(Boolean.parseBoolean(rs.getString("PK_COLUMN")));
                 c.setForeignKey(Boolean.parseBoolean(rs.getString("fk_column")));
                 c.setForeignTable(rs.getString("r_table_name"));

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -34,9 +35,17 @@ public class HtmlForm extends Template {
         String columna = Conversor.toJavaFormat(column.getName(), "_");
         makeColumns += ("<label>" + columna + "</label>");
         makeColumns += ("</br>");
-        makeColumns += ("<input name='" + columna + "'  type='text' class='" + columna + "'/>");
+        //System.out.println("datatype!!:"+column.getDataType());
+        //System.out.println("length!!:"+column.getLength());
+        String length = "maxlength='"+column.getLength()+"' size='"+column.getLength()+"'";
+        if (column.getDataType().equalsIgnoreCase("date")||column.getDataType().toLowerCase().contains("timestamp")){
+            makeColumns += ("<input name='" + columna + "'  type='date' "+length+" class='" + columna + "'/>");
+        }else if (column.getDataType().equalsIgnoreCase("number")){
+            makeColumns += ("<input name='" + columna + "'  type='number' "+length+" class='" + columna + "'/>");
+        }else{
+            makeColumns += ("<input name='" + columna + "'  type='text' "+length+" class='" + columna + "'/>");
+        }
         makeColumns += ("</br>");
-        // makeParamsMethods += "#{" + column + "},";
     }
 
     @Override
@@ -52,36 +61,6 @@ public class HtmlForm extends Template {
         if (!paramsPrimaryKey.equals("")) {
             paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
         }
-        //Save Method
-        makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-        makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
-        makeMethods += "</select>";
-        ///EDIT METHOD
-        makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-        makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
-        makeMethods += "</select>";
-        //DELETE METHOD
-        makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-        makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
-        makeMethods += "</select>";
-        //LIST METHOD
-        makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
-        makeMethods += "select * from " + tnc.getName() + ";";
-        makeMethods += "</select>";
-        //FIND BY ID
-        makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
-        makeMethods += "select * from " + tnc.getName() + " where ";
-        for (int ii = 0; ii < pks.size(); ii++) {
-            if (ii == 0) {
-                makeMethods += pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
-            } else {
-                makeMethods += " and " + pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
-            }
-
-        }
-        makeMethods += ";";
-        makeMethods += "</select>";
-
         //String content = "";
 
         content += ("<div class=\"row\">");
@@ -130,7 +109,7 @@ public class HtmlForm extends Template {
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        generateProject("org\\proyecto\\views\\" + tableName + "\\", tableName + ".html");
+        generateProject(Global.VIEW_LOCATION+ tableName + "\\", tableName + ".html");
        System.out.println(content);
     }
 
@@ -138,6 +117,14 @@ public class HtmlForm extends Template {
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
         String columna = Conversor.toJavaFormat(fk.getName(), "_");
+
+        makeColumns += ("<label>" + columna + "</label>");
+        makeColumns += ("</br>");
+        makeColumns += ("<select name='" + columna + "' class='" + columna + "'>"+columna);
+        makeColumns += ("<option></option>");
+        makeColumns += ("</select>");
+        makeColumns += ("</br>");
+
 
             String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable().substring(6), "_"));
             String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");

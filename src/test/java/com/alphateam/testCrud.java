@@ -19,14 +19,14 @@ public class testCrud {
          /*SpringService s = new SpringService();
          s.build();*/
          /*JavaBeans j = new JavaBeans();
-         j.build();
+         j.build();*/
          HtmlForm h = new HtmlForm();
          h.build();
-          MapperXml m =  new MapperXml();
+         /* MapperXml m =  new MapperXml();
          m.build();
          SpringController sc =  new SpringController();
          sc.build();*/
-         StoreProcedure sp = new StoreProcedure();
-         sp.build();
+         /*StoreProcedure sp = new StoreProcedure();
+         sp.build();*/
      }
 }

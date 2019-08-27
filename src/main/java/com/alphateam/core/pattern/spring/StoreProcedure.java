@@ -10,6 +10,7 @@ import com.alphateam.core.template.Template;
 
 import java.util.List;
 
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -35,9 +36,9 @@ public class StoreProcedure extends Template {
     public void column(Column tcp) {
         super.column(tcp);
          //Variables
-        column = Conversor.toJavaFormat(tcp.getName(), "_");
-        //customized
 
+        //customized
+        ///column = Conversor.toJavaFormat(tcp.getName(), "_");
         //updateComparission += tcp.getName() + "=" + methodParams + ",";
         methods = "";
     }
@@ -45,26 +46,31 @@ public class StoreProcedure extends Template {
     @Override
     public void buildParameters(Table table, Column c) {
         super.buildParameters(table, c);
-            makeColumns += methodParams + ",";
+        column = Conversor.toJavaFormat(c.getName(), "_");
+
             methodParams = "sp" + Conversor.firstCharacterToUpper(column);
-            params += ToSql.headerParamsProcedure(methodParams, c.getDataType(), c.getAttributeNumber(), database);
+            params += ToSql.headerParamsProcedure(methodParams, c, database);
+
             tableColumns += c.getName() + ",";
             updateComparission += c.getName() + "=" + methodParams + ", ";
+            makeColumns += methodParams + ",";
     }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-            pkParams += pk.getName() + " " + ToSql.getDataType(pk.getDataType(), database) + ",";
+            //pkParams += "sp" +pk.getName() + " " + ToSql.getDataType(pk.getDataType(), database) + ",";
+        pkParams += "sp" +Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pk.getName().toLowerCase(), "_")) /*+ " " + ToSql.getDataType(pk.getDataType(), database) + ","*/;
+        pkParams = ToSql.headerParamsProcedure(pkParams, pk, database);
     }
 
     @Override
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
-            params += ToSql.headerParamsProcedure(methodParams, fk.getDataType(), fk.getAttributeNumber(), database);
+            params += ToSql.headerParamsProcedure(methodParams, /*fk.getDataType(), fk.getAttributeNumber()*/fk, database);
             makeColumns += methodParams+ ",";
             tableColumns += fk.getName() + ",";
-            updateComparission += fk.getName() + "=" + methodParams + ", ";
+            updateComparission += fk.getName() + "=" + methodParams + ",";
     }
 
 
@@ -80,7 +86,7 @@ public class StoreProcedure extends Template {
         updateComparission = clearLastComma(updateComparission);
 
         //Insert record procedure
-        methods += ToSql.headerProcedure("spi_" + tnc.getName(), params, database);
+        methods += ToSql.headerProcedure("spi_" + tnc.getName().toLowerCase(), params, database);
         methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + makeColumns + ")";
 
         //ruturn id
@@ -95,8 +101,8 @@ public class StoreProcedure extends Template {
                 //END Insert procedure
 
             //Update procedure
-            methods += ToSql.headerProcedure("spu_" + tnc.getName(), params, database);
-                //procedure body
+            methods += ToSql.headerProcedure("spu_" + tnc.getName().toLowerCase(), params+", "+pkParams, database);
+            //procedure body
             methods += "UPDATE " + tnc.getName() + " set " + updateComparission + " where ";
             System.out.println("pks.size():"+pks.size());
 
@@ -112,7 +118,7 @@ public class StoreProcedure extends Template {
                 //END Update procedure
 
             //DELETE procedure
-            methods += ToSql.headerProcedure("spd_" + tnc.getName(), pkParams, database);
+            methods += ToSql.headerProcedure("spd_" + tnc.getName().toLowerCase(), pkParams, database);
                 //body
             methods += "UPDATE " + tnc.getName() + " set recordStatus=0 where ";
             for (int t = 0; t < pks.size(); t++) {
@@ -128,7 +134,7 @@ public class StoreProcedure extends Template {
 
             //Print all
         content = methods;
-        generateProject("sql\\", tnc.getName() + ".sql");
+        generateProject(Global.SQL_SCRIPT_LOCATION, tnc.getName() + ".sql");
         System.out.println(methods);
 
     }

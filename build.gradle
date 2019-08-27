@@ -26,10 +26,10 @@ bootRun {
     addResources = true
 }
 
-bootRepackage {
+/*bootRepackage {
     mainClass = 'com.com.alphateam.CRUDGeneratorApplication'
 }
-
+*/
 repositories {
             mavenCentral()
 }

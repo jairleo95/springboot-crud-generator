@@ -35,4 +35,18 @@ public class Conversor {
 
         return new String(caracteres);
     }
+    public static String extractCharacters(String string, int length) {
+        char[] characters = string.toCharArray();
+        String acum = "";
+        if (characters.length<=length){
+             return string;
+        }else{
+            for (int i = 0; i < length; i++) {
+                acum += characters[i];
+            }
+
+            return acum;
+        }
+
+    }
 }

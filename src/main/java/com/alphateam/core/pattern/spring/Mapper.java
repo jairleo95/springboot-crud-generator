@@ -6,6 +6,7 @@
 package com.alphateam.core.pattern.spring;
 
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
@@ -44,7 +45,7 @@ public class Mapper extends Template {
         content += ("public Integer edit(" + beanName + " " + tableName + ");");
         content += ("}");
         //FileBuilder.writeFolderAndFile("org\\proyecto\\mapper\\" + tableName + "\\", tableEntity + "Mapper.ToJava", content);
-        generateProject("org\\proyecto\\mapper\\" + tableName + "\\", tableEntity + "Mapper.java");
+        generateProject(Global.MAPPER_LOCATION + tableName + "\\", tableEntity + "Mapper.java");
         System.out.println(content);
     }
 

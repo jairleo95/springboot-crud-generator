@@ -11,6 +11,7 @@ import com.alphateam.convert.ToSql;
 import java.util.ArrayList;
 import java.util.List;
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -156,7 +157,7 @@ public class SpringController extends Template {
                 + "} }catch (Exception e) {System.out.println(\"1ER - ERROR \" + e.getStackTrace()); System.out.println(\"2DO - ERROR \" + e.getMessage());rpta.put(\"status\", false);}return gson.toJson(rpta);}");
         content += ("}");
       //  FileBuilder.writeFolderAndFile("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.ToJava", content);
-        generateProject("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.java");
+        generateProject(Global.CONTROLLER_LOCATION + tableName + "\\", tableEntity + "Controller.java");
         System.out.println(content);
         //content = "";
     }

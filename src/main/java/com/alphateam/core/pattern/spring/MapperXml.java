@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 */
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -132,7 +133,7 @@ public class MapperXml extends Template {
         content += (makeMethods);
 
         content += ("</mapper>");
-        generateProject("org\\proyecto\\resources\\xml\\mapper\\" + tableName + "\\", tableName + "-mapper.xml");
+        generateProject(Global.MAPPER_XML_LOCATION + tableName + "\\", tableName + "-mapper.xml");
         System.out.println(content);
     }
     @Override

@@ -6,6 +6,7 @@
 package com.alphateam.core.pattern.spring;
 
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
@@ -56,7 +57,7 @@ public class SpringService extends Template {
         content += ("}");
         content += ("}");
 
-        generateProject("org\\proyecto\\services\\" + tableName + "\\", tableEntity + "SpringService.java");
+        generateProject(Global.SERVICE_LOCATION+ tableName + "\\", tableEntity + "Service.java");
         System.out.println(content);
 
     }

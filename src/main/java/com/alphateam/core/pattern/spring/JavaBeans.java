@@ -9,6 +9,7 @@ import com.alphateam.connection.Factory;
 
 import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
@@ -79,7 +80,7 @@ public class JavaBeans extends Template {
         content += ("}");
         content += (makeSettersAndGetters);
         content += ("}");
-        generateProject("org\\proyecto\\bean\\" + tableName + "\\", beanName  + ".java");
+        generateProject(Global.BEAN_LOCATION+tableName + "\\", beanName  + ".java");
         System.out.println(content);
 
     }
