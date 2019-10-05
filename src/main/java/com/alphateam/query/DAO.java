@@ -111,7 +111,8 @@ public class DAO {
             while (rs.next()) {
                 Column c  = new Column();
                 c.setTableName(rs.getString(1));/*table name*/
-                c.setName(rs.getString(2));
+                //todo:refactor
+                c.setName(rs.getString(2).replace("#", ""));
                 c.setDataType(rs.getString(3));
                 c.setLength(rs.getString(4));
                 c.setPrimaryKey(Boolean.parseBoolean(rs.getString("PK_COLUMN")));

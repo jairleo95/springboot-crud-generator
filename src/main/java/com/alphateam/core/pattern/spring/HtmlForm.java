@@ -28,13 +28,20 @@ public class HtmlForm extends Template {
     String makeParamsMethods = "";
     String paramsPrimaryKey = "";
 
+    String tableColumns = "";
+
 
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
         String columna = Conversor.toJavaFormat(column.getName(), "_");
-        makeColumns += ("<label>" + columna + "</label>");
-        makeColumns += ("</br>");
+
+        makeColumns += ("<div class=\"form-group\">");
+        makeColumns += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
+       // makeColumns += ("</br>");
+        makeColumns += ("<div class=\"col-md-4\">");
+
+
         //System.out.println("datatype!!:"+column.getDataType());
         //System.out.println("length!!:"+column.getLength());
         String length = "maxlength='"+column.getLength()+"' size='"+column.getLength()+"'";
@@ -45,7 +52,11 @@ public class HtmlForm extends Template {
         }else{
             makeColumns += ("<input name='" + columna + "'  type='text' "+length+" class='" + columna + "'/>");
         }
-        makeColumns += ("</br>");
+        makeColumns += ("</div>");
+        makeColumns += ("</div>");
+
+        //table headers
+        tableColumns +="<th>"+columna+"</th>";
     }
 
     @Override
@@ -92,12 +103,12 @@ public class HtmlForm extends Template {
         content += ("</div>");
         content += ("<div class=\"row\">\n"
                 + "<div class=\"col col-sm-12\">");
-        content += ("<form id=\"form-submit\" class=\"smart-form formSubmit\" style=\"display: \">");
+        content += ("<form class=\"form-horizontal form"+tableEntity+"\" >");
         content += (makeColumns);
         content += ("\n");
         content += ("</form>");
 
-         content = "<!DOCTYPE html>\n"
+        content = "<!DOCTYPE html>\n"
                 + "<html>\n"
                 + "<head>\n"
                 + "<meta charset=\"UTF-8\">\n"
@@ -106,11 +117,14 @@ public class HtmlForm extends Template {
                 + "\n"
                 + "<body>\n"
                 + content
+                + buildDataTable(tableColumns)
+                + "<script src=\"../../js/business-logic/"+tableEntity+"/register.js\"></script>"
                 + "</body>\n"
                 + "\n"
                 + "</html>";
-        generateProject(Global.VIEW_LOCATION+ tableName + "\\", tableName + ".html");
-       System.out.println(content);
+
+        generateProject(Global.VIEW_LOCATION+ tableEntity + "\\", "form"+tableEntity + ".html");
+        //System.out.println(content);
     }
 
     @Override
@@ -160,5 +174,30 @@ public class HtmlForm extends Template {
          makeMethods = "";
          makeParamsMethods = "";
          paramsPrimaryKey = "";
+         tableColumns = "";
+    }
+
+    String buildDataTable(String headers){
+     String section =  "<section id=\"widget-grid\">\n" +
+                "<div class=\"row\">\n" +
+                "<div class=\"col-sm-12\">\n" +
+                "<div class=\"well well-light\">\n" +
+                "<button class=\"btn btn-default btn-circle btn-lg pull-right btn-create\"><i class=\"fa fa-plus\"></i></button>"
+
+                 +"<table class=\"table table-bordered table-hover users-datatable\" width=\"100%\">"
+                        +"<thead>"
+                                +"<tr>"
+                                +"<th>Nro</th>"
+                                + headers
+                                +"<th>Actions</th>"
+                                +"</tr>"
+                            +"</thead>"
+                        +"</table>"
+
+                 +"</div>\n"
+                 +"</div>\n"
+                 +"</div>\n"
+                 +"</section>";
+          return section;
     }
 }

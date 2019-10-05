@@ -32,12 +32,13 @@ public class MapperXml extends Template {
     String makeParamsMethods = "";
     String paramsPrimaryKey = "";
 
+
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
         String columna = Conversor.toJavaFormat(pk.getName(), "_");
-        makeColumns += ("<id property=\"" + columna + "\" column=\"" + pk.getName() + "\" />");
-        paramsPrimaryKey += "#{" + pk.getName() + "},";
+        makeColumns += ("       <id property=\"" + columna + "\" column=\"" + pk.getName() + "\" />\n");
+        paramsPrimaryKey += "#{" +columna + "},";
     }
 
     @Override
@@ -45,21 +46,24 @@ public class MapperXml extends Template {
         super.foreignKeys(tcp, fk);
 
         String columna = Conversor.toJavaFormat(fk.getName(), "_");
-        String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"));
+        String tableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"))+"Bean";
             String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
-            makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + foreignTableEntity + "\">";
+
+           makeAssociatonColumns += "<association property=\"" + columna + "\" javaType=\"" + tableBean + "\">\n";
+
             List<Column> foreignColumns =  dao.getColumsProperties(fk.getForeignTable());
+
             for (int hh = 0; hh < foreignColumns.size(); hh++) {
-                //String tableNameFk = foreignColumns.get(h).getName();
+
                 String columnNameFk = foreignColumns.get(hh).getName();
                 if (columnNameFk.equals(fk.getForeignColumn())) {
-                    makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>";
+                    makeAssociatonColumns += "          <id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>\n";
                 } else {
-                    makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>";
+                    //makeAssociatonColumns += "          <result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>\n";
                 }
             }
 
-            makeAssociatonColumns += "</association>";
+            makeAssociatonColumns += "</association>\n";
             makeParamsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
 
     }
@@ -69,16 +73,16 @@ public class MapperXml extends Template {
         super.buildParameters(table, column);
         String columna = Conversor.toJavaFormat(column.getName(), "_");
 
-        makeColumns += ("<result property=\"" + columna + "\" column=\"" + table.getName() + "\" />");
+        makeColumns += ("       <result property=\"" + columna + "\" column=\"" + column.getName() + "\" />\n");
         makeParamsMethods += "#{" + columna + "},";
     }
 
     @Override
-    public void buildMethods(Table tnc, List<String> pks) {
-        super.buildMethods(tnc, pks);
+    public void buildMethods(Table table, List<String> pks) {
+        super.buildMethods(table, pks);
 
-        String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
-        String tableEntity = Conversor.firstCharacterToUpper(tableName);
+        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableBean = Conversor.firstCharacterToUpper(tableName)+"Bean";
 
 
         if (!makeParamsMethods.equals("")) {
@@ -89,27 +93,28 @@ public class MapperXml extends Template {
         }
 
         //Save Method
-        makeMethods += "<select id=\"save\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
+        makeMethods += "<select id=\"create\" parameterType=\""+tableBean+"\" resultMap=\"" + tableName + "Map\" statementType=\"CALLABLE\">\n";
 
-        makeMethods += "select spi_" + tnc.getName() + "(" + makeParamsMethods + ");";
-        makeMethods += "</select>";
+        makeMethods += "call spi_" + table.getName() + "(" + makeParamsMethods + ")";
+        makeMethods += "</select>\n";
+        //getAll
+        makeMethods += "<select id=\"read\" resultMap=\"" + tableName + "Map\" >\n";
+        makeMethods += "select * from " + table.getName() + "";
+        makeMethods += "</select>\n";
+
         //*EDIT METHOD
-        makeMethods += "<select id=\"edit\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-        makeMethods += "select spu_" + tnc.getName() + "(" + makeParamsMethods + ");";
-        makeMethods += "</select>";
-        //*DELETE METHOD
-        makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableEntity + "\">";
-        makeMethods += "select spd_" + tnc.getName() + "(" + paramsPrimaryKey + ",usuEli.varUsuario);";
-        makeMethods += "</select>";
+        makeMethods += "<select id=\"update\" resultType=\"Integer\" parameterType=\"" + tableBean + "\">\n";
+        makeMethods += "call spu_" + table.getName() + "(" + makeParamsMethods + ")";
+        makeMethods += "</select>\n";
 
-        //*LIST METHOD
-        makeMethods += "<select id=\"getAll\" resultMap=\"" + tableEntity + "Map" + "\">";
-        makeMethods += "select * from " + tnc.getName() + ";";
-        makeMethods += "</select>";
+        //*DELETE METHOD
+        makeMethods += "<select id=\"delete\" resultType=\"Integer\" parameterType=\"" + tableBean + "\">\n";
+        makeMethods += "call spd_" + table.getName() + "(" + paramsPrimaryKey + ")";
+        makeMethods += "</select>\n";
 
         //*FIND BY ID
-        makeMethods += "<select id=\"findById\"  parameterType=\"Integer\" resultMap=\"" + tableEntity + "Map" + "\">";
-        makeMethods += "select * from " + tnc.getName() + " where ";
+        makeMethods += "<select id=\"getById\"  parameterType=\""+tableBean+"\" resultMap=\"" + tableName + "Map" + "\">\n";
+        makeMethods += "select * from " + table.getName() + " where ";
         for (int ii = 0; ii < pks.size(); ii++) {
             if (ii == 0) {
                 makeMethods += pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
@@ -118,23 +123,22 @@ public class MapperXml extends Template {
             }
 
         }
-        makeMethods += ";";
-        makeMethods += "</select>";
+        makeMethods += "</select>\n";
        // String content = "";
 
         //Print
         System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
-        content += ("<mapper namespace=\"org.proyecto.mapper." + tableName + "" + Conversor.firstCharacterToUpper(tableName) + "Mapper\">");
-        content += ("<resultMap id=\"" + Conversor.firstCharacterToUpper(tableName) + "Map\" type=\"" + Conversor.firstCharacterToUpper(tableName) + "\">");
+        content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n");
+        content += ("<mapper namespace=\""+Global.PACKAGE_NAME+".mapper."  + Conversor.firstCharacterToUpper(tableName) + "Mapper\">\n");
+        content += ("   <resultMap id=\"" +tableName + "Map\" type=\"" + tableBean + "\">\n");
         content += (makeColumns);
         content += (makeAssociatonColumns);
-        content += ("</resultMap>");
+        content += ("   </resultMap>\n");
         content += (makeMethods);
 
-        content += ("</mapper>");
-        generateProject(Global.MAPPER_XML_LOCATION + tableName + "\\", tableName + "-mapper.xml");
-        System.out.println(content);
+        content += ("</mapper>\n");
+        generateProject(Global.MAPPER_XML_LOCATION +  "\\", tableName + "-mapper.xml");
+        //System.out.println(content);
     }
     @Override
     public void resetValues() {

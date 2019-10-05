@@ -5,11 +5,16 @@
  */
 package com.alphateam.core.pattern.spring;
 
+import com.alphateam.connection.Factory;
+import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
+import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
+
+import java.util.List;
 
 /**
  *
@@ -18,35 +23,47 @@ import com.alphateam.utiles.FileBuilder;
 
 
 public class Mapper extends Template {
+
     @Override
-    public void table(Table table) {
-        super.table(table);
-        //Table table = tables.get(g);
+    public void primaryKeys(Table table, Column pk) {
         String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        super.primaryKeys(table, pk);
+        String dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
+    }
 
-        //one or more IDS
-        //String content = "";
+    @Override
+    public void buildMethods(Table table, List<String> pks) {
+        super.buildMethods(table, pks);
 
+        String tableName = Conversor.toJavaFormat(table.getName(), "_");
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
-        String beanName = tableEntity + "Bean ";
+
+        String beanName = tableEntity + "Bean";
+        //pkParameters = clearLastComma(pkParameters);
+
         System.out.println("//TABLA :" + table.getName());
         //Print
-        content += ("package org.proyecto.mapper." + tableName + ";");
-        content += ("import ToJava.util.List;");
-        content += ("import org.springframework.stereotype.Component;");
-        content += ("import org.proyecto.bean." + tableName + "" + beanName + ";");
-        content += ("@Component");
-        content += (" public interface " + tableEntity + "Mapper" + " {");
+        content += ("package "+Global.PACKAGE_NAME +".mapper;");
+        content += ("import java.util.List;");
+        content += ("import org.apache.ibatis.annotations.Param;");
+
+        content += ("import org.apache.ibatis.annotations.Mapper;");
+        content += ("import "+Global.PACKAGE_NAME +".bean." + beanName + ";");
+        content += ("\n");
+        content += ("@Mapper \n");
+        content += ("public interface " + tableEntity + "Mapper" + " { \n");
         //Methods
-        content += ("public List<" + beanName + "> getAll();");
-        content += ("public " + beanName + " findById(Integer id);");
-        content += ("public Integer delete(" + beanName + " " + tableName + ");");
-        content += ("public Integer save(" + beanName + " " + tableName + ");");
-        content += ("public Integer edit(" + beanName + " " + tableName + ");");
-        content += ("}");
-        //FileBuilder.writeFolderAndFile("org\\proyecto\\mapper\\" + tableName + "\\", tableEntity + "Mapper.ToJava", content);
-        generateProject(Global.MAPPER_LOCATION + tableName + "\\", tableEntity + "Mapper.java");
-        System.out.println(content);
+
+        content += (" Boolean create(" + beanName + " " + tableName + "); \n");
+        content += (" List<" + beanName + "> read(); \n");
+        content += (" Boolean update(" + beanName + " " + tableName + "); \n");
+        content += (" Boolean delete(" + pkMapVarInput+ "); \n");
+
+        content += (" " + beanName + " getById("+pkMapVarInput+"); \n");
+        content += ("} \n");
+
+        generateProject(Global.MAPPER_LOCATION + "\\", tableEntity + "Mapper.java");
+        //System.out.println(content);
     }
 
 }

@@ -120,7 +120,7 @@ public class StoreProcedure extends Template {
             //DELETE procedure
             methods += ToSql.headerProcedure("spd_" + tnc.getName().toLowerCase(), pkParams, database);
                 //body
-            methods += "UPDATE " + tnc.getName() + " set recordStatus=0 where ";
+            methods += "DELETE FROM " + tnc.getName() + " where ";
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
                     methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));

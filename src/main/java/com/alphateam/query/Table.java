@@ -1,6 +1,7 @@
 package com.alphateam.query;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -8,56 +9,23 @@ import java.util.List;
  */
 public class Table {
     private String name;
-    private List<Column> column;
-
+    private LinkedList<Column> column;
     private String numColumns;
-    //private String constraintName;
-    //private String foreignColumn;
-   // private String foreignTable;
 
     public Table() {
         this.name = "";
         this.numColumns = "";
-        this.column = new ArrayList<>();
-
-       // this.constraintName="";
-        //this.foreignTable="";
-        //this.foreignColumn="";
+        this.column = new LinkedList<>();
     }
 
-    public List<Column> getColumn() {
+    public LinkedList<Column> getColumn() {
         return column;
     }
 
-    public void setColumn(List<Column> column) {
+    public void setColumn(LinkedList<Column> column) {
         this.column = column;
     }
 
-    /*public String getForeignTable() {
-        return foreignTable;
-    }
-
-    public void setForeignTable(String foreignTable) {
-        this.foreignTable = foreignTable;
-    }
-
-    public String getForeignColumn() {
-        return foreignColumn;
-    }
-
-    public void setForeignColumn(String foreignColumn) {
-        this.foreignColumn = foreignColumn;
-    }
-
-    public String getConstraintName() {
-        return constraintName;
-    }
-
-    public void setConstraintName(String constraintName) {
-        this.constraintName = constraintName;
-    }
-
-    */
     public String getName() {
         return name;
     }
@@ -74,15 +42,12 @@ public class Table {
         this.numColumns = numColumns;
     }
 
-
     @Override
     public String toString() {
         return "Table{" +
                 "name='" + name + '\'' +
+                ", column=" + column +
                 ", numColumns='" + numColumns + '\'' +
-             /*   ", constraintName='" + constraintName + '\'' +
-                ", foreignColumn='" + foreignColumn + '\'' +
-                ", foreignTable='" + foreignTable + '\'' +*/
                 '}';
     }
 }

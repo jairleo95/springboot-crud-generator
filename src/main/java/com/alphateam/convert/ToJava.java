@@ -45,7 +45,8 @@ public class ToJava {
             case Factory.ORACLE:
                 /*mysql*/
                 if (dataType.equalsIgnoreCase("NUMBER")) {
-                    dataType = "Integer";
+                    dataType = "long";
+                   // dataType = "Integer";
                 } else if (dataType.equalsIgnoreCase("VARCHAR2")) {
                     dataType = "String";
                 } /*else if (dataType.equalsIgnoreCase("tinyint")) {
@@ -54,10 +55,10 @@ public class ToJava {
                     dataType = "String";
                 } else if (dataType.equalsIgnoreCase("decimal")) {
                     dataType = "Double";
-                } else if (dataType.equalsIgnoreCase("date")) {
+                } else if (dataType.equalsIgnoreCase("date")||dataType.toLowerCase().contains("timestamp")) {
                     dataType = "Date";
                 } else {
-                    dataType = "character varying";
+                    dataType = "String";
                 }
                 break;
             default:
@@ -70,7 +71,9 @@ public class ToJava {
     public static String getParseByDataType(String data) {
 
         if (data.equalsIgnoreCase("Integer")) {
-            data = "Integer.parseIn";
+            data = "Integer.parseInt";
+        }else if (data.equalsIgnoreCase("long")) {
+            data = "Long.parseLong";
         } else if (data.equalsIgnoreCase("String")) {
             data = "String.valueOf";
         } else if (data.equalsIgnoreCase("Boolean")) {
@@ -89,7 +92,9 @@ public class ToJava {
 
         if (data.equalsIgnoreCase("Integer")) {
             data = "0";
-        } else if (data.equalsIgnoreCase("String")) {
+        }else if (data.equalsIgnoreCase("long")) {
+            data = "0";
+        }else if (data.equalsIgnoreCase("String")) {
             data = "\"\"";
         } else if (data.equalsIgnoreCase("Boolean")) {
             data = "false";
@@ -106,7 +111,7 @@ public class ToJava {
     public static String getImportsByDataType(String data) {
 
         if (data.equalsIgnoreCase("Date")) {
-            data = " import ToJava.util.Date;";
+            data = "import java.util.Date;";
         } else {
             data = "";
         }

@@ -25,105 +25,40 @@ import com.alphateam.utiles.FileBuilder;
 public class SpringController extends Template {
     String paramsPrimaryKey = "";
 
-    String makeAssociatonColumns = "";
+    //String makeAssociatonColumns = "";
     String makeColumns = "";
-    String makeMethods = "";
-    String makeParamsMethods = "";
-    String makeAllParamsMethods = "";
-    String makeParamsUpdate = "";
-    String makeColumnsTable = "";
+    String makeParameters = "";
 
     String dataType = "";
+    String makeSetters = "";
+    String makeImports = "";
 
-   // String content = "";
+    String projectID = Global.PACKAGE_NAME;
 
-
-    @Override
-    public void table(Table table) {
-        super.table(table);
-
-
-        //one or more ids
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
-        String tableEntity = Conversor.firstCharacterToUpper(tableName);
-
-        System.out.println("//TABLA :" + table.getName());
-
-        String makeImports = "";
-        String beanName = tableEntity + "Bean ";
-        String tableEntityService = tableEntity + "SpringService";
-        content += ("package org.proyecto.controller." + tableName + ";");
-        makeImports += "import ToJava.util.HashMap;"
-                + "import ToJava.util.Map;"
-                + "import javax.servlet.http.HttpServletRequest;"
-                + "import javax.servlet.http.HttpServletResponse;"
-                + "import javax.servlet.http.HttpSession;"
-                + "import org.proyecto.bean." + tableName + "" + beanName + ";"
-                + "import org.proyecto.services." + tableName + "." + tableEntityService + ";"
-                + "import org.springframework.beans.factory.annotation.Autowired;"
-                + "import org.springframework.stereotype.Controller;"
-                + "import org.springframework.web.bind.annotation.RequestMapping;"
-                + "import org.springframework.web.bind.annotation.RequestMethod;"
-                + "import org.springframework.web.bind.annotation.ResponseBody;"
-                + "import com.google.gson.Gson;";
-        content += (makeImports);
-        content += ("@Controller \n");
-        content += ("public class " + tableEntity + "Controller {");
-        content += ("@Autowired \n");
-        content += ("private " + tableEntityService + " " + tableName + "SpringService;");
-        content += ("@RequestMapping(value = \"" + tableName + "/executeCrud"
-                + Conversor.firstCharacterToUpper(tableName)
-                + ".htm\", method = { RequestMethod.GET, RequestMethod.POST })");
-        content += ("@ResponseBody");
-        content += ("public String execute" + Conversor.firstCharacterToUpper(tableName) + "(HttpServletRequest request, HttpServletResponse response) {");
-        content += ("Gson gson = new Gson(); Map<String, Object> rpta = new HashMap<String, Object>(); String opc = request.getParameter(\"opc\");HttpSession sesion = request.getSession(true);Integer resultado = 0;"
-                + "String usuario = (String) sesion.getAttribute(\"usuario\");");
-        content += (beanName + tableName + " = new " + beanName + "();");
-        content += ("try {"
-                + "if (opc.equals(\"list\")) {");
-        content += ("rpta.put(\"data\", " + tableName + "SpringService.list());");
-        content += ("} ");
-        content += ("else if (opc.equals(\"delete\")) {");
-        content += ("Integer id = (Integer.parseInt(request.getParameter(\"id\")));");
-        content += (tableName + ".setId" + Conversor.firstCharacterToUpper(tableName) + "(id);");
-        content += (tableName + ".getUsuEli().setVarUsuario(usuario);");
-        content += ("resultado =" + tableName + "SpringService.delete(" + tableName + ");rpta.put(\"id\", resultado);");
-        content += ("} ");
-        content += (" else if (opc.equals(\"save\") || opc.equals(\"edit\")) {");
-
-    }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-
-        paramsPrimaryKey += pk.getName() + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";
+        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String columna = Conversor.toJavaFormat(pk.getName(), "_");
+        dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
+        makeSetters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
     }
 
     @Override
     public void column(Column column) {
         super.column(column);
-        ///String tableNameTCP = columnList.get(h).getName();
-        String columnNameTCP = column.getName();
-
-        makeAllParamsMethods += "sp" + Conversor.firstCharacterToUpper(column.getName()) + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase());
-        makeParamsUpdate += columnNameTCP + "=" + "sp" + Conversor.firstCharacterToUpper(column.getName()) + ",";
     }
 
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
 
-        String parametersProcedure = "sp" + Conversor.firstCharacterToUpper(column.getName());
         String tableName = Conversor.toJavaFormat(table.getName(), "_");
-
         String columna = Conversor.toJavaFormat(column.getName(), "_");
-        makeColumns += "sp" + Conversor.firstCharacterToUpper(columna) + ",";
-        makeParamsMethods += "sp" + Conversor.firstCharacterToUpper(columna) + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";
-        makeColumnsTable += column.getName() + ",";
-        makeParamsUpdate += column.getName() + "=" + parametersProcedure + ", ";
-        dataType = ToJava.getDataType(dataType, Factory.getDefaultDatabase());
-        content += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\")));");
+
+        dataType = ToJava.getDataType(column.getDataType(), Factory.getDefaultDatabase());
+        makeSetters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + "(" + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
 
     }
 
@@ -131,34 +66,138 @@ public class SpringController extends Template {
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
 
-        ///Table fk = listForeignKey.get(d);
         String tableName = Conversor.toJavaFormat(tcp.getName(), "_");
-        String parametersProcedure = "sp" + Conversor.firstCharacterToUpper(fk.getName());
-
         String ForeignColumnEnty = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_"));
-           /// isForean = true;
-            makeParamsMethods += parametersProcedure + " " + ToSql.getDataType(dataType, Factory.getDefaultDatabase()) + ",";
-            makeColumns += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_")) + "(";
-            dataType = ToJava.getDataType(dataType, Factory.getDefaultDatabase());
-            content += (tableName + ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + ForeignColumnEnty + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + fk.getName() + "\")));");
-       /// }
+
+        makeColumns += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_")) + "(";
+         dataType = ToJava.getDataType(dataType, Factory.getDefaultDatabase());
+
+        makeSetters += (tableName + ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + ForeignColumnEnty + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + fk.getName() + "\"))); \n");
     }
 
     @Override
-    public void buildMethods(Table tnc, List<String> pks) {
-        super.buildMethods(tnc, pks);
+    public void buildMethods(Table table, List<String> pks) {
+        super.buildMethods(table, pks);
 
-        String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
+        String tableName = Conversor.toJavaFormat(table.getName(), "_");
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
-        content += ("if (opc.equals(\"save\")) {rpta.put(\"id\", " + tableName + "SpringService.save(" + tableName + "));}");
-        content += ("else if (opc.equals(\"edit\")) {");
-        content += ("rpta.put(\"id\", " + tableName + "SpringService.edit(" + tableName + "));}");
-        content += ("rpta.put(\"status\", true);"
-                + "} }catch (Exception e) {System.out.println(\"1ER - ERROR \" + e.getStackTrace()); System.out.println(\"2DO - ERROR \" + e.getMessage());rpta.put(\"status\", false);}return gson.toJson(rpta);}");
-        content += ("}");
-      //  FileBuilder.writeFolderAndFile("org\\proyecto\\controller\\" + tableName + "\\", tableEntity + "Controller.ToJava", content);
-        generateProject(Global.CONTROLLER_LOCATION + tableName + "\\", tableEntity + "Controller.java");
-        System.out.println(content);
-        //content = "";
+
+
+        makeImports += ToJava.getImportsByDataType(dataType);
+
+        System.out.println("//TABLA :" + table.getName());
+
+
+        String beanName = tableEntity + "Bean";
+        String tableEntityService = tableEntity + "Service";
+        content += ("package "+Global.PACKAGE_NAME+".controller;");
+
+        makeImports += "import java.util.HashMap;"
+                + "import java.util.Map;"
+                + "import javax.servlet.http.HttpServletRequest;"
+                + "import javax.servlet.http.HttpServletResponse;"
+                + "import javax.servlet.http.HttpSession;"
+                + "import org.apache.logging.log4j.LogManager;\n" +
+                "import org.apache.logging.log4j.Logger;"
+                + "import "+projectID+".bean." + beanName + ";"
+                + "import "+projectID+".services." + tableEntityService + ";"
+                + "import org.springframework.beans.factory.annotation.Autowired;"
+                + "import org.springframework.web.bind.annotation.*;"
+                + "import java.util.Collection;"
+                + "import org.springframework.http.MediaType;"
+                + "import com.google.gson.Gson;" +
+                "import org.springframework.http.ResponseEntity;import org.springframework.http.HttpStatus;";
+        content += ("import "+projectID+".util.Security;");
+        content += ("\n");
+        content += (makeImports);
+        content += ("\n\n");
+
+        content += ("@RestController \n");
+        content += ("@RequestMapping(\"/"+tableEntity+"\") \n");
+
+        content += ("public class " + tableEntity + "Controller { \n");
+        content += ("@Autowired \n");
+        content += ("private " + tableEntityService + " " + "service; \n");
+        content += ("private final Logger log = LogManager.getLogger(getClass().getName()); \n");
+        content += ("\n");
+        //getAll
+        content += ("@RequestMapping (method = {RequestMethod.GET}, produces = {MediaType.APPLICATION_JSON_VALUE}) \n");
+        content += ("public Collection<"+beanName+"> read(){return this.service.getAll();} \n");
+        content += ("\n");
+        //ByID
+        content += ("@RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.GET},produces = {MediaType.APPLICATION_JSON_VALUE}) \n");
+        content += ("@ResponseBody \n");
+        content += ("\n");
+        content += ("public "+beanName+" read("+pkPathVarInput+"){ \n");
+        /*todo*/
+        //content += ("log.info(\"id;\"+id); \n");
+        content += (beanName+" x = service.getByID("+pkParams+"); \n");
+        content += ("if (x== null){\n" +
+                "            return null;\n" +
+             /*   "        }else if(!x.getRecordStatus()){\n" +
+                "            return null;\n" +*/
+                "        }else{\n" +
+                "            return x.encrypt();\n" +
+                "    }\n");
+        content += (" }\n");
+
+        /*add*/
+        content += (" @RequestMapping(method = {RequestMethod.POST}, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
+                "    @ResponseBody\n" +
+                "    public ResponseEntity<?> add (@RequestBody "+beanName+" input){\n" +
+                "        log.info(\"Request received:\"+input.toString());\n" +
+              //  "        if (service.getByName(input.getName())!=null){\n" +
+                //"          log.info(\"A target name \"+input.getName()+ \" already exist\");\n" +
+                //"            return new ResponseEntity<Void>(HttpStatus.CONFLICT);\n" +
+                //"        }\n" +
+                "        "+beanName+" "+tableName+" = service.create(input).encrypt();\n" +
+                "        return new ResponseEntity<>("+tableName+",HttpStatus.CREATED);\n" +
+                "    } \n");
+        content += ("\n");
+
+        /*update*/
+        content += (" @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.PUT},consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
+                "    @ResponseBody\n" +
+                "    public ResponseEntity<?> update ("+pkPathVarInput+", @RequestBody "+beanName+" "+tableName+"){\n" +
+                "      "+pkSetter+"\n" +
+                "        log.debug(\"Request received:\"+"+tableName+".toString());\n" +
+                "        if (service.getByID("+pkParams+")!=null){\n" +
+                "            return new ResponseEntity<>(service.update("+tableName+"),HttpStatus.OK);\n" +
+                "        }else{\n" +
+                "            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n" +
+                "        }\n" +
+                "    } \n");
+
+        /*delete*/
+
+        content += (" @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.DELETE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
+                "    public ResponseEntity<?> delete("+pkPathVarInput+"){\n" +
+              //  "        log.info(\"id received:\"+id);\n" +
+                "        "+beanName+" x = service.getByID("+pkParams+");\n" +
+                "        if (x==null){\n" +
+                "            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n" +
+                "        }" +
+                //"else if (!x.getRecordStatus()){\n" +
+                //"            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);\n" +
+                //"        }" +
+                "else{\n" +
+                "            String response = service.delete("+pkParams+");\n" +
+                "            return new ResponseEntity<>(response, HttpStatus.OK);\n" +
+                "        }\n" +
+                "    } \n");
+
+        content += (" \n");
+
+        content += ("} \n");
+        generateProject(Global.CONTROLLER_LOCATION  + "\\", tableEntity + "Controller.java");
+        //System.out.println(content);
+    }
+
+    @Override
+    public void resetValues() {
+        super.resetValues();
+        makeSetters = "";
+        makeImports = "";
+        content = "";
     }
 }

@@ -8,6 +8,7 @@ package com.alphateam.core.template;
 import com.alphateam.connection.Connection;
 import java.util.List;
 
+import com.alphateam.query.Column;
 import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
 
@@ -23,6 +24,19 @@ public abstract class Core {
     protected DAO dao;
     public String content = "";
 
-    protected List<Table> tables /*table*/, columnList/*column*/,listPrimaryKey, listForeignKey;
+    /*todo: refactor this*/
+    public String pkParameters ="";
+    public String pkVariables="";
+    public String pkDecrypt="";
+    public String pkinput="";
+    public String pkMethVarInput ="";
+    public String pkPathVarInput ="";
+    public String pkParams ="";
+    public String pkParamsRequest ="";
+    public String pkSetter ="";
+    public String pkMapVarInput ="";
+
+    protected List<Table> tables ,listPrimaryKey, listForeignKey;
+    protected List<Column> columns;
     protected abstract void init();
 }
