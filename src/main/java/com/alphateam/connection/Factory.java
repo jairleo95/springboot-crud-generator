@@ -23,7 +23,7 @@ public class Factory {
 
     public static String[] configPOSGRESQL = {Global.HOSTNAME_PS, Global.DATABASE_PS, Global.USER_PS, Global.PWD_PS};
 
-    public static int getDefaultDatabase() {
+    public static int getDefaultDB() {
         return ORACLE;
     }
     public static String getSchema(){

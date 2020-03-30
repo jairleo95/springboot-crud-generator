@@ -20,7 +20,7 @@ import java.util.List;
 public class DAO {
 
     Connection conn;
-    int database = Factory.getDefaultDatabase();
+    int database = Factory.getDefaultDB();
 
     public Column getForeignKey(String table, String column) {
         Column c  = new Column();
@@ -149,7 +149,7 @@ public class DAO {
             while (rs.next()) {
                 Table table = new Table();
                 table.setName(rs.getString(1));
-                table.setNumColumns(rs.getString(2));
+                table.setNumColumns(Integer.parseInt(rs.getString(2)));
                 x.add(table);
             }
             rs.close();

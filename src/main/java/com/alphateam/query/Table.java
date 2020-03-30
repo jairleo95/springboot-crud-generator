@@ -1,5 +1,8 @@
 package com.alphateam.query;
 
+import com.alphateam.properties.Global;
+import com.alphateam.utiles.Conversor;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,11 +13,11 @@ import java.util.List;
 public class Table {
     private String name;
     private LinkedList<Column> column;
-    private String numColumns;
+    private int numColumns;
 
     public Table() {
         this.name = "";
-        this.numColumns = "";
+        numColumns = 0;
         this.column = new LinkedList<>();
     }
 
@@ -34,11 +37,11 @@ public class Table {
         this.name = name;
     }
 
-    public String getNumColumns() {
+    public int getNumColumns() {
         return numColumns;
     }
 
-    public void setNumColumns(String numColumns) {
+    public void setNumColumns(int numColumns) {
         this.numColumns = numColumns;
     }
 
@@ -49,5 +52,10 @@ public class Table {
                 ", column=" + column +
                 ", numColumns='" + numColumns + '\'' +
                 '}';
+    }
+
+    public Table format(){
+        this.name = Conversor.toJavaFormat(name, Global.SPLIT_CRITERIA);
+        return this;
     }
 }

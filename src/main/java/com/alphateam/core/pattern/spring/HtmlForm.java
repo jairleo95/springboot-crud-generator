@@ -5,7 +5,6 @@
  */
 package com.alphateam.core.pattern.spring;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.alphateam.core.template.Template;
@@ -13,7 +12,6 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
-import com.alphateam.utiles.FileBuilder;
 
 /**
  *
@@ -22,57 +20,57 @@ import com.alphateam.utiles.FileBuilder;
 
 public class HtmlForm extends Template {
 
-    String makeColumns = "";
-    String makeAssociatonColumns = "";
-    String makeMethods = "";
-    String makeParamsMethods = "";
+    String parameters = "";
+    String associatonColumns = "";
+    String methods = "";
+    String paramsMethods = "";
     String paramsPrimaryKey = "";
-
     String tableColumns = "";
 
 
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
 
-        makeColumns += ("<div class=\"form-group\">");
-        makeColumns += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
-       // makeColumns += ("</br>");
-        makeColumns += ("<div class=\"col-md-4\">");
+        String columna = column.format().getName();
+
+        parameters += ("<div class=\"form-group\">");
+        parameters += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
+       // variables += ("</br>");
+        parameters += ("<div class=\"col-md-4\">");
 
 
-        //System.out.println("datatype!!:"+column.getDataType());
-        //System.out.println("length!!:"+column.getLength());
         String length = "maxlength='"+column.getLength()+"' size='"+column.getLength()+"'";
+
         if (column.getDataType().equalsIgnoreCase("date")||column.getDataType().toLowerCase().contains("timestamp")){
-            makeColumns += ("<input name='" + columna + "'  type='date' "+length+" class='" + columna + "'/>");
+            parameters += ("<input name='" + columna + "'  type='date' "+length+" class='" + columna + "'/>");
         }else if (column.getDataType().equalsIgnoreCase("number")){
-            makeColumns += ("<input name='" + columna + "'  type='number' "+length+" class='" + columna + "'/>");
+            parameters += ("<input name='" + columna + "'  type='number' "+length+" class='" + columna + "'/>");
         }else{
-            makeColumns += ("<input name='" + columna + "'  type='text' "+length+" class='" + columna + "'/>");
+            parameters += ("<input name='" + columna + "'  type='text' "+length+" class='" + columna + "'/>");
         }
-        makeColumns += ("</div>");
-        makeColumns += ("</div>");
+        parameters += ("</div>");
+        parameters += ("</div>");
 
         //table headers
         tableColumns +="<th>"+columna+"</th>";
     }
 
     @Override
-    public void buildMethods(Table tnc, List<String> pks) {
-        super.buildMethods(tnc, pks);
-        String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
-        String tableEntity = Conversor.firstCharacterToUpper(tableName);
-        System.out.println("/*TABLA :" + tnc.getName() + " ");
+    public void buildMethods(Table table, List<String> pks) {
+        super.buildMethods(table, pks);
 
-        if (!makeParamsMethods.equals("")) {
-            makeParamsMethods = makeParamsMethods.substring(0, (makeParamsMethods.length() - 1));
+        String tableName = table.format().getName();
+        String tableEntity = Conversor.firstCharacterToUpper(tableName);
+
+        System.out.println("/*TABLA :" + table.getName() + " ");
+
+        if (!paramsMethods.equals("")) {
+            paramsMethods = paramsMethods.substring(0, (paramsMethods.length() - 1));
         }
         if (!paramsPrimaryKey.equals("")) {
             paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
         }
-        //String content = "";
 
         content += ("<div class=\"row\">");
         content += ("<div class=\"col-sm-12\">");
@@ -104,7 +102,7 @@ public class HtmlForm extends Template {
         content += ("<div class=\"row\">\n"
                 + "<div class=\"col col-sm-12\">");
         content += ("<form class=\"form-horizontal form"+tableEntity+"\" >");
-        content += (makeColumns);
+        content += (parameters);
         content += ("\n");
         content += ("</form>");
 
@@ -117,83 +115,68 @@ public class HtmlForm extends Template {
                 + "\n"
                 + "<body>\n"
                 + content
-                + buildDataTable(tableColumns)
-                + "<script src=\"../../js/business-logic/"+tableEntity+"/register.js\"></script>"
+                + buildDataTable(tableEntity,tableColumns)
+                + "<script src=\"../../js/business-logic/"+tableEntity+"/"+tableEntity+".js\"></script>"
                 + "</body>\n"
                 + "\n"
                 + "</html>";
 
-        generateProject(Global.VIEW_LOCATION+ tableEntity + "\\", "form"+tableEntity + ".html");
-        //System.out.println(content);
+        generateProject(Global.VIEW_LOCATION + tableEntity + "\\", "form"+tableEntity + ".html");
     }
 
     @Override
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
-        String columna = Conversor.toJavaFormat(fk.getName(), "_");
 
-        makeColumns += ("<label>" + columna + "</label>");
-        makeColumns += ("</br>");
-        makeColumns += ("<select name='" + columna + "' class='" + columna + "'>"+columna);
-        makeColumns += ("<option></option>");
-        makeColumns += ("</select>");
-        makeColumns += ("</br>");
+        String columna = fk.format().getName();
+        String column = Conversor.firstCharacterToUpper(fk.format().getName());
 
+        parameters += ("<label>" + column + "</label>");
+        parameters += ("</br>");
+        parameters += ("<select name='" + columna + "' class='select" + column + "'>");
+        parameters += ("<option></option>");
+        parameters += ("</select>");
+        parameters += ("</br>");
 
-            String foreignTableEntity = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable().substring(6), "_"));
-            String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
-            // String ColumnaBean = Conversor.toJavaFormat(column, "_");
-            makeAssociatonColumns += "<select name='" + columna + "' javaType=\"" + foreignTableEntity + "\">";
-            /*for (int hh = 0; hh < columnList.size(); hh++) {
-                String tableNameFk = columnList.get(h).getName();
-                String columnNameFk = columnList.get(h).getColumn().getName();
-                if (tableNameFk.equals(fk.getForeignTable())) {
-                    if (columnNameFk.equals(fk.getForeignColumn())) {
-                        makeAssociatonColumns += "<id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>";
-                    } else {
-                        makeAssociatonColumns += "<result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>";
-                    }
-                }
-            }*/
-            makeAssociatonColumns += "</select>";
+        tableColumns +="<th>"+fk.format().getForeignColumn()+"</th>";
     }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-        String columna = Conversor.toJavaFormat(pk.getName(), "_");
-        makeColumns += ("<input name='" + columna + "' type='hidden' />");
-    }
 
+        String columna = pk.format().getName();
+        parameters += ("<input name='" + columna + "' type='hidden' />");
+    }
 
     @Override
     public void resetValues() {
         super.resetValues();
-         makeColumns = "";
-         makeAssociatonColumns = "";
-         makeMethods = "";
-         makeParamsMethods = "";
+         parameters = "";
+         associatonColumns = "";
+         methods = "";
+         paramsMethods = "";
          paramsPrimaryKey = "";
          tableColumns = "";
     }
 
-    String buildDataTable(String headers){
+    String buildDataTable(String tableEntity,String headers){
      String section =  "<section id=\"widget-grid\">\n" +
                 "<div class=\"row\">\n" +
                 "<div class=\"col-sm-12\">\n" +
                 "<div class=\"well well-light\">\n" +
                 "<button class=\"btn btn-default btn-circle btn-lg pull-right btn-create\"><i class=\"fa fa-plus\"></i></button>"
-
-                 +"<table class=\"table table-bordered table-hover users-datatable\" width=\"100%\">"
+                 +"<div class='table-responsive'>" +
+                    "<table class=\"table table-bordered table-hover "+tableEntity+"-datatable\" width=\"100%\">"
                         +"<thead>"
                                 +"<tr>"
-                                +"<th>Nro</th>"
+                                 +"<th>Actions</th>"
+                                 +"<th>Nro</th>"
                                 + headers
-                                +"<th>Actions</th>"
                                 +"</tr>"
                             +"</thead>"
                         +"</table>"
-
+                 +" </div>\n"
                  +"</div>\n"
                  +"</div>\n"
                  +"</div>\n"

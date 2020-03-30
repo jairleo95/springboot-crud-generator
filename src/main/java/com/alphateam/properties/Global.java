@@ -23,11 +23,14 @@ public class Global {
     public static final String SERVICE_LOCATION = PROJECT_NAME_LOCATION + "services\\";
     public static final String BEAN_LOCATION = PROJECT_NAME_LOCATION + "bean\\" ;
 
+    public static final String SPLIT_CRITERIA = "_" ;
+
 
 
     public static final String RESOURCES_LOCATION = "src\\main\\" + "resources\\";
     public static final String MAPPER_XML_LOCATION = RESOURCES_LOCATION+PACKAGE_NAME2+"\\mapper\\" ;
     public static final String VIEW_LOCATION = RESOURCES_LOCATION+ "static\\views\\" ;
+    public static final String JS_SCRIPT_LOCATION = RESOURCES_LOCATION+ "static\\js\\business-logic\\" ;
 
     public static final String CONTROLLER_LOCATION = PROJECT_NAME_LOCATION + "controller\\";
     public static final String SQL_SCRIPT_LOCATION = "\\sql\\";

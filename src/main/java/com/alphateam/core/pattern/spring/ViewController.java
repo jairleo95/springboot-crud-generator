@@ -5,15 +5,10 @@
  */
 package com.alphateam.core.pattern.spring;
 
-import com.alphateam.connection.Factory;
-import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
-import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
-
-import java.util.List;
 /*
 *
  *
@@ -23,16 +18,14 @@ import java.util.List;
 public class ViewController extends Template {
 
     String dataType = "";
-    String makeSetters = "";
-    String makeImports = "";
-
+    String setters = "";
+    String imports = "";
     String projectID = Global.PACKAGE_NAME;
-
     String controllers="";
 
     @Override
     public Table table(Table table) {
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.format().getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
         System.out.println("//TABLA :" + table.getName());
@@ -53,7 +46,7 @@ public class ViewController extends Template {
 
         content += ("package "+Global.PACKAGE_NAME+".controller;");
 
-        makeImports += "import java.util.HashMap;"
+        imports += "import java.util.HashMap;"
                 + "import java.util.Map;"
                 + "import javax.servlet.http.HttpServletRequest;"
                 + "import javax.servlet.http.HttpServletResponse;"
@@ -68,7 +61,7 @@ public class ViewController extends Template {
                 "import org.springframework.http.ResponseEntity;import org.springframework.web.servlet.ModelAndView;";
         content += ("import "+projectID+".util.Security;");
         content += ("\n");
-        content += (makeImports);
+        content += (imports);
         content += ("\n\n");
 
         content += ("@RestController(\"gui\") \n");
@@ -99,8 +92,8 @@ public class ViewController extends Template {
     @Override
     public void resetValues() {
         super.resetValues();
-        makeSetters = "";
-        makeImports = "";
+        setters = "";
+        imports = "";
         content = "";
     }
 }

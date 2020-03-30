@@ -33,10 +33,11 @@ public class SpringService extends Template {
         super.buildMethods(table, pks);
                /*table name - columnList*/
 
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.format().getName();
 
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
         String beanName = tableEntity + "Bean";
+
         System.out.println("//TABLA :" + table.getName());
         /*Print*/
         content += ("package "+projectID+".services;");

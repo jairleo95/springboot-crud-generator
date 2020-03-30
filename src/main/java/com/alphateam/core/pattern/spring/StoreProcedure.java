@@ -25,7 +25,7 @@ public class StoreProcedure extends Template {
 
     String params = "";
     String methodParams="";
-    String makeColumns = "";
+    String colsParams = "";
     String methods = "";
     String pkParams = "";
     String column ="";
@@ -33,42 +33,32 @@ public class StoreProcedure extends Template {
     String updateComparission = "";
 
     @Override
-    public void column(Column tcp) {
-        super.column(tcp);
-         //Variables
-
-        //customized
-        ///column = Conversor.toJavaFormat(tcp.getName(), "_");
-        //updateComparission += tcp.getName() + "=" + methodParams + ",";
-        methods = "";
-    }
-
-    @Override
     public void buildParameters(Table table, Column c) {
         super.buildParameters(table, c);
-        column = Conversor.toJavaFormat(c.getName(), "_");
+
+        column = c.format().getName();
 
             methodParams = "sp" + Conversor.firstCharacterToUpper(column);
             params += ToSql.headerParamsProcedure(methodParams, c, database);
 
             tableColumns += c.getName() + ",";
             updateComparission += c.getName() + "=" + methodParams + ", ";
-            makeColumns += methodParams + ",";
+            colsParams += methodParams + ",";
     }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-            //pkParams += "sp" +pk.getName() + " " + ToSql.getDataType(pk.getDataType(), database) + ",";
-        pkParams += "sp" +Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pk.getName().toLowerCase(), "_")) /*+ " " + ToSql.getDataType(pk.getDataType(), database) + ","*/;
+
+        pkParams += "sp" +Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pk.getName().toLowerCase(), "_"));
         pkParams = ToSql.headerParamsProcedure(pkParams, pk, database);
     }
 
     @Override
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
-            params += ToSql.headerParamsProcedure(methodParams, /*fk.getDataType(), fk.getAttributeNumber()*/fk, database);
-            makeColumns += methodParams+ ",";
+            params += ToSql.headerParamsProcedure(methodParams, fk, database);
+            colsParams += methodParams+ ",";
             tableColumns += fk.getName() + ",";
             updateComparission += fk.getName() + "=" + methodParams + ",";
     }
@@ -81,13 +71,13 @@ public class StoreProcedure extends Template {
         //Remove commas from params
         params = clearLastComma(params);
         pkParams = clearLastComma(pkParams);
-        makeColumns = clearLastComma(makeColumns);
+        colsParams = clearLastComma(colsParams);
         tableColumns = clearLastComma(tableColumns);
         updateComparission = clearLastComma(updateComparission);
 
         //Insert record procedure
         methods += ToSql.headerProcedure("spi_" + tnc.getName().toLowerCase(), params, database);
-        methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + makeColumns + ")";
+        methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + colsParams + ")";
 
         //ruturn id
         System.out.println("buildMethods.pks.size():"+pks.size());
@@ -144,7 +134,7 @@ public class StoreProcedure extends Template {
         super.resetValues();
          params = "";
          methodParams="";
-         makeColumns = "";
+         colsParams = "";
          methods = "";
          pkParams = "";
          column ="";

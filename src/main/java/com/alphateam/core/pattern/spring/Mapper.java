@@ -12,7 +12,6 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
-import com.alphateam.utiles.FileBuilder;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class Mapper extends Template {
     public void primaryKeys(Table table, Column pk) {
         String tableName = Conversor.toJavaFormat(table.getName(), "_");
         super.primaryKeys(table, pk);
-        String dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
+        String dataType = ToJava.getDataType(pk.getDataType());
     }
 
     @Override

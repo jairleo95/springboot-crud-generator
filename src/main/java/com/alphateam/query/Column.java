@@ -1,5 +1,9 @@
 package com.alphateam.query;
 
+import com.alphateam.properties.Global;
+import com.alphateam.utiles.Conversor;
+
+
 /**
  * Created by JairL on 9/27/2018.
  */
@@ -10,11 +14,11 @@ public class Column {
     private String dataType;
     private String length;
     private String attributeNumber;
-    private boolean foreignKey;
 
     private String foreignTable;
     private String foreignColumn;
 
+    private boolean foreignKey;
     private boolean primaryKey;
 
     public Column() {
@@ -100,6 +104,17 @@ public class Column {
 
     public void setLength(String length) {
         this.length = length;
+    }
+
+    public Column format(){
+        this.name = Conversor.toJavaFormat(name, Global.SPLIT_CRITERIA);
+        if (foreignColumn!=null) {
+            this.foreignColumn = Conversor.toJavaFormat(foreignColumn, Global.SPLIT_CRITERIA);
+        }
+        if (foreignTable!= null){
+            this.foreignTable = Conversor.toJavaFormat(foreignTable, Global.SPLIT_CRITERIA);
+        }
+        return this;
     }
 
     @Override

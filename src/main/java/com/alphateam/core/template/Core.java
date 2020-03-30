@@ -22,21 +22,10 @@ public abstract class Core {
     protected int database;
     protected boolean returnId;
     protected DAO dao;
+
     public String content = "";
 
-    /*todo: refactor this*/
-    public String pkParameters ="";
-    public String pkVariables="";
-    public String pkDecrypt="";
-    public String pkinput="";
-    public String pkMethVarInput ="";
-    public String pkPathVarInput ="";
-    public String pkParams ="";
-    public String pkParamsRequest ="";
-    public String pkSetter ="";
-    public String pkMapVarInput ="";
-
-    protected List<Table> tables ,listPrimaryKey, listForeignKey;
+    protected List<Table> tables;
     protected List<Column> columns;
     protected abstract void init();
 }

@@ -13,7 +13,8 @@ import com.alphateam.connection.Factory;
  */
 public class ToJava {
 
-    public static String getDataType(String dataType, Integer typeDB) {
+    public static String getDataType(String dataType) {
+        Integer typeDB = Factory.getDefaultDB();
         switch (typeDB) {
             case Factory.POSGRESQL:
                 if (dataType.equals("int4")) {

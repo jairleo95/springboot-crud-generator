@@ -16,8 +16,6 @@ import com.alphateam.utiles.FileBuilder;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  *
@@ -37,9 +35,20 @@ interface Methods {
 
 public class Template extends Core implements Methods{
 
+    public String pkParameters ="";
+    public String pkVariables="";
+    public String pkDecrypt="";
+    public String pkinput="";
+    public String pkMethVarInput ="";
+    public String pkPathVarInput ="";
+    public String pkParams ="";
+    public String pkParamsRequest ="";
+    public String pkSetter ="";
+    public String pkMapVarInput ="";
+
     @Override
     public void init() {
-        database = Factory.getDefaultDatabase();
+        database = Factory.getDefaultDB();
         returnId = false;
         conn = Factory.open(database);
         dao = new DAO();
@@ -107,6 +116,7 @@ public class Template extends Core implements Methods{
 
     @Override
     public Table table(Table table) {
+
         //check primary keys
         boolean x = false;
         for (Column column: table.getColumn()) {
@@ -133,7 +143,7 @@ public class Template extends Core implements Methods{
     }
 
     @Override
-    public void foreignKeys(Table tcp, Column fk) {
+    public void foreignKeys(Table fkTable, Column fk) {
         //System.out.println("foreignKeys callback TABLE:"+tcp.toString());
         //System.out.println("foreignKeys callback FK:"+fk.toString());
     }
@@ -141,17 +151,12 @@ public class Template extends Core implements Methods{
     @Override
     public void primaryKeys(Table table, Column pk) {
         String tableName = Conversor.toJavaFormat(table.getName(), "_");
-        String dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
+        String dataType = ToJava.getDataType(pk.getDataType());
         String columnName = Conversor.toJavaFormat(pk.getName(), "_");
 
-      // if (dataType.equalsIgnoreCase("Integer")){
-            //pkinput+=  "Integer.parseInt("+columnName+"),";
-            //pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+"Integer.parseInt(Security.decrypt("+columnName+"))"+");";
-        //}else {
-            pkinput+=  columnName+",";
-            pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+");";
-        //}
-        //work with datatype string for crypt
+        pkinput+=  columnName+",";
+        pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+");";
+
         //todo:refactor this hardcode
         dataType = "String";
         pk.setDataType("char");
@@ -238,7 +243,7 @@ public class Template extends Core implements Methods{
         FORM_VIEW
     }
 
-   public  String clearLastComma(String string){
+   public static String clearLastComma(String string){
         if (!string.equals("")) {
             if (string.contains(",")){
                 string = string.substring(0, (string.length() - 1));

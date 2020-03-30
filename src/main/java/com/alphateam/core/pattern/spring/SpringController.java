@@ -5,17 +5,14 @@
  */
 package com.alphateam.core.pattern.spring;
 
-import com.alphateam.connection.Factory;
 import com.alphateam.convert.ToJava;
-import com.alphateam.convert.ToSql;
-import java.util.ArrayList;
+
 import java.util.List;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
-import com.alphateam.utiles.FileBuilder;
 /*
 *
  *
@@ -25,13 +22,13 @@ import com.alphateam.utiles.FileBuilder;
 public class SpringController extends Template {
     String paramsPrimaryKey = "";
 
-    //String makeAssociatonColumns = "";
-    String makeColumns = "";
+    //String associatonColumns = "";
+    //String colsParams = "";
     String makeParameters = "";
 
     String dataType = "";
-    String makeSetters = "";
-    String makeImports = "";
+    String setters = "";
+    String imports = "";
 
     String projectID = Global.PACKAGE_NAME;
 
@@ -39,40 +36,35 @@ public class SpringController extends Template {
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
-        String columna = Conversor.toJavaFormat(pk.getName(), "_");
-        dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
-        makeSetters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
-    }
-
-    @Override
-    public void column(Column column) {
-        super.column(column);
+        String tableName = table.format().getName();
+        String columna =pk.format().getName();
+        dataType = ToJava.getDataType(pk.getDataType());
+        setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
     }
 
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
 
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
+        String tableName = table.format().getName();
+        String columna = column.format().getName();
 
-        dataType = ToJava.getDataType(column.getDataType(), Factory.getDefaultDatabase());
-        makeSetters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + "(" + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
+        dataType = ToJava.getDataType(column.getDataType());
+        setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + "(" + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
 
     }
 
     @Override
-    public void foreignKeys(Table tcp, Column fk) {
-        super.foreignKeys(tcp, fk);
+    public void foreignKeys(Table table, Column fk) {
+        super.foreignKeys(table, fk);
 
-        String tableName = Conversor.toJavaFormat(tcp.getName(), "_");
-        String ForeignColumnEnty = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_"));
+        String tableName = table.format().getName();
+        String ForeignColumnEnty = Conversor.firstCharacterToUpper(fk.format().getForeignColumn());
 
-        makeColumns += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignColumn(), "_")) + "(";
-         dataType = ToJava.getDataType(dataType, Factory.getDefaultDatabase());
+        //colsParams += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(fk.format().getForeignColumn()) + "(";
+         dataType = ToJava.getDataType(dataType);
 
-        makeSetters += (tableName + ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + ForeignColumnEnty + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + fk.getName() + "\"))); \n");
+        setters += (tableName + ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + ForeignColumnEnty + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + fk.getName() + "\"))); \n");
     }
 
     @Override
@@ -83,7 +75,7 @@ public class SpringController extends Template {
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
 
-        makeImports += ToJava.getImportsByDataType(dataType);
+        imports += ToJava.getImportsByDataType(dataType);
 
         System.out.println("//TABLA :" + table.getName());
 
@@ -92,7 +84,7 @@ public class SpringController extends Template {
         String tableEntityService = tableEntity + "Service";
         content += ("package "+Global.PACKAGE_NAME+".controller;");
 
-        makeImports += "import java.util.HashMap;"
+        imports += "import java.util.HashMap;"
                 + "import java.util.Map;"
                 + "import javax.servlet.http.HttpServletRequest;"
                 + "import javax.servlet.http.HttpServletResponse;"
@@ -109,7 +101,7 @@ public class SpringController extends Template {
                 "import org.springframework.http.ResponseEntity;import org.springframework.http.HttpStatus;";
         content += ("import "+projectID+".util.Security;");
         content += ("\n");
-        content += (makeImports);
+        content += (imports);
         content += ("\n\n");
 
         content += ("@RestController \n");
@@ -196,8 +188,8 @@ public class SpringController extends Template {
     @Override
     public void resetValues() {
         super.resetValues();
-        makeSetters = "";
-        makeImports = "";
+        setters = "";
+        imports = "";
         content = "";
     }
 }

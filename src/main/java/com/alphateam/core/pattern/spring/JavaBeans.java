@@ -5,8 +5,6 @@
  */
 package com.alphateam.core.pattern.spring;
 
-import com.alphateam.connection.Factory;
-
 import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
@@ -23,11 +21,10 @@ import java.util.List;
 public class JavaBeans extends Template {
 
 
-    String makeColumns = "";
-    String makeInstanceBean = "";
-    String makeSettersAndGetters = "";
-    String makeImports = "";
-   //String content = "";
+    String variables = "";
+    String instanceBean = "";
+    String gettersAndSetters = "";
+    String imports = "";
 
     String encryptContent="";
     String decryptContent = "";
@@ -36,103 +33,105 @@ public class JavaBeans extends Template {
     String projectID = Global.PACKAGE_NAME;
 
     @Override
-    public void foreignKeys(Table tcp, Column column) {
-        super.foreignKeys(tcp, column);
+    public void foreignKeys(Table table, Column column) {
+        super.foreignKeys(table, column);
 
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
-       // System.out.println("Enter to foreignKeys method");
-        String TableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(column.getForeignTable(), "_")) + "Bean";
-        String ColumnaBean = Conversor.toJavaFormat(column.getName(), "_");
-        makeColumns += ("private " + TableBean + " " + ColumnaBean + "; \n");
-        // s++;
-        //isForean = true;
-        makeInstanceBean += ColumnaBean + " = new " + TableBean + "(); \n";
-        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(ColumnaBean) + "(" + TableBean + " " + ColumnaBean + "){"
-                + "this." + ColumnaBean + "=" + ColumnaBean + ";} \n");
-        makeSettersAndGetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(ColumnaBean) + "(){"
-                + "return " + ColumnaBean + ";} \n";
-        //makeImports += " import " + Global.PACKAGE_NAME + ".bean; \n";
+        String columnName = column.format().getName();
+        String TableBean = Conversor.firstCharacterToUpper(column.format().getForeignTable()) + "Bean";
+        String beanColumn = column.format().getName();
+
+        variables += ("private " + TableBean + " " + beanColumn + "; \n");
+
+        instanceBean += beanColumn + " = new " + TableBean + "(); \n";
+        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(beanColumn) + "(" + TableBean + " " + beanColumn + "){"
+                + "this." + beanColumn + "=" + beanColumn + ";} \n");
+        gettersAndSetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(beanColumn) + "(){" + "return " + beanColumn + ";} \n";
 
         /*security*/
-        encryptContent += "this."+columna + " = "+columna+".decrypt(); \n";
-        decryptContent += "this."+columna + " = "+columna+".decrypt(); \n";
+        encryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
+        decryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
     }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-        String columna = Conversor.toJavaFormat(pk.getName(), "_");
-        String dataType = ToJava.getDataType(pk.getDataType(), Factory.getDefaultDatabase());
-        makeColumns += ("@JsonProperty(\""+columna+"\") \n");
-        makeColumns += ("private " + dataType + " " + columna + "; \n");
-        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){ \n"
-                + "this." + columna + "=" + columna + ";} \n");
-        makeSettersAndGetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columna) + "(){ \n"
-                + "return " + columna + ";}";
 
-        makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
-        makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
+        String columnName = pk.format().getName();
+        String dataType = ToJava.getDataType(pk.getDataType());
 
-        /*security*/
-         encryptContent += "this."+columna + " = "+"Security.encrypt("+columna+"); \n";
-        decryptContent += "this."+columna + " = "+"Security.decrypt("+columna+"); \n";
+        variables += ("@JsonProperty(\""+columnName+"\") \n");
+        variables += ("private " + dataType + " " + columnName + "; \n");
+        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(columnName) + "(" + dataType + " " + columnName + "){ \n"
+                + "this." + columnName + "=" + columnName + ";} \n");
+        gettersAndSetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columnName) + "(){ \n" + "return " + columnName + ";}";
+
+        instanceBean += "this." + columnName + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
+        instanceBean += "this." + columnName + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
+
+        encryptContent += "this."+columnName + " = "+"Security.encrypt("+columnName+"); \n";
+        decryptContent += "this."+columnName + " = "+"Security.decrypt("+columnName+"); \n";
     }
 
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
-        String dataType = ToJava.getDataType(column.getDataType(), Factory.getDefaultDatabase());
 
-        makeColumns += ("@JsonProperty(\""+columna+"\") \n");
+        String columna = column.format().getName();
+        String dataType = ToJava.getDataType(column.getDataType());
+
+        variables += ("@JsonProperty(\""+columna+"\") \n");
         if (dataType.equalsIgnoreCase("date")){
-            makeImports+="import com.fasterxml.jackson.annotation.JsonFormat;";
-            makeColumns += "@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\")";
+            imports +="import com.fasterxml.jackson.annotation.JsonFormat;";
+            variables += "@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\")";
         }
-        makeColumns += ("private " + dataType + " " + columna + "; \n");
+        variables += ("private " + dataType + " " + columna + "; \n");
 
-        makeSettersAndGetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){ \n"
+        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(columna) + "(" + dataType + " " + columna + "){ \n"
                 + "this." + columna + "=" + columna + ";} \n");
-        makeSettersAndGetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columna) + "(){ \n"
+        gettersAndSetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columna) + "(){ \n"
                 + "return " + columna + ";} \n";
 
-        makeImports += ToJava.getImportsByDataType(dataType);
+        imports += ToJava.getImportsByDataType(dataType);
 
-        makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
-      //  makeInstanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
+        instanceBean += "this." + columna + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
     }
 
     @Override
     public void column(Column column) {
         super.column(column);
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
-        toStringColumns += ("\n + \"" +  columna + "='\" +"+columna+"+ '\\'' + "+"\",\"");
+
+        String columnName = column.format().getName();
+
+        toStringColumns += ("\n + \"" +  columnName + "='\" +"+columnName+"+ '\\'' + "+"\",\"");
     }
 
     @Override
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+
+        String tableName = table.format().getName();
         String beanName = Conversor.firstCharacterToUpper(tableName + "Bean");
 
 
         content += ("package "+ Global.PACKAGE_NAME +".bean" + "; \n");
         content += ("import com.fasterxml.jackson.annotation.JsonProperty; \n");
         content += ("import "+projectID+".util.Security;");
-        content += (makeImports);
+        content += (imports);
         content += ("\n");
         content += ("\n");
+
         content += ("public class " + beanName + " { \n");
 
-        content += (makeColumns);
+        content += (variables);
 
         content += ("\n");
+
         //Contructor
         content += ("public " + beanName + "(){ \n");
-        content += (makeInstanceBean);
+        content += (instanceBean);
         content += ("}");
         content += ("\n");
-        content += (makeSettersAndGetters);
+        content += (gettersAndSetters);
 
         content += ("\n");
         //crypt
@@ -163,21 +162,18 @@ public class JavaBeans extends Template {
         content += ("}");
 
         generateProject(Global.BEAN_LOCATION+ "\\", beanName  + ".java");
-        ///System.out.println(content);
-
     }
 
     @Override
     public void resetValues() {
         super.resetValues();
-         makeColumns = "";
-         makeInstanceBean = "";
-         makeSettersAndGetters = "";
-         makeImports = "";
+         variables = "";
+         instanceBean = "";
+         gettersAndSetters = "";
+         imports = "";
          content = "";
         toStringColumns = "";
-
-            encryptContent = "";
-            decryptContent = "";
+        encryptContent = "";
+        decryptContent = "";
     }
 }
