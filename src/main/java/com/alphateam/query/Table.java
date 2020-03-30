@@ -12,11 +12,13 @@ import java.util.List;
  */
 public class Table {
     private String name;
+    private String rawName;
     private LinkedList<Column> column;
     private int numColumns;
 
     public Table() {
         this.name = "";
+        this.rawName = "";
         numColumns = 0;
         this.column = new LinkedList<>();
     }
@@ -31,6 +33,14 @@ public class Table {
 
     public String getName() {
         return name;
+    }
+
+    public String getRawName() {
+        return rawName;
+    }
+
+    public void setRawName(String rawName) {
+        this.rawName = rawName;
     }
 
     public void setName(String name) {
@@ -49,8 +59,9 @@ public class Table {
     public String toString() {
         return "Table{" +
                 "name='" + name + '\'' +
+                ", rawName='" + rawName + '\'' +
                 ", column=" + column +
-                ", numColumns='" + numColumns + '\'' +
+                ", numColumns=" + numColumns +
                 '}';
     }
 

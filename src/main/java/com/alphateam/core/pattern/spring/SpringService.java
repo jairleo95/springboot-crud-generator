@@ -12,6 +12,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class SpringService extends Template {
     String projectID = Global.PACKAGE_NAME;
-
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
     public void primaryKeys(Table table, Column pk) {
@@ -33,12 +35,12 @@ public class SpringService extends Template {
         super.buildMethods(table, pks);
                /*table name - columnList*/
 
-        String tableName = table.format().getName();
+        String tableName = table.getName();
 
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
         String beanName = tableEntity + "Bean";
 
-        System.out.println("//TABLA :" + table.getName());
+        log.debug("//TABLA :" + table.getName());
         /*Print*/
         content += ("package "+projectID+".services;");
 

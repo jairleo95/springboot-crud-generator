@@ -4,8 +4,8 @@
     <bytecodeTargetLevel>
       <module name="com.alphateam_main" target="1.7" />
       <module name="com.alphateam_test" target="1.7" />
-      <module name="crud-generator_main" target="1.8" />
-      <module name="crud-generator_test" target="1.8" />
+      <module name="crud-generator_main" target="1.7" />
+      <module name="crud-generator_test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

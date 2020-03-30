@@ -12,6 +12,8 @@ import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -45,6 +47,8 @@ public class Template extends Core implements Methods{
     public String pkParamsRequest ="";
     public String pkSetter ="";
     public String pkMapVarInput ="";
+
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
     public void init() {
@@ -80,15 +84,14 @@ public class Template extends Core implements Methods{
         init();
         for (int r = 0; r < tables.size(); r++) {
             List<String> pks = new ArrayList<>();
-            Table table = table(this.tables.get(r));
-
-            System.out.println("Table [" + table.getName()+"]");
+            Table table = table(this.tables.get(r)).format();
+            log.debug("Table [" + table.getName()+"]");
             //System.out.println("/*table.getColumn().size() :" + columns.size() + " */");
 
             /*iterate columnList*/
             for (int h = 0; h < table.getColumn().size(); h++) {
                 //make threads
-                Column column = table.getColumn().get(h);
+                Column column = table.getColumn().get(h).format();
 
                     if (column.isPrimaryKey()){
                         pks.add(column.getName());
@@ -150,9 +153,9 @@ public class Template extends Core implements Methods{
 
     @Override
     public void primaryKeys(Table table, Column pk) {
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.getName();
         String dataType = ToJava.getDataType(pk.getDataType());
-        String columnName = Conversor.toJavaFormat(pk.getName(), "_");
+        String columnName = pk.getName();
 
         pkinput+=  columnName+",";
         pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+");";
@@ -163,7 +166,7 @@ public class Template extends Core implements Methods{
 
         pkParameters+=  tableName +".get"+Conversor.firstCharacterToUpper(columnName)+"(),";
         pkParams+=  columnName+",";
-        pkParamsRequest+=  "/{"+Conversor.toJavaFormat(pk.getName(),"_")+"}";
+        pkParamsRequest+=  "/{"+pk.getName()+"}";
         pkVariables+=  dataType+" "+columnName+",";
         pkMethVarInput +=  "String "+columnName+",";
         pkPathVarInput +=  "@PathVariable String "+columnName+",";
@@ -225,7 +228,7 @@ public class Template extends Core implements Methods{
     @Override
     public void generateProject(String path,String filename) {
         //path = "org\\proyecto\\views\\" + filename + "\\";
-        FileBuilder.writeFolderAndFile(path, filename, content);
+        new FileBuilder().writeFolderAndFile(path, filename, content);
     }
 
     public String header(SyntaxType opc) {

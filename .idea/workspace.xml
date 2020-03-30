@@ -2,11 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6546e96-ecdd-4cb0-a820-5db96064f3c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_dataformat_jackson_dataformat_yaml_2_8_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_api_2_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_core_2_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_jul_2_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_slf4j_impl_2_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_actuator_1_5_9_RELEASE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_actuator_1_5_9_RELEASE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_log4j2_2_1_1_RELEASE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/MainController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.yaml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_classic_1_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_core_1_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_log4j_over_slf4j_1_7_25.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/CRUDGeneratorApplication.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/CRUDGeneratorApplication.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/Connection.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/Connection.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/Factory.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/Factory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/MYSQL.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/MYSQL.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/ORACLE.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/ORACLE.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/POSGRESQL.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/connection/POSGRESQL.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/convert/ToJava.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/convert/ToJava.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/convert/ToSql.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/convert/ToSql.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/mvc/Controller.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/mvc/Controller.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/mvc/DAO.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/mvc/DAO.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/HtmlForm.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/HtmlForm.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/JavaBeans.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/JavaBeans.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/JavaScriptsFunctions.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/JavaScriptsFunctions.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/Mapper.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/Mapper.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/MapperXml.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/MapperXml.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/MyBatisConf.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/MyBatisConf.class" />
@@ -15,32 +41,47 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/StoreProcedure.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/StoreProcedure.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/ViewController.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/pattern/spring/ViewController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Core.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Core.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Entity.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Entity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Methods.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Methods.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Task.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Task.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template$1.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template$SyntaxType.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template$SyntaxType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/core/template/Template.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/properties/Global.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/properties/Global.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/properties/UserMachine.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/properties/UserMachine.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Column.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Column.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/DAO.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/DAO.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Query.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Query.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Table.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/query/Table.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/utiles/Conversor.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/utiles/Conversor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/alphateam/utiles/FileBuilder.class" afterPath="$PROJECT_DIR$/build/classes/main/com/alphateam/utiles/FileBuilder.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/test/com/alphateam/testCrud.class" afterPath="$PROJECT_DIR$/build/classes/test/com/alphateam/testCrud.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/libs/crud-generator-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/build/libs/crud-generator-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/libs/crud-generator-1.0-SNAPSHOT.jar.original" afterPath="$PROJECT_DIR$/build/libs/crud-generator-1.0-SNAPSHOT.jar.original" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/crud-generator_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/crud-generator_main.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/crud-generator_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/crud-generator_test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/convert/ToJava.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/convert/ToJava.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/MYSQL.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/MYSQL.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/POSGRESQL.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/connection/POSGRESQL.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/HtmlForm.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/HtmlForm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MyBatisConf.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MyBatisConf.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringService.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/ViewController.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/ViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Core.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Core.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/properties/Global.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/properties/Global.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/alphateam/testCrud.java" afterPath="$PROJECT_DIR$/src/test/java/com/alphateam/testCrud.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -112,6 +153,24 @@
                 <option name="myItemId" value="crud-generator" />
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="Tasks" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="build" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode$1" />
+              </PATH_ELEMENT>
+            </PATH>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="crud-generator" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
             </PATH>
           </tree_state>
         </projects_view>
@@ -123,25 +182,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="JavaBeans.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java">
+      <file leaf-file-name="Template.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#6368#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state relative-caret-position="1173">
+              <caret line="85" column="49" lean-forward="false" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Column.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Column.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="81" column="10" lean-forward="false" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="1479">
+              <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+              <folding>
+                <element signature="e#1532#1533#0" expanded="true" />
+                <element signature="e#1565#1566#0" expanded="true" />
+                <element signature="e#1599#1600#0" expanded="true" />
+                <element signature="e#1629#1630#0" expanded="true" />
+                <element signature="e#1675#1676#0" expanded="true" />
+                <element signature="e#1713#1714#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,8 +212,75 @@
       <file leaf-file-name="Global.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/properties/Global.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="744">
-              <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+            <state relative-caret-position="238">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestConnection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/alphateam/TestConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Factory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="38" column="30" lean-forward="false" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="33" lean-forward="false" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapperXml.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Table.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="63" column="44" lean-forward="false" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
+              <folding>
+                <element signature="e#714#715#0" expanded="true" />
+                <element signature="e#741#742#0" expanded="true" />
+                <element signature="e#775#776#0" expanded="true" />
+                <element signature="e#805#806#0" expanded="true" />
+                <element signature="e#851#852#0" expanded="true" />
+                <element signature="e#889#890#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2006">
+              <caret line="130" column="55" lean-forward="false" selection-start-line="130" selection-start-column="55" selection-end-line="130" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -167,41 +297,42 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>users/se</find>
-      <find>users/ses</find>
-      <find>users/sess</find>
-      <find>users/sessio</find>
-      <find>users/session</find>
-      <find>users/ession</find>
-      <find>users/ssion</find>
-      <find>users/sion</find>
-      <find>users/ion</find>
-      <find>users/on</find>
-      <find>users/n</find>
-      <find>users/</find>
-      <find>userRe</find>
-      <find>userRecords</find>
-      <find>data</find>
-      <find>tableEntity+&quot;Records</find>
-      <find>datatable</find>
-      <find>buil</find>
-      <find>sta</find>
-      <find>Editar</find>
-      <find>users-</find>
-      <find>fore</find>
+      <find>coformat()</find>
+      <find>colformat()</find>
+      <find>colu,nformat()</find>
+      <find>colu,format()</find>
+      <find>coluformat()</find>
+      <find>columformat()</find>
+      <find>columnformat()</find>
+      <find>column.format()</find>
+      <find>ser</find>
+      <find>import</find>
+      <find>car</find>
+      <find>carga</find>
+      <find>forma</find>
+      <find>format().</find>
+      <find>get</find>
+      <find>table.getName()</find>
+      <find>pkParameters</find>
+      <find>format()</find>
+      <find>t</find>
+      <find>tolow</find>
+      <find>tolowe</find>
+      <find>tolower</find>
+      <find>Conversor.toJavaFormat</find>
+      <find>table(</find>
+      <find>format</find>
+      <find>tableName</find>
       <find>table</find>
-      <find>header</find>
-      <find>tableColumns</find>
-      <find>file</find>
-      <find>_</find>
-      <find>pkPathVarInput</find>
-      <find>clearLastComma</find>
-      <find>makeColumns</find>
+      <find>select</find>
+      <find>Column</find>
+      <find>column=</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>//</replace>
       <replace>columnName</replace>
+      <replace>log.debug</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -409,8 +540,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4641338691779" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="1376808060" />
+        <entry key="$PROJECT_DIR$" value="4661090060552" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="80968134" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="829777938" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="1403464485" />
       </map>
@@ -599,12 +730,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/coreCRUD/spring/springControllerGenerator.java" />
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/coreCRUD/spring/storeProcedureCrudGenerator.java" />
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/coreCRUD/spring/javaBeansGenerator.java" />
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/OracleCrudGenerator/controllerGenerator.java" />
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/OracleCrudGenerator/daoGenerator.java" />
-        <option value="$PROJECT_DIR$/src/java/com/alphateam/query/makeQuery.java" />
         <option value="$PROJECT_DIR$/src/java/com/alphateam/utiles/makeFile.java" />
         <option value="$PROJECT_DIR$/test/java/com/alphateam/MakeBackEnd.java" />
         <option value="$PROJECT_DIR$/src/java/com/alphateam/conexionDB/FactoryConnectionDB.java" />
@@ -622,34 +747,40 @@
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/Tables.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/alphateam/TestConnection.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/mvc/DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$USER_HOME$/AppData/Local/Temp/2ndwj5CavIM1YyOL8N2F9l.url" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/utiles/Conversor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/convert/ToSql.java" />
         <option value="$PROJECT_DIR$/../../dsp-simulator/src/main/java/com/hpe/hpsa/timbrazil/connection/Connection.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java" />
         <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/4.3.13.RELEASE/8613a7077722f1d97f8cb3fea4b0b40bfadf4496/spring-beans-4.3.13.RELEASE.jar!/org/springframework/beans/factory/support/BeanDefinitionBuilder.class" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/Query.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MyBatisConf.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/convert/ToJava.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/alphateam/testCrud.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Core.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/HtmlForm.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/ViewController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/properties/Global.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/connection/MYSQL.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/connection/POSGRESQL.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j2.yaml" />
+        <option value="$PROJECT_DIR$/src/test/java/com/alphateam/testCrud.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/MainController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/ViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/HtmlForm.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MyBatisConf.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java" />
       </list>
     </option>
   </component>
@@ -682,6 +813,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -711,8 +844,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -725,21 +856,23 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Files/Software Development/Projects/Web Applications/CRUD Generator/crud-generator/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java" />
     <property name="settings.editor.splitter.proportion" value="0.23483366" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\Files\Software Development\Projects\Web Applications\CRUD Generator\crud-generator\libs" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.alphateam.core.pattern.spring" />
-      <recent name="com.alphateam.connection" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Files\Software Development\Projects\CRUD Generator\crud-generator\src\main" />
       <recent name="G:\Files\Software Development\Projects\CRUD Generator\crud-generator\src\main\java" />
       <recent name="G:\Files\Software Development\Projects\CRUD Generator\crud-generator\src" />
       <recent name="G:\Files\Software Development\Projects\CRUD Generator\crud-generator\src\java" />
       <recent name="G:\Files\Software Development\Projects\CRUD Generator\crud-generator\src\java\main" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.alphateam.core.pattern.spring" />
+      <recent name="com.alphateam.connection" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Software Development\crud-generator-project\crud-generator\src\main\resources" />
+      <recent name="H:\Files\Software Development\Projects\Web Applications\CRUD Generator\crud-generator\libs" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -754,7 +887,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.testCrud">
+  <component name="RunManager" selected="Spring Boot.run">
     <configuration default="false" name="crud-generator [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -1314,12 +1447,13 @@
       <workItem from="1572930665821" duration="13049000" />
       <workItem from="1575561041438" duration="1661000" />
       <workItem from="1585269587561" duration="2986000" />
-      <workItem from="1585551875213" duration="88000" />
+      <workItem from="1585551875213" duration="14552000" />
+      <workItem from="1585605091253" duration="9000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311180000" />
+    <option name="totallyTimeSpent" value="325653000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1349,19 +1483,19 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3358946" sideWeight="0.4972973" order="2" side_tool="false" content_ui="tabs" x="110" y="31" width="947" height="734" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3358946" sideWeight="0.4972973" order="2" side_tool="false" content_ui="tabs" x="89" y="31" width="1190" height="1408" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18935837" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19953051" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20622726" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20735525" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960877" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1750187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32834706" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1418,56 +1552,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/alphateam/MakeBackEnd.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/Boolean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="42" column="19" lean-forward="false" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="109" column="2" lean-forward="true" selection-start-line="109" selection-start-column="2" selection-end-line="109" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/MYSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/sql/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="103" column="14" lean-forward="false" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="861">
-          <caret line="46" column="5" lean-forward="false" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/properties/UserMachine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/alphateam/TestConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/oracleGenerator/GEN_SP_INSERT.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-94">
@@ -1517,13 +1601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/mvc/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="88" column="17" lean-forward="true" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1553,52 +1630,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/CRUDGeneratorApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="58" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/4.3.13.RELEASE/8613a7077722f1d97f8cb3fea4b0b40bfadf4496/spring-beans-4.3.13.RELEASE.jar!/org/springframework/beans/factory/support/BeanDefinitionBuilder.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/mvc/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="23" column="30" lean-forward="false" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="16" column="34" lean-forward="false" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/ORACLE.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1623,35 +1658,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="114" column="39" lean-forward="true" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/convert/ToJava.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="35" column="53" lean-forward="true" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="25" column="34" lean-forward="false" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
-          <folding>
-            <element signature="e#838#839#0" expanded="false" />
-            <element signature="e#867#868#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/utiles/Conversor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1662,121 +1672,266 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/CRUDGeneratorApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+        <state relative-caret-position="34">
+          <caret line="3" column="68" lean-forward="true" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/utiles/Conversor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/mvc/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/MYSQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="37" column="21" lean-forward="false" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/POSGRESQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="30" column="14" lean-forward="false" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/mvc/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="27" column="142" lean-forward="false" selection-start-line="27" selection-start-column="142" selection-end-line="27" selection-end-column="142" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/utiles/FileBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="35" column="50" lean-forward="false" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="35" lean-forward="false" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/properties/UserMachine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/alphateam/testCrud.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="306">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="29" column="61" lean-forward="false" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="36" column="40" lean-forward="true" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
-          <folding />
+        <state relative-caret-position="255">
+          <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/ViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        <state relative-caret-position="374">
+          <caret line="31" column="33" lean-forward="false" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/HtmlForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="68" column="55" lean-forward="true" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        <state relative-caret-position="351">
+          <caret line="64" column="33" lean-forward="false" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+        <state relative-caret-position="790">
+          <caret line="88" column="52" lean-forward="false" selection-start-line="88" selection-start-column="52" selection-end-line="88" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/SpringController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="91" column="65" lean-forward="false" selection-start-line="91" selection-start-column="65" selection-end-line="91" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/Mapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="31" column="42" lean-forward="false" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/StoreProcedure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="48" column="45" lean-forward="false" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="657">
+          <caret line="45" column="47" lean-forward="false" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="31" column="12" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+          <caret line="60" column="25" lean-forward="false" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaScriptsFunctions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="44" column="40" lean-forward="false" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/template/Template.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="85" column="49" lean-forward="false" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="33" lean-forward="false" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/alphateam/TestConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="63" column="44" lean-forward="false" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
+          <folding>
+            <element signature="e#714#715#0" expanded="true" />
+            <element signature="e#741#742#0" expanded="true" />
+            <element signature="e#775#776#0" expanded="true" />
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+            <element signature="e#889#890#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/ORACLE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="26" column="9" lean-forward="false" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/connection/Factory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="38" column="30" lean-forward="false" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MyBatisConf.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="54" column="26" lean-forward="true" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="56" column="26" lean-forward="true" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/JavaBeans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#6368#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state relative-caret-position="544">
+          <caret line="45" column="69" lean-forward="false" selection-start-line="45" selection-start-column="69" selection-end-line="45" selection-end-column="69" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/properties/Global.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
-          <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+        <state relative-caret-position="238">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2006">
+          <caret line="130" column="55" lean-forward="false" selection-start-line="130" selection-start-column="55" selection-end-line="130" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/query/Column.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="81" column="10" lean-forward="false" selection-start-line="81" selection-start-column="10" selection-end-line="81" selection-end-column="10" />
+        <state relative-caret-position="1479">
+          <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+          <folding>
+            <element signature="e#1532#1533#0" expanded="true" />
+            <element signature="e#1565#1566#0" expanded="true" />
+            <element signature="e#1599#1600#0" expanded="true" />
+            <element signature="e#1629#1630#0" expanded="true" />
+            <element signature="e#1675#1676#0" expanded="true" />
+            <element signature="e#1713#1714#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/alphateam/core/pattern/spring/MapperXml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
           <folding />
         </state>
       </provider>

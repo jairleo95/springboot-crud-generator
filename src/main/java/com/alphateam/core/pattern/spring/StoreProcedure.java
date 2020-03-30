@@ -14,6 +14,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -32,11 +34,13 @@ public class StoreProcedure extends Template {
     String tableColumns = "";
     String updateComparission = "";
 
+    private final Logger log = LogManager.getLogger(getClass().getName());
+    
     @Override
     public void buildParameters(Table table, Column c) {
         super.buildParameters(table, c);
 
-        column = c.format().getName();
+        column = c.getName();
 
             methodParams = "sp" + Conversor.firstCharacterToUpper(column);
             params += ToSql.headerParamsProcedure(methodParams, c, database);
@@ -50,7 +54,7 @@ public class StoreProcedure extends Template {
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
 
-        pkParams += "sp" +Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pk.getName().toLowerCase(), "_"));
+        pkParams += "sp" +Conversor.firstCharacterToUpper(pk.getName().toLowerCase());
         pkParams = ToSql.headerParamsProcedure(pkParams, pk, database);
     }
 
@@ -80,7 +84,7 @@ public class StoreProcedure extends Template {
         methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + colsParams + ")";
 
         //ruturn id
-        System.out.println("buildMethods.pks.size():"+pks.size());
+        log.debug("buildMethods.pks.size():"+pks.size());
             if (pks.size() == 1 & returnId) {
                 methods += " returning " + pks.get(0) + " into result ;";
             } else {
@@ -94,13 +98,13 @@ public class StoreProcedure extends Template {
             methods += ToSql.headerProcedure("spu_" + tnc.getName().toLowerCase(), params+", "+pkParams, database);
             //procedure body
             methods += "UPDATE " + tnc.getName() + " set " + updateComparission + " where ";
-            System.out.println("pks.size():"+pks.size());
+            log.debug("pks.size():"+pks.size());
 
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
                 }
             }
             methods += ";";
@@ -113,9 +117,9 @@ public class StoreProcedure extends Template {
             methods += "DELETE FROM " + tnc.getName() + " where ";
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(Conversor.toJavaFormat(pks.get(t), "_"));
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
                 }
             }
             methods += ";";
@@ -125,7 +129,7 @@ public class StoreProcedure extends Template {
             //Print all
         content = methods;
         generateProject(Global.SQL_SCRIPT_LOCATION, tnc.getName() + ".sql");
-        System.out.println(methods);
+        log.debug(methods);
 
     }
 

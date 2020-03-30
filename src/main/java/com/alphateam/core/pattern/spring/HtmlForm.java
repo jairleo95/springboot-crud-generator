@@ -12,6 +12,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -27,12 +29,12 @@ public class HtmlForm extends Template {
     String paramsPrimaryKey = "";
     String tableColumns = "";
 
-
+    private final Logger log = LogManager.getLogger(getClass().getName());
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
 
-        String columna = column.format().getName();
+        String columna = column.getName();
 
         parameters += ("<div class=\"form-group\">");
         parameters += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
@@ -60,10 +62,10 @@ public class HtmlForm extends Template {
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
 
-        String tableName = table.format().getName();
+        String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
-        System.out.println("/*TABLA :" + table.getName() + " ");
+        log.info("/*TABLA :" + table.getName() + " ");
 
         if (!paramsMethods.equals("")) {
             paramsMethods = paramsMethods.substring(0, (paramsMethods.length() - 1));
@@ -128,8 +130,8 @@ public class HtmlForm extends Template {
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
 
-        String columna = fk.format().getName();
-        String column = Conversor.firstCharacterToUpper(fk.format().getName());
+        String columna = fk.getName();
+        String column = Conversor.firstCharacterToUpper(fk.getName());
 
         parameters += ("<label>" + column + "</label>");
         parameters += ("</br>");
@@ -138,14 +140,14 @@ public class HtmlForm extends Template {
         parameters += ("</select>");
         parameters += ("</br>");
 
-        tableColumns +="<th>"+fk.format().getForeignColumn()+"</th>";
+        tableColumns +="<th>"+fk.getForeignColumn()+"</th>";
     }
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
 
-        String columna = pk.format().getName();
+        String columna = pk.getName();
         parameters += ("<input name='" + columna + "' type='hidden' />");
     }
 

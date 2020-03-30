@@ -31,7 +31,7 @@ public class MyBatisConf extends Template {
     public Table table(Table table) {
         super.table(table);
 
-            String tableName = Conversor.toJavaFormat(table.getName(), "_");
+            String tableName = table.format().getName();
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             String beanName = tableEntity + "Bean";
 
@@ -57,7 +57,7 @@ public class MyBatisConf extends Template {
         content += ("    </mappers>\n" +
                 "</configuration> \n");
 
-        FileBuilder.writeFolderAndFile(Global.RESOURCES_LOCATION  + "\\", "mybatis-config.xml", content);
+        new FileBuilder().writeFolderAndFile(Global.RESOURCES_LOCATION  + "\\", "mybatis-config.xml", content);
     }
 
 }

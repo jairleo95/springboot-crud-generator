@@ -19,24 +19,39 @@ apply plugin: 'org.springframework.boot'
 group 'com.alphateam'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 bootRun {
     addResources = true
 }
 
-/*bootRepackage {
+bootRepackage {
     mainClass = 'com.com.alphateam.CRUDGeneratorApplication'
 }
-*/
+
 repositories {
             mavenCentral()
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
+    [
+            compile ('org.springframework.boot:spring-boot-starter-web'),
+            compile('org.springframework.boot:spring-boot-starter-actuator')
+    ].each { dep ->
+        compile(dep) {
+            exclude module: "log4j-over-slf4j"
+            exclude module: "logback-classic"
+        }
+    }
+
+    //db connectors
     compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.6'
     compile files('libs/ojdbc7.jar')
+
+    //log4j, and exclude from web and actuator
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.1.RELEASE'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.8.5'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

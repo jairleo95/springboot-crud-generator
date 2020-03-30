@@ -12,6 +12,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -23,9 +25,11 @@ import java.util.List;
 
 public class Mapper extends Template {
 
+
+    private final Logger log = LogManager.getLogger(getClass().getName());
     @Override
     public void primaryKeys(Table table, Column pk) {
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.getName();
         super.primaryKeys(table, pk);
         String dataType = ToJava.getDataType(pk.getDataType());
     }
@@ -34,13 +38,13 @@ public class Mapper extends Template {
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
 
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
         String beanName = tableEntity + "Bean";
         //pkParameters = clearLastComma(pkParameters);
 
-        System.out.println("//TABLA :" + table.getName());
+        log.info("//TABLA :" + table.getName());
         //Print
         content += ("package "+Global.PACKAGE_NAME +".mapper;");
         content += ("import java.util.List;");

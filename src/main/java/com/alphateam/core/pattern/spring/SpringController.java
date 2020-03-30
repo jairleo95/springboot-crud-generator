@@ -13,6 +13,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /*
 *
  *
@@ -32,12 +34,13 @@ public class SpringController extends Template {
 
     String projectID = Global.PACKAGE_NAME;
 
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-        String tableName = table.format().getName();
-        String columna =pk.format().getName();
+        String tableName = table.getName();
+        String columna =pk.getName();
         dataType = ToJava.getDataType(pk.getDataType());
         setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
     }
@@ -46,8 +49,8 @@ public class SpringController extends Template {
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
 
-        String tableName = table.format().getName();
-        String columna = column.format().getName();
+        String tableName = table.getName();
+        String columna = column.getName();
 
         dataType = ToJava.getDataType(column.getDataType());
         setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + "(" + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
@@ -58,10 +61,10 @@ public class SpringController extends Template {
     public void foreignKeys(Table table, Column fk) {
         super.foreignKeys(table, fk);
 
-        String tableName = table.format().getName();
-        String ForeignColumnEnty = Conversor.firstCharacterToUpper(fk.format().getForeignColumn());
+        String tableName = table.getName();
+        String ForeignColumnEnty = Conversor.firstCharacterToUpper(fk.getForeignColumn());
 
-        //colsParams += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(fk.format().getForeignColumn()) + "(";
+        //colsParams += ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + Conversor.firstCharacterToUpper(fk.getForeignColumn()) + "(";
          dataType = ToJava.getDataType(dataType);
 
         setters += (tableName + ".get" + Conversor.firstCharacterToUpper(fk.getName()) + "().set" + ForeignColumnEnty + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + fk.getName() + "\"))); \n");
@@ -71,13 +74,13 @@ public class SpringController extends Template {
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
 
-        String tableName = Conversor.toJavaFormat(table.getName(), "_");
+        String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
 
         imports += ToJava.getImportsByDataType(dataType);
 
-        System.out.println("//TABLA :" + table.getName());
+        log.info("//TABLA :" + table.getName());
 
 
         String beanName = tableEntity + "Bean";
@@ -182,7 +185,6 @@ public class SpringController extends Template {
 
         content += ("} \n");
         generateProject(Global.CONTROLLER_LOCATION  + "\\", tableEntity + "Controller.java");
-        //System.out.println(content);
     }
 
     @Override

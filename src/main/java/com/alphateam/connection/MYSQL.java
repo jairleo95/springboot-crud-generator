@@ -5,6 +5,9 @@
  */
 package com.alphateam.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -14,6 +17,7 @@ import java.sql.SQLException;
  */
 public final class MYSQL extends Connection {
 
+    private final Logger log = LogManager.getLogger(getClass().getName());
     public MYSQL(String[] parametro) {
         this.parametro = parametro;
         this.open();
@@ -26,12 +30,12 @@ public final class MYSQL extends Connection {
             Class.forName("com.mysql.jdbc.Driver");
             this.conex = DriverManager.getConnection(url, this.parametro[2], this.parametro[3]);
         } catch (ClassNotFoundException e) {
-            System.out.println("SQLException: " + e.getMessage());
+            log.error("SQLException: " + e.getMessage());
         } catch (SQLException e) {
             // handle any errors
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            log.error("SQLException: " + e.getMessage());
+            log.error("SQLState: " + e.getSQLState());
+            log.error("VendorError: " + e.getErrorCode());
         }
         return this.conex;
     }

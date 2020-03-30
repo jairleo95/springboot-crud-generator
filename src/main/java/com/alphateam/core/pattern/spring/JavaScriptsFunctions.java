@@ -18,22 +18,22 @@ public class JavaScriptsFunctions extends Template {
 
     @Override
     public void buildParameters(Table table, Column column) {
-        String columna = Conversor.toJavaFormat(column.getName(), "_");
+        String columna = column.getName();
         tableColumns +="{\"data\": \""+columna+"\"},\n";
     }
 
     @Override
     public void foreignKeys(Table fkTable, Column fk) {
         super.foreignKeys(fkTable, fk);
-        String tableName = Conversor.toJavaFormat(fk.getForeignTable(), "_");
+        String tableName = fk.getForeignTable();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
-        String column = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getName(), "_"));
+        String column = Conversor.firstCharacterToUpper(fk.getName());
 
         formSelects +=   "var select"+column+" = $('.select"+column+"');\n" +
-                        "getSelectItems({url:'"+tableEntity+"',select:select"+column+",name:'"+Conversor.toJavaFormat(fk.getName(), "_")+"'}); \n" ;
+                        "getSelectItems({url:'"+tableEntity+"',select:select"+column+",name:'"+fk.getName()+"'}); \n" ;
 
-        String columna = Conversor.toJavaFormat(fk.getName(), "_");
+        String columna = fk.getName();
 
         tableColumns +="{\"data\": \""+columna+"\"},\n";
 
@@ -42,7 +42,7 @@ public class JavaScriptsFunctions extends Template {
     @Override
     public void buildMethods(Table tnc, List<String> pks) {
         super.buildMethods(tnc, pks);
-        String tableName = Conversor.toJavaFormat(tnc.getName(), "_");
+        String tableName = tnc.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
         content +="/*form variables*/   \n";

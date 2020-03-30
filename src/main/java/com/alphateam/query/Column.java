@@ -11,6 +11,7 @@ public class Column {
 
     private String tableName;
     private String name;
+    private String rawName;
     private String dataType;
     private String length;
     private String attributeNumber;
@@ -24,6 +25,7 @@ public class Column {
     public Column() {
         this.tableName = "";
         this.name = "";
+        this.rawName= "";
         this.dataType = "";
         this.length = "";
         this.attributeNumber ="";
@@ -68,6 +70,14 @@ public class Column {
 
     public boolean isPrimaryKey() {
         return primaryKey;
+    }
+
+    public String getRawName() {
+        return rawName;
+    }
+
+    public void setRawName(String rawName) {
+        this.rawName = rawName;
     }
 
     public void setPrimaryKey(boolean primaryKey) {
@@ -120,13 +130,15 @@ public class Column {
     @Override
     public String toString() {
         return "Column{" +
-                "name='" + name + '\'' +
+                "tableName='" + tableName + '\'' +
+                ", name='" + name + '\'' +
+                ", rawName='" + rawName + '\'' +
                 ", dataType='" + dataType + '\'' +
                 ", length='" + length + '\'' +
                 ", attributeNumber='" + attributeNumber + '\'' +
-                ", foreignKey=" + foreignKey +
                 ", foreignTable='" + foreignTable + '\'' +
                 ", foreignColumn='" + foreignColumn + '\'' +
+                ", foreignKey=" + foreignKey +
                 ", primaryKey=" + primaryKey +
                 '}';
     }

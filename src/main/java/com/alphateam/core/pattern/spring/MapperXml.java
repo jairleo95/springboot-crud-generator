@@ -35,8 +35,8 @@ public class MapperXml extends Template {
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
-        String columna = Conversor.toJavaFormat(pk.getName(), "_");
-        parameters += ("       <id property=\"" + columna + "\" column=\"" + pk.getName() + "\" />\n");
+        String columna = pk.getName();
+        parameters += ("       <id property=\"" + columna + "\" column=\"" + pk.getRawName() + "\" />\n");
         paramsPrimaryKey += "#{" +columna + "},";
     }
 
@@ -44,9 +44,9 @@ public class MapperXml extends Template {
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
 
-        String columna = Conversor.toJavaFormat(fk.getName(), "_");
-        String tableBean = Conversor.firstCharacterToUpper(Conversor.toJavaFormat(fk.getForeignTable(), "_"))+"Bean";
-            String ForeignColumnBean = Conversor.toJavaFormat(fk.getForeignColumn(), "_");
+        String columna = fk.getName();
+        String tableBean = Conversor.firstCharacterToUpper((fk.getForeignTable())+"Bean");
+            String ForeignColumnBean = fk.getForeignColumn();
 
            associatonColumns += "<association property=\"" + columna + "\" javaType=\"" + tableBean + "\">\n";
 
@@ -54,9 +54,9 @@ public class MapperXml extends Template {
 
             for (int hh = 0; hh < foreignColumns.size(); hh++) {
 
-                String columnNameFk = foreignColumns.get(hh).getName();
+                String columnNameFk = foreignColumns.get(hh).getRawName();
                 if (columnNameFk.equals(fk.getForeignColumn())) {
-                    associatonColumns += "          <id column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></id>\n";
+                    associatonColumns += "          <id column=\"" + columnNameFk + "\" property=\"" + columnNameFk + "\"></id>\n";
                 } else {
                     //associatonColumns += "          <result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>\n";
                 }
@@ -70,9 +70,9 @@ public class MapperXml extends Template {
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
-        String columna = column.format().getName();
+        String columna = column.getName();
 
-        parameters += ("       <result property=\"" + columna + "\" column=\"" + column.getName() + "\" />\n");
+        parameters += ("       <result property=\"" + columna + "\" column=\"" + column.getRawName() + "\" />\n");
         paramsMethods += "#{" + columna + "},";
     }
 
@@ -80,7 +80,7 @@ public class MapperXml extends Template {
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
 
-        String tableName = table.format().getName();
+        String tableName = table.getName();
         String tableBean = Conversor.firstCharacterToUpper(tableName)+"Bean";
 
 
@@ -98,7 +98,7 @@ public class MapperXml extends Template {
         methods += "</select>\n";
         //getAll
         methods += "<select id=\"read\" resultMap=\"" + tableName + "Map\" >\n";
-        methods += "select * from " + table.getName() + "";
+        methods += "select * from " + table.getRawName() + "";
         methods += "</select>\n";
 
         //*EDIT METHOD
@@ -116,9 +116,9 @@ public class MapperXml extends Template {
         methods += "select * from " + table.getName() + " where ";
         for (int ii = 0; ii < pks.size(); ii++) {
             if (ii == 0) {
-                methods += pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
+                methods += pks.get(ii) + " = " + "#{" + pks.get(ii) + "} ";
             } else {
-                methods += " and " + pks.get(ii) + " = " + "#{" + Conversor.toJavaFormat(pks.get(ii), "_") + "} ";
+                methods += " and " + pks.get(ii) + " = " + "#{" + pks.get(ii) + "} ";
             }
 
         }

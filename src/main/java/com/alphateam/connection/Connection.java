@@ -6,6 +6,9 @@
 package com.alphateam.connection;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,9 +23,10 @@ public abstract class Connection {
     public java.sql.Connection conex;
 
     abstract java.sql.Connection open();
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
     public ResultSet query(String sql) {
-        System.out.println("query  :" + sql);
+        log.debug("query :" + sql);
         Statement st;
         ResultSet rs = null;
         try {

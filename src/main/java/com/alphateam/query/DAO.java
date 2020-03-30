@@ -7,6 +7,8 @@ package com.alphateam.query;
 
 import com.alphateam.connection.Connection;
 import com.alphateam.connection.Factory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +23,7 @@ public class DAO {
 
     Connection conn;
     int database = Factory.getDefaultDB();
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
     public Column getForeignKey(String table, String column) {
         Column c  = new Column();
@@ -113,6 +116,7 @@ public class DAO {
                 c.setTableName(rs.getString(1));/*table name*/
                 //todo:refactor
                 c.setName(rs.getString(2).replace("#", ""));
+                c.setRawName(rs.getString(2).replace("#", ""));
                 c.setDataType(rs.getString(3));
                 c.setLength(rs.getString(4));
                 c.setPrimaryKey(Boolean.parseBoolean(rs.getString("PK_COLUMN")));
@@ -142,13 +146,14 @@ public class DAO {
         List<Table> x = new ArrayList<>();
         try {
             this.conn = Factory.open(database);
-            System.out.println("tipo bd:" + database);
+            log.debug("tipo bd:" + database);
             sql = sql.replace("{schema}",Factory.getSchema());
             ResultSet rs = this.conn.query(sql);
 
             while (rs.next()) {
                 Table table = new Table();
                 table.setName(rs.getString(1));
+                table.setRawName(rs.getString(1));
                 table.setNumColumns(Integer.parseInt(rs.getString(2)));
                 x.add(table);
             }
@@ -161,7 +166,7 @@ public class DAO {
             try {
                 this.conn.close();
             } catch (Exception e) {
-                System.out.println(e);
+                log.error(e);
                 throw new RuntimeException(e.getMessage());
             }
         }

@@ -9,6 +9,8 @@ import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /*
 *
  *
@@ -23,12 +25,14 @@ public class ViewController extends Template {
     String projectID = Global.PACKAGE_NAME;
     String controllers="";
 
+    private final Logger log = LogManager.getLogger(getClass().getName());
+
     @Override
     public Table table(Table table) {
-        String tableName = table.format().getName();
+        String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
-        System.out.println("//TABLA :" + table.getName());
+        log.info("//TABLA :" + table.getName());
 
         controllers += ("\t@RequestMapping(value = \"form"+tableEntity+"\") public ModelAndView form"+tableEntity+"() {\n" +
                 "\t\treturn  new ModelAndView(\"/views/"+tableEntity+"/form"+tableEntity+".html\");\n" +

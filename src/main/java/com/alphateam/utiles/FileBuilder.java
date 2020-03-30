@@ -12,17 +12,20 @@ package com.alphateam.utiles;
 import java.io.File;
 import java.io.FileWriter;
 import com.alphateam.properties.Global;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FileBuilder {
+    private final Logger log = LogManager.getLogger(getClass().getName());
 
-    public static Boolean writeFolderAndFile(String directory, String file, String content) {
-        String ubicacion = Global.DEFAULT_PROJECT_LOCATION;
+    public Boolean writeFolderAndFile(String directory, String file, String content) {
+        String location = Global.DEFAULT_PROJECT_LOCATION;
         Boolean x = false;
         try {
             //Crear un objeto File se encarga de crear o abrir acceso a un archivo que se especifica en su constructor
-            File directorio = new File(ubicacion + directory);
+            File directorio = new File(location + directory);
             directorio.mkdirs();
-            File archivo = new File(ubicacion + directory + file);
+            File archivo = new File(location + directory + file);
             //Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
             FileWriter escribir = new FileWriter(archivo, false);
             //Escribimos en el archivo con el metodo write 
@@ -30,11 +33,11 @@ public class FileBuilder {
             x = true;
             //Cerramos la conexion
             escribir.close();
-            System.out.println("file generated:"+ubicacion + directory + file);
+            log.debug("file generated:"+location + directory + file);
 
         } //Si existe un problema al escribir entra aqui
         catch (Exception e) {
-            System.out.println("Error " + e.getMessage());
+            log.error("Error " + e.getMessage());
             x = false;
         }
         return x;

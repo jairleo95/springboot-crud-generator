@@ -11,6 +11,8 @@ import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,7 +21,6 @@ import java.util.List;
  * @author Jairleo95
  */
 public class JavaBeans extends Template {
-
 
     String variables = "";
     String instanceBean = "";
@@ -32,13 +33,17 @@ public class JavaBeans extends Template {
     String toStringColumns="";
     String projectID = Global.PACKAGE_NAME;
 
+    //private final Logger log = LogManager.getLogger(getClass().getName());
+
     @Override
     public void foreignKeys(Table table, Column column) {
         super.foreignKeys(table, column);
 
-        String columnName = column.format().getName();
-        String TableBean = Conversor.firstCharacterToUpper(column.format().getForeignTable()) + "Bean";
-        String beanColumn = column.format().getName();
+        String columnName = column.getName();
+
+        String TableBean = Conversor.firstCharacterToUpper(column.getForeignTable()) + "Bean";
+        String beanColumn = column.getName();
+
 
         variables += ("private " + TableBean + " " + beanColumn + "; \n");
 
@@ -56,7 +61,7 @@ public class JavaBeans extends Template {
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
 
-        String columnName = pk.format().getName();
+        String columnName = pk.getName();
         String dataType = ToJava.getDataType(pk.getDataType());
 
         variables += ("@JsonProperty(\""+columnName+"\") \n");
@@ -76,7 +81,7 @@ public class JavaBeans extends Template {
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table, column);
 
-        String columna = column.format().getName();
+        String columna = column.getName();
         String dataType = ToJava.getDataType(column.getDataType());
 
         variables += ("@JsonProperty(\""+columna+"\") \n");
@@ -100,16 +105,16 @@ public class JavaBeans extends Template {
     public void column(Column column) {
         super.column(column);
 
-        String columnName = column.format().getName();
+        //String columnName = column.getName();
 
-        toStringColumns += ("\n + \"" +  columnName + "='\" +"+columnName+"+ '\\'' + "+"\",\"");
+        toStringColumns += ("\n + \"" +  column.getName() + "='\" +"+column.getName()+"+ '\\'' + "+"\",\"");
     }
 
     @Override
     public void buildMethods(Table table, List<String> pks) {
         super.buildMethods(table, pks);
 
-        String tableName = table.format().getName();
+        String tableName = table.getName();
         String beanName = Conversor.firstCharacterToUpper(tableName + "Bean");
 
 
