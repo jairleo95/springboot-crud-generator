@@ -11,7 +11,8 @@ package com.alphateam.properties;
  */
 public class Global {
 
-    public static final String DEFAULT_PROJECT_LOCATION = "D:\\Software Development\\crud-generator-project\\generated-projects\\DSP\\";
+    public static final String DEFAULT_PROJECT_LOCATION = "D:\\Software Development\\crud-generator-project\\generated-projects\\gth-crud\\";
+
     public static final String SRC_LOCATION = "src\\main\\java\\";
     public static final String PACKAGE_NAME2 = "com\\hpe\\";
     public static final String PROJECT_NAME_LOCATION = SRC_LOCATION + PACKAGE_NAME2;
@@ -41,10 +42,10 @@ public class Global {
 
     /*oracle bd connection */
     public static final String HOSTNAME = "DESKTOP-MS5NN2M";
-    public static final String USER = "SDSPMAIN001";
-    public static final String USER_PWD = "SDSPMAIN001";
-    public static final String PORT = "1522";
-    public static final String SID = "orcl";
+    public static final String USER = "procesosrh";
+    public static final String USER_PWD = "gestionrrhh";
+    public static final String PORT = "1521";
+    public static final String SID = "xe";
     public static final int MAX_CHARACTER_IDENTIFIER= 30;
 
     /*Mysql*/

@@ -30,9 +30,10 @@ public class HtmlForm extends Template {
     String tableColumns = "";
 
     private final Logger log = LogManager.getLogger(getClass().getName());
+
     @Override
-    public void buildParameters(Table table, Column column) {
-        super.buildParameters(table, column);
+    public void column(Column column) {
+        super.column(column);
 
         String columna = column.getName();
 
@@ -140,7 +141,7 @@ public class HtmlForm extends Template {
         parameters += ("</select>");
         parameters += ("</br>");
 
-        tableColumns +="<th>"+fk.getForeignColumn()+"</th>";
+        //tableColumns +="<th>"+fk.getForeignColumn()+"</th>";
     }
 
     @Override
@@ -149,6 +150,7 @@ public class HtmlForm extends Template {
 
         String columna = pk.getName();
         parameters += ("<input name='" + columna + "' type='hidden' />");
+        //tableColumns +="<th>"+columna+"</th>";
     }
 
     @Override

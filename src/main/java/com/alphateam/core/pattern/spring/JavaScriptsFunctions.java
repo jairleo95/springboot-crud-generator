@@ -42,6 +42,7 @@ public class JavaScriptsFunctions extends Template {
     @Override
     public void buildMethods(Table tnc, List<String> pks) {
         super.buildMethods(tnc, pks);
+
         String tableName = tnc.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 

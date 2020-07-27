@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.alphateam.core.pattern.mvc;
+package com.alphateam.core.pattern.simplemvc;
 
 import com.alphateam.connection.Connection;
 import com.alphateam.connection.Factory;

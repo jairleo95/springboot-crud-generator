@@ -29,7 +29,7 @@ public class ViewController extends Template {
 
     @Override
     public Table table(Table table) {
-        String tableName = table.getName();
+        String tableName = table.format().getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
         log.info("//TABLA :" + table.getName());

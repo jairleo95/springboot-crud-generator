@@ -22,10 +22,10 @@ public class MainController {
 
     @RequestMapping(value = "/test",method = {RequestMethod.GET}, produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<?> test() {
-        JavaBeans j = new JavaBeans();
+       JavaBeans j = new JavaBeans();
         j.build();
 
-        SpringController sc =  new SpringController();
+        /* SpringController sc =  new SpringController();
         sc.build();
 
         SpringService s = new SpringService();
@@ -42,8 +42,17 @@ public class MainController {
         mapper.build();
         MyBatisConf conf = new MyBatisConf();
         conf.build();
-        ViewController v = new ViewController();
-        v.build();
-        return new ResponseEntity<>("", HttpStatus.OK);
+
+*/
+
+//        ViewController v = new ViewController();
+//        v.build();
+//        HtmlForm h = new HtmlForm();
+//        h.build();
+//
+//        JavaScriptsFunctions jsf = new JavaScriptsFunctions();
+//        jsf.build();
+
+       return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
