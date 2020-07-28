@@ -50,17 +50,19 @@ public class MapperXml extends Template {
 
            associatonColumns += "<association property=\"" + columna + "\" javaType=\"" + tableBean + "\">\n";
 
-            List<Column> foreignColumns =  dao.getColumsProperties(fk.getForeignTable());
-
-            for (int hh = 0; hh < foreignColumns.size(); hh++) {
-
-                String columnNameFk = foreignColumns.get(hh).getRawName();
-                if (columnNameFk.equals(fk.getForeignColumn())) {
-                    associatonColumns += "          <id column=\"" + columnNameFk + "\" property=\"" + columnNameFk + "\"></id>\n";
-                } else {
-                    //associatonColumns += "          <result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>\n";
-                }
-            }
+           //todo: refactor this
+//
+//            List<Column> foreignColumns =  dao.getColumsProperties(fk.getForeignTable());
+//
+//            for (int hh = 0; hh < foreignColumns.size(); hh++) {
+//
+//                String columnNameFk = foreignColumns.get(hh).getRawName();
+//                if (columnNameFk.equals(fk.getForeignColumn())) {
+//                    associatonColumns += "          <id column=\"" + columnNameFk + "\" property=\"" + columnNameFk + "\"></id>\n";
+//                } else {
+//                    //associatonColumns += "          <result column=\"" + columnNameFk + "\" property=\"" + Conversor.toJavaFormat(columnNameFk, "_") + "\"></result>\n";
+//                }
+//            }
 
             associatonColumns += "</association>\n";
             paramsMethods += "#{" + columna + "" + ForeignColumnBean + "},";

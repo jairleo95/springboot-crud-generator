@@ -11,6 +11,8 @@ package com.alphateam.utiles;
  */
 import java.io.File;
 import java.io.FileWriter;
+
+import com.alphateam.app.configurtions.AppConfiguration;
 import com.alphateam.properties.Global;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +21,10 @@ public class FileBuilder {
     private final Logger log = LogManager.getLogger(getClass().getName());
 
     public Boolean writeFolderAndFile(String directory, String file, String content) {
-        String location = Global.DEFAULT_PROJECT_LOCATION;
+
+        String location = AppConfiguration.instance().getConfig().getOutputLocation();
+
+        //String location = Global.DEFAULT_PROJECT_LOCATION;
         Boolean x = false;
         try {
             //Crear un objeto File se encarga de crear o abrir acceso a un archivo que se especifica en su constructor

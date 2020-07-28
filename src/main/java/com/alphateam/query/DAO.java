@@ -103,7 +103,7 @@ public class DAO {
         return x;
     }
 
-    public List<Column> getColumsProperties(String tableName ) {
+    public List<Column> getColumsProperties(/*String tableName*/ ) {
         List<Column> x = new ArrayList<>();
         String sql = Query.getTableXColumsProperties(database);
         try {

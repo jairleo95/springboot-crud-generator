@@ -5,6 +5,8 @@
  */
 package com.alphateam.connection;
 
+import com.alphateam.app.configurtions.AppConfiguration;
+import com.alphateam.app.configurtions.Config;
 import com.alphateam.properties.Global;
 
 /**
@@ -17,20 +19,26 @@ public class Factory {
     public static final int ORACLE = 2;
     public static final int POSGRESQL = 3;
 
-    public static String[] configMYSQL = {Global.HOSTNAME_MYSQL, Global.DATABASE_MYSQL, Global.USER_MYSQL, Global.PWD_MYSQL};
 
-    public static String[] configORACLE = {Global.USER, Global.USER_PWD, Global.HOSTNAME, Global.PORT, Global.SID};
-
-    public static String[] configPOSGRESQL = {Global.HOSTNAME_PS, Global.DATABASE_PS, Global.USER_PS, Global.PWD_PS};
 
     public static int getDefaultDB() {
         return ORACLE;
     }
     public static String getSchema(){
-        return Global.USER;
+        return AppConfiguration.instance().getConfig().getUsername();
     }
 
     public static Connection open(int typeDB) {
+        Config c = AppConfiguration.instance().getConfig();
+
+        System.out.println("configuration file json:" +c.toString());
+
+        String[] configMYSQL = {c.getHostname(), c.getDbName(), c.getUsername(), c.getPassword()};
+
+        String[] configORACLE = {c.getUsername(), c.getPassword(), c.getHostname(), c.getPort(), c.getDbName()};
+
+        String[] configPOSGRESQL = {c.getHostname(), c.getDbName(), c.getUsername(), c.getPassword()};
+
         switch (typeDB) {
             case Factory.MYSQL:
                 return new MYSQL(configMYSQL);

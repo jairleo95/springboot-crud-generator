@@ -54,20 +54,22 @@ public class Template extends Core implements Methods{
     public void init() {
         database = Factory.getDefaultDB();
         returnId = false;
+
         conn = Factory.open(database);
         dao = new DAO();
+
         tables = dao.getWithColumnsNumber();
         loadColumns();
     }
 
     public void loadColumns(){
         //allcolumns
-        columns = dao.getColumsProperties("");
+        columns = dao.getColumsProperties();
         for (int r = 0; r < tables.size(); r++) {
             Table t = tables.get(r);
             LinkedList<Column> column = new LinkedList<>();
 
-            for (int h = 0; h < columns.size(); h++) {
+            for(int h = 0; h < columns.size(); h++) {
                 if (columns.get(h).getTableName().equals(t.getName())){
                     column.add(columns.get(h));
                 }
@@ -255,8 +257,7 @@ public class Template extends Core implements Methods{
         return string;
     }
 }
-final class Task implements Runnable
-{
+final class Task implements Runnable {
     private Table table;
 
     public Task(Table table)
@@ -265,10 +266,7 @@ final class Task implements Runnable
     }
 
     @Override
-    public void run()
-    {
-
-        System.out.println("Task ID : " + this.table.toString() + " performed by "
-                + Thread.currentThread().getName());
+    public void run(){
+        System.out.println("Task ID : " + this.table.toString() + " performed by " + Thread.currentThread().getName());
     }
 }
