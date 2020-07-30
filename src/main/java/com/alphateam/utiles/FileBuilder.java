@@ -12,8 +12,7 @@ package com.alphateam.utiles;
 import java.io.File;
 import java.io.FileWriter;
 
-import com.alphateam.app.configurtions.AppConfiguration;
-import com.alphateam.properties.Global;
+import com.alphateam.app.base.ApplicationClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class FileBuilder {
 
     public Boolean writeFolderAndFile(String directory, String file, String content) {
 
-        String location = AppConfiguration.instance().getConfig().getOutputLocation();
+        String location = ApplicationClass.instance().getConfig().getOutputLocation();
 
         //String location = Global.DEFAULT_PROJECT_LOCATION;
         Boolean x = false;

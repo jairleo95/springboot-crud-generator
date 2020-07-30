@@ -35,8 +35,8 @@ public class MyBatisConf extends Template {
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             String beanName = tableEntity + "Bean";
 
-            aliases += ("   <typeAlias alias=\""+beanName+"\" type=\"com.hpe.bean."+beanName+"\"></typeAlias>\n");
-            mappers += ("   <mapper resource=\"com/hpe/mapper/"+tableName+"-mapper.xml\" /> \n");
+            aliases += ("   <typeAlias alias=\""+beanName+"\" type=\"com.app.bean."+beanName+"\"></typeAlias>\n");
+            mappers += ("   <mapper resource=\"com/app/mapper/"+tableName+"-mapper.xml\" /> \n");
             return table;
          }
 

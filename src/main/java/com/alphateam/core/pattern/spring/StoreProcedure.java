@@ -129,7 +129,7 @@ public class StoreProcedure extends Template {
             //Print all
         content = methods;
         generateProject(Global.SQL_SCRIPT_LOCATION, tnc.getName() + ".sql");
-        log.debug(methods);
+        //log.debug(methods);
 
     }
 

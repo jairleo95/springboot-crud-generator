@@ -5,8 +5,6 @@
  */
 package com.alphateam.properties;
 
-import com.alphateam.app.configurtions.AppConfiguration;
-
 /**
  *
  * @author ALPHA
@@ -16,7 +14,7 @@ public class Global {
     //public static final String DEFAULT_PROJECT_LOCATION = "D:\\Software Development\\crud-generator-project\\generated-projects\\gth-crud\\";
 
     public static final String SRC_LOCATION = "\\src\\main\\java\\";
-    public static final String PACKAGE_NAME2 = "com\\hpe\\";
+    public static final String PACKAGE_NAME2 = "com\\app\\";
     public static final String PROJECT_NAME_LOCATION = SRC_LOCATION + PACKAGE_NAME2;
     public static final String PACKAGE_NAME = "com.app";
 
@@ -29,7 +27,7 @@ public class Global {
     public static final String SPLIT_CRITERIA = "_" ;
 
 
-    public static final String RESOURCES_LOCATION = "src\\main\\" + "resources\\";
+    public static final String RESOURCES_LOCATION = "\\src\\main\\" + "resources\\";
     public static final String MAPPER_XML_LOCATION = RESOURCES_LOCATION+PACKAGE_NAME2+"\\mapper\\" ;
     public static final String VIEW_LOCATION = RESOURCES_LOCATION+ "static\\views\\" ;
     public static final String JS_SCRIPT_LOCATION = RESOURCES_LOCATION+ "static\\js\\business-logic\\" ;

@@ -136,7 +136,7 @@ public class SpringService extends Template {
         content += ("} \n");
 
         generateProject(Global.SERVICE_LOCATION+ "\\", tableEntity + "Service.java");
-        System.out.println(content);
+//        System.out.println(content);
     }
 
     @Override

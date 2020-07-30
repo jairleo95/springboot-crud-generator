@@ -5,9 +5,8 @@
  */
 package com.alphateam.connection;
 
-import com.alphateam.app.configurtions.AppConfiguration;
+import com.alphateam.app.base.ApplicationClass;
 import com.alphateam.app.configurtions.Config;
-import com.alphateam.properties.Global;
 
 /**
  *
@@ -25,11 +24,11 @@ public class Factory {
         return ORACLE;
     }
     public static String getSchema(){
-        return AppConfiguration.instance().getConfig().getUsername();
+        return ApplicationClass.instance().getConfig().getUsername();
     }
 
     public static Connection open(int typeDB) {
-        Config c = AppConfiguration.instance().getConfig();
+        Config c = ApplicationClass.instance().getConfig();
 
         System.out.println("configuration file json:" +c.toString());
 

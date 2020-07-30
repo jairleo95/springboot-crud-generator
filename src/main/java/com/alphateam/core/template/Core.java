@@ -5,7 +5,8 @@
  */
 package com.alphateam.core.template;
 
-import com.alphateam.connection.Connection;
+import com.alphateam.app.base.ApplicationClass;
+
 import java.util.List;
 
 import com.alphateam.query.Column;
@@ -18,7 +19,8 @@ import com.alphateam.query.Table;
  */
 public abstract class Core {
 
-    protected Connection conn;
+    protected ApplicationClass app;
+    //protected Connection conn;
     protected int database;
     protected boolean returnId;
     protected DAO dao;

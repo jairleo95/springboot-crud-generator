@@ -7,10 +7,10 @@ import java.io.FileNotFoundException;
 
 abstract public class Configuration {
     protected Logger logger = LogManager.getLogger(getClass().getName());
-    protected String fileName;
+    protected Config config;
 
-    public Configuration(String fileName){
-        this.fileName = fileName;
+    public Configuration(Config config){
+        this.config = config;
     }
 
     abstract public void reload();

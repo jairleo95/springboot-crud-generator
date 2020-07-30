@@ -5,10 +5,10 @@
  */
 package com.alphateam.core.template;
 
+import com.alphateam.app.base.ApplicationClass;
 import com.alphateam.connection.Factory;
 import com.alphateam.convert.ToJava;
 import com.alphateam.query.Column;
-import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -52,34 +51,16 @@ public class Template extends Core implements Methods{
 
     @Override
     public void init() {
+        log.debug("Enter to init() method.");
+
         database = Factory.getDefaultDB();
         returnId = false;
 
-        conn = Factory.open(database);
-        dao = new DAO();
+        app = ApplicationClass.instance();
 
-        tables = dao.getWithColumnsNumber();
-        loadColumns();
+        tables = app.getTableList();
+        columns = app.getColumnsList();
     }
-
-    public void loadColumns(){
-        //allcolumns
-        columns = dao.getColumsProperties();
-        for (int r = 0; r < tables.size(); r++) {
-            Table t = tables.get(r);
-            LinkedList<Column> column = new LinkedList<>();
-
-            for(int h = 0; h < columns.size(); h++) {
-                if (columns.get(h).getTableName().equals(t.getName())){
-                    column.add(columns.get(h));
-                }
-            }
-
-            t.setColumn(column);
-            tables.set(r,t);
-        }
-    }
-
 
     //refactoring
     public void build() {
