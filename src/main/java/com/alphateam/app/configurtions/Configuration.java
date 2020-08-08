@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.FileNotFoundException;
 
 abstract public class Configuration {
-    protected Logger logger = LogManager.getLogger(getClass().getName());
+    //protected Logger logger = LogManager.getLogger(getClass().getName());
     protected Config config;
 
     public Configuration(Config config){

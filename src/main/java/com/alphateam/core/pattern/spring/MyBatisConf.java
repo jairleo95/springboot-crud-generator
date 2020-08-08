@@ -5,16 +5,11 @@
  */
 package com.alphateam.core.pattern.spring;
 
-import com.alphateam.connection.Factory;
-import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
-import com.alphateam.query.Column;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
-
-import java.util.List;
 
 /**
  *
@@ -28,10 +23,10 @@ public class MyBatisConf extends Template {
     String mappers ="";
     String content ="";
     @Override
-    public Table table(Table table) {
-        super.table(table);
+    public Table processTable(Table table) {
+        super.processTable(table);
 
-            String tableName = table.format().getName();
+            String tableName = table.getName();
             String tableEntity = Conversor.firstCharacterToUpper(tableName);
             String beanName = tableEntity + "Bean";
 

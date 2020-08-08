@@ -8,7 +8,10 @@ package com.alphateam.core.template;
 import com.alphateam.app.base.ApplicationClass;
 import com.alphateam.connection.Factory;
 import com.alphateam.convert.ToJava;
+
+import com.alphateam.properties.Global;
 import com.alphateam.query.Column;
+import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
 import com.alphateam.utiles.Conversor;
 import com.alphateam.utiles.FileBuilder;
@@ -16,23 +19,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-/**
- *
- * @author JAIR
- */
-interface Methods {
-    Table table(Table table);
-    void column(Column column);
-    void foreignKeys(Table table,Column fk);
-    void primaryKeys(Table table,Column pk);
-
-    void buildParameters(Table table,Column column);
-    void buildMethods(Table tnc, List<String> pks);
-    void resetValues();
-    void generateProject(String path,String filename);
-}
 
 public class Template extends Core implements Methods{
 
@@ -49,6 +37,8 @@ public class Template extends Core implements Methods{
 
     private final Logger log = LogManager.getLogger(getClass().getName());
 
+    private List<Table> tables;
+
     @Override
     public void init() {
         log.debug("Enter to init() method.");
@@ -56,20 +46,42 @@ public class Template extends Core implements Methods{
         database = Factory.getDefaultDB();
         returnId = false;
 
-        app = ApplicationClass.instance();
+        //app = ApplicationClass.instance();
+        //tables = app.getTableList();
 
-        tables = app.getTableList();
-        columns = app.getColumnsList();
+        loadData();
+        log.debug("Tablesx [" + tables.toString()+"]");
     }
 
+    public void loadData() {
+        System.out.println("enter to loadData() function");
+
+        List<Table> tList = new DAO().getWithColumnsNumber();
+        List<Column> cList = new DAO().getColumsProperties();
+
+        for (int i = 0; i < tList.size(); i++) {
+            LinkedList<Column> columns = new LinkedList<>();
+
+            for(int j = 0; j < cList.size(); j++) {
+                if (cList.get(j).getTableName().equals(tList.get(i).getName())){
+                    columns.add(cList.get(j));
+                }
+            }
+            tList.get(i).setColumn(columns);
+        }
+        tables = tList;
+
+    }
     //refactoring
+    @Override
     public void build() {
         init();
+        //List<Table> tables = app.getTableList();
+
         for (int r = 0; r < tables.size(); r++) {
             List<String> pks = new ArrayList<>();
-            Table table = table(this.tables.get(r)).format();
-            log.debug("Table [" + table.getName()+"]");
-            //System.out.println("/*table.getColumn().size() :" + columns.size() + " */");
+
+            Table table = processTable(tables.get(r));
 
             /*iterate columnList*/
             for (int h = 0; h < table.getColumn().size(); h++) {
@@ -87,7 +99,6 @@ public class Template extends Core implements Methods{
                     }else if (!column.isForeignKey() && !column.isPrimaryKey()) {
                         buildParameters(table,column);
                     }
-                    //System.out.println("build().column:"+column.toString());
                     //setting new data
                      column(column);
                     //table.getColumn().set(h, column);
@@ -101,11 +112,11 @@ public class Template extends Core implements Methods{
     }
 
     @Override
-    public Table table(Table table) {
+    public Table processTable(Table t) {
 
         //check primary keys
         boolean x = false;
-        for (Column column: table.getColumn()) {
+        for (Column column: t.getColumn()) {
             if (column.isPrimaryKey()){
                 x=true;
             }
@@ -113,14 +124,15 @@ public class Template extends Core implements Methods{
 
         if (!x){
                 Column c = new Column();
-                c.setTableName(table.getName());
+                c.setTableName(t.getName());
                 c.setName("id_temp");
                 c.setDataType("char");
                 c.setLength("10");
                 c.setPrimaryKey(true);
-                table.getColumn().addFirst(c);
+                t.getColumn().addFirst(c);
         }
-        return table;
+
+        return t.format();
     }
 
     @Override
@@ -136,6 +148,7 @@ public class Template extends Core implements Methods{
 
     @Override
     public void primaryKeys(Table table, Column pk) {
+
         String tableName = table.getName();
         String dataType = ToJava.getDataType(pk.getDataType());
         String columnName = pk.getName();
@@ -189,6 +202,7 @@ public class Template extends Core implements Methods{
         pkPathVarInput = clearLastComma(pkPathVarInput);
         pkParams = clearLastComma(pkParams);
         pkMapVarInput = clearLastComma(pkMapVarInput);
+
       // System.out.println("Building something - primaryKeys callback PK:"+pks.toString());
     }
     @Override
@@ -210,7 +224,6 @@ public class Template extends Core implements Methods{
 
     @Override
     public void generateProject(String path,String filename) {
-        //path = "org\\proyecto\\views\\" + filename + "\\";
         new FileBuilder().writeFolderAndFile(path, filename, content);
     }
 
@@ -238,16 +251,17 @@ public class Template extends Core implements Methods{
         return string;
     }
 }
-final class Task implements Runnable {
-    private Table table;
 
-    public Task(Table table)
-    {
-        this.table = table;
-    }
-
-    @Override
-    public void run(){
-        System.out.println("Task ID : " + this.table.toString() + " performed by " + Thread.currentThread().getName());
-    }
-}
+//final class Task implements Runnable {
+//    private Table table;
+//
+//    public Task(Table table)
+//    {
+//        this.table = table;
+//    }
+//
+//    @Override
+//    public void run(){
+//        System.out.println("Task ID : " + this.table.toString() + " performed by " + Thread.currentThread().getName());
+//    }
+//}

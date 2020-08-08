@@ -25,24 +25,24 @@ public class Conversor {
         return acum;
     }
 
-    public static String firstCharacterToUpper(String cadena) {
-        char[] caracteres = cadena.toCharArray();
-        for (int ii = 0; ii < caracteres.length; ii++) {
+    public static String firstCharacterToUpper(String x) {
+        char[] c = x.toCharArray();
+        for (int ii = 0; ii < c.length; ii++) {
             if (ii == 0) {
-                caracteres[0] = Character.toUpperCase(caracteres[0]);
+                c[0] = Character.toUpperCase(c[0]);
             }
         }
 
-        return new String(caracteres);
+        return new String(c);
     }
-    public static String extractCharacters(String string, int length) {
-        char[] characters = string.toCharArray();
+    public static String extractCharacters(String string, int l) {
+        char[] c = string.toCharArray();
         String acum = "";
-        if (characters.length<=length){
+        if (c.length<=l){
              return string;
         }else{
-            for (int i = 0; i < length; i++) {
-                acum += characters[i];
+            for (int i = 0; i < l; i++) {
+                acum += c[i];
             }
 
             return acum;

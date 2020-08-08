@@ -10,6 +10,8 @@ import mdlaf.utils.MaterialColors;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.Random;
+import java.util.UUID;
 
 
 public class Application extends JPanel implements ActionListener {
@@ -59,7 +61,7 @@ public class Application extends JPanel implements ActionListener {
 
         content.add (new JLabel("Database :"), constr);
         constr.gridx=1;
-        content.add(new JComboBox<String> (new String[]{"Oracle", "MYSQL", "PostgreSQL"}), constr);
+        content.add(new JComboBox<String> (new String[]{"Oracle"}), constr);
         constr.gridx=0; constr.gridy=1;
 
         content.add(new JLabel("Hostname :"), constr);
@@ -128,12 +130,15 @@ public class Application extends JPanel implements ActionListener {
                     config.setPassword(password.getText());
                     config.setDbName(SID.getText());
                     config.setPort(port.getText());
-                    config.setOutputLocation("D:\\Software Development\\crud-generator-project\\generated-projects\\gth-crud-2");
-                    config.setZipFile(tfPath.getText()+"Project.zip");
+
+                    String uuid = UUID.randomUUID().toString();
+                    config.setOutputLocation(tfPath.getText()+"project-"+uuid);
+                    config.setZipFile(tfPath.getText()+"project-"+uuid+".zip");
+
                 new Process().build(config);
 
                 JOptionPane optionPane = new JOptionPane();
-                optionPane.showMessageDialog(content, "This is message info", "El codigo fuente ha sido generado.", JOptionPane.INFORMATION_MESSAGE);
+                optionPane.showMessageDialog(content, "El codigo fuente ha sido generado.", "INFO", JOptionPane.INFORMATION_MESSAGE);
 
                 hostname.setEnabled(true);
                 username.setEnabled(true);

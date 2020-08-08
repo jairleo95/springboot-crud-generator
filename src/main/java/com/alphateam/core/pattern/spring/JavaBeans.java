@@ -5,6 +5,7 @@
  */
 package com.alphateam.core.pattern.spring;
 
+import com.alphateam.app.base.ApplicationClass;
 import com.alphateam.convert.ToJava;
 import com.alphateam.core.template.Template;
 import com.alphateam.properties.Global;
@@ -104,8 +105,6 @@ public class JavaBeans extends Template {
     @Override
     public void column(Column column) {
         super.column(column);
-
-        //String columnName = column.getName();
 
         toStringColumns += ("\n + \"" +  column.getName() + "='\" +"+column.getName()+"+ '\\'' + "+"\",\"");
     }

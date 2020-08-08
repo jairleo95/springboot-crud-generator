@@ -19,7 +19,7 @@ public class Table {
     public Table() {
         this.name = "";
         this.rawName = "";
-        numColumns = 0;
+        this.numColumns = 0;
         this.column = new LinkedList<>();
     }
 
@@ -65,8 +65,8 @@ public class Table {
                 '}';
     }
 
-    public Table format(){
-        this.name = Conversor.toJavaFormat(name, Global.SPLIT_CRITERIA);
+    public Table format() {
+        setName(Conversor.toJavaFormat(name, Global.SPLIT_CRITERIA));
         return this;
     }
 }

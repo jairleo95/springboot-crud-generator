@@ -1,6 +1,7 @@
 package com.alphateam;
 
 
+import com.alphateam.app.base.Process;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,6 @@ public class CRUDGeneratorApplication implements CommandLineRunner {
 
      @Override
      public void run(String... args) throws Exception {
-          //new Process().build();
+          new Process().build(null);
      }
 }

@@ -23,11 +23,10 @@ public abstract class Core {
     //protected Connection conn;
     protected int database;
     protected boolean returnId;
-    protected DAO dao;
+    //protected DAO dao;
 
     public String content = "";
 
-    protected List<Table> tables;
-    protected List<Column> columns;
+    //protected List<Column> columns;
     protected abstract void init();
 }

@@ -28,8 +28,10 @@ public class ViewController extends Template {
     private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
-    public Table table(Table table) {
-        String tableName = table.format().getName();
+    public Table processTable(Table table) {
+        super.processTable(table);
+
+        String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
         log.info("//TABLA :" + table.getName());
@@ -41,7 +43,7 @@ public class ViewController extends Template {
                 "\t\treturn  new ModelAndView(\"/views/"+tableEntity+"/details-"+tableEntity+".html\");\n" +
                 "\t} \n");
 
-        return super.table(table);
+        return table;
     }
 
     @Override

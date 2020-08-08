@@ -2,12 +2,11 @@ package com.alphateam.app.base;
 
 import com.alphateam.app.configurtions.Config;
 import com.alphateam.app.configurtions.Configuration;
-import com.alphateam.app.configurtions.ReadConfig;
 import com.alphateam.query.Column;
 import com.alphateam.query.DAO;
 import com.alphateam.query.Table;
 
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,25 +14,12 @@ public class ApplicationClass extends Configuration {
 
     private static ApplicationClass singleton = null;
 
-    //private Config config;
-
     private List<Table> tableList;
-    private List<Column> columnsList;
 
-    public List<Column> getColumnsList() {
-        return columnsList;
-    }
+    private List<Table> xList;
 
-    public void setColumnsList(List<Column> columnsList) {
-        this.columnsList = columnsList;
-    }
-
-    public static ApplicationClass getSingleton() {
-        return singleton;
-    }
-
-    public static void setSingleton(ApplicationClass singleton) {
-        ApplicationClass.singleton = singleton;
+    public List<Table> getxList() {
+        return xList;
     }
 
     public List<Table> getTableList() {
@@ -67,31 +53,28 @@ public class ApplicationClass extends Configuration {
 
     public void loadConfig(Config config){
         setConfig(config);
-        //setConfig(new ReadConfig().loadConfigFile(fileName));
-        logger.debug(config.toString());
     }
-    public void loadData() {
-        this.tableList = new DAO().getWithColumnsNumber();
-        logger.debug(tableList.toString());
-        loadColumns();
-    }
-    public void loadColumns(){
-        //allcolumns
-        this.columnsList = new DAO().getColumsProperties();
-        for (int r = 0; r < this.tableList.size(); r++) {
-            Table t = this.tableList.get(r);
-            LinkedList<Column> column = new LinkedList<>();
 
-            for(int h = 0; h < this.columnsList.size(); h++) {
-                if (this.columnsList.get(h).getTableName().equals(t.getName())){
-                    column.add(this.columnsList.get(h));
+    public void loadData() {
+       System.out.println("enter to loadData() function");
+
+       List<Table> tList = new DAO().getWithColumnsNumber();
+       List<Column> cList = new DAO().getColumsProperties();
+
+        for (int i = 0; i < tList.size(); i++) {
+            LinkedList<Column> columns = new LinkedList<>();
+
+            for(int j = 0; j < cList.size(); j++) {
+                if (cList.get(j).getTableName().equals(tList.get(i).getName())){
+                    columns.add(cList.get(j));
                 }
             }
-
-            t.setColumn(column);
-            this.tableList.set(r,t);
+            tList.get(i).setColumn(columns);
         }
+        setTableList(tList);
+       // this.xList = new DAO().getWithColumnsNumber();
     }
+
 
     @Override
     public void reload() {
