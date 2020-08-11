@@ -11,6 +11,11 @@ package com.alphateam.utiles;
  */
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 import com.alphateam.app.base.ApplicationClass;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +23,17 @@ import org.apache.logging.log4j.Logger;
 
 public class FileBuilder {
     private final Logger log = LogManager.getLogger(getClass().getName());
+
+    public static String readAllBytes(String filePath){
+        String content = "";
+        try {
+            content = new String (Files.readAllBytes(Paths.get(filePath)));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 
     public Boolean writeFolderAndFile(String directory, String file, String content) {
 

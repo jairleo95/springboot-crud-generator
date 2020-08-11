@@ -78,7 +78,8 @@ public class SpringController extends Template {
 
         String beanName = Conversor.firstCharacterToUpper(tableName+ "Bean");
         String tableEntityService = Conversor.firstCharacterToUpper(tableName + "Service");
-        String filename = Conversor.firstCharacterToUpper(tableName + "Controller.java");
+        String className = Conversor.firstCharacterToUpper(tableName + "Controller");
+        String serviceName = Conversor.firstCharacterToUpper(tableName);
 
         imports += ToJava.getImportsByDataType(dataType);
 
@@ -107,9 +108,9 @@ public class SpringController extends Template {
         content += ("\n\n");
 
         content += ("@RestController \n");
-        content += ("@RequestMapping(\"/"+beanName+"\") \n");
+        content += ("@RequestMapping(\"/"+serviceName+"\") \n");
 
-        content += ("public class " + beanName + "Controller { \n");
+        content += ("public class " + className + " { \n");
         content += ("@Autowired \n");
         content += ("private " + tableEntityService + " " + "service; \n");
         content += ("private final Logger log = LogManager.getLogger(getClass().getName()); \n");
@@ -183,7 +184,7 @@ public class SpringController extends Template {
         content += (" \n");
 
         content += ("} \n");
-        generateProject(Global.CONTROLLER_LOCATION  + "\\", filename );
+        generateProject(Global.CONTROLLER_LOCATION  + "\\", className + ".java" );
     }
 
     @Override
