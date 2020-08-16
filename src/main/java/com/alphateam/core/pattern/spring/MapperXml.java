@@ -48,10 +48,10 @@ public class MapperXml extends Template {
         String tableBean = Conversor.firstCharacterToUpper((fk.getForeignTable())+"Bean");
             String ForeignColumnBean = fk.getForeignColumn();
 
-           associatonColumns += "<association property=\"" + columna + "\" javaType=\"" + tableBean + "\">\n";
-
-           //todo: refactor this
+        associatonColumns += ("       <result property=\"" + columna + "\" column=\"" + fk.getRawName() + "\" />\n");
+        //todo: refactor this
 //
+        //associatonColumns += "<association property=\"" + columna + "\" javaType=\"" + tableBean + "\">\n";
 //            List<Column> foreignColumns =  dao.getColumsProperties(fk.getForeignTable());
 //
 //            for (int hh = 0; hh < foreignColumns.size(); hh++) {
@@ -64,7 +64,8 @@ public class MapperXml extends Template {
 //                }
 //            }
 
-            associatonColumns += "</association>\n";
+           // associatonColumns += "</association>\n";
+
             paramsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
 
     }
@@ -79,7 +80,7 @@ public class MapperXml extends Template {
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
 
         String tableName = table.getName();
@@ -115,12 +116,12 @@ public class MapperXml extends Template {
 
         //*FIND BY ID
         methods += "<select id=\"getById\"  parameterType=\""+tableBean+"\" resultMap=\"" + tableName + "Map" + "\">\n";
-        methods += "select * from " + table.getName() + " where ";
+        methods += "select * from " + table.getRawName() + " where ";
         for (int ii = 0; ii < pks.size(); ii++) {
             if (ii == 0) {
-                methods += pks.get(ii) + " = " + "#{" + pks.get(ii) + "} ";
+                methods += pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
             } else {
-                methods += " and " + pks.get(ii) + " = " + "#{" + pks.get(ii) + "} ";
+                methods += " and " + pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
             }
 
         }

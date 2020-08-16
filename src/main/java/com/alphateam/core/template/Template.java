@@ -79,7 +79,7 @@ public class Template extends Core implements Methods{
         //List<Table> tables = app.getTableList();
 
         for (int r = 0; r < tables.size(); r++) {
-            List<String> pks = new ArrayList<>();
+            List<Column> pks = new ArrayList<>();
 
             Table table = processTable(tables.get(r));
 
@@ -89,7 +89,7 @@ public class Template extends Core implements Methods{
                 Column column = table.getColumn().get(h).format();
 
                     if (column.isPrimaryKey()){
-                        pks.add(column.getName());
+                        pks.add(column);
                         //listener
                         primaryKeys(table, column);
 
@@ -167,7 +167,7 @@ public class Template extends Core implements Methods{
         pkMethVarInput +=  "String "+columnName+",";
         pkPathVarInput +=  "@PathVariable String "+columnName+",";
 
-        pkDecrypt+= columnName+" = Security.decrypt("+columnName+"); \n";
+        pkDecrypt+= "String " + columnName+"Decrypt" + " = Security.decrypt("+columnName+"); \n";
         pkMapVarInput +=  "@Param(\""+columnName+"\") String "+columnName+",";
     }
 
@@ -178,7 +178,7 @@ public class Template extends Core implements Methods{
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
 
         if (pks.size()==0){
             //todo: refator

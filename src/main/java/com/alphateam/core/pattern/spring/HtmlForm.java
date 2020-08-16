@@ -32,14 +32,14 @@ public class HtmlForm extends Template {
     private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
-    public void column(Column column) {
-        super.column(column);
+    public void buildParameters(Table table, Column column) {
+        super.buildParameters(table,column);
 
         String columna = column.getName();
 
         parameters += ("<div class=\"form-group\">");
         parameters += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
-       // variables += ("</br>");
+
         parameters += ("<div class=\"col-md-4\">");
 
 
@@ -55,12 +55,18 @@ public class HtmlForm extends Template {
         parameters += ("</div>");
         parameters += ("</div>");
 
+    }
+
+    @Override
+    public void column(Column column) {
+        super.column(column);
+        String columna = column.getName();
         //table headers
         tableColumns +="<th>"+columna+"</th>";
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
 
         String tableName = table.getName();
@@ -134,12 +140,16 @@ public class HtmlForm extends Template {
         String columna = fk.getName();
         String column = Conversor.firstCharacterToUpper(fk.getName());
 
-        parameters += ("<label>" + column + "</label>");
-        parameters += ("</br>");
+        parameters += ("<div class=\"form-group\">");
+        parameters += ("<label class=\"col-md-3 control-label\">" + column + "</label>");
+        parameters += ("<div class=\"col-md-4\">");
         parameters += ("<select name='" + columna + "' class='select" + column + "'>");
         parameters += ("<option></option>");
         parameters += ("</select>");
         parameters += ("</br>");
+
+        parameters += ("</div>");
+        parameters += ("</div>");
 
         //tableColumns +="<th>"+fk.getForeignColumn()+"</th>";
     }
@@ -149,7 +159,7 @@ public class HtmlForm extends Template {
         super.primaryKeys(table, pk);
 
         String columna = pk.getName();
-        parameters += ("<input name='" + columna + "' type='hidden' />");
+       // parameters += ("<input name='" + columna + "' type='hidden' />");
         //tableColumns +="<th>"+columna+"</th>";
     }
 

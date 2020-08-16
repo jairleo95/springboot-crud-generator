@@ -44,18 +44,31 @@ public class JavaBeans extends Template {
 
         String TableBean = Conversor.firstCharacterToUpper(column.getForeignTable()) + "Bean";
         String beanColumn = column.getName();
+        String dataType = ToJava.getDataType(column.getDataType());
 
 
-        variables += ("private " + TableBean + " " + beanColumn + "; \n");
+        variables += ("@JsonProperty(\""+columnName+"\") \n");
+        variables += ("private " + dataType + " " + columnName + "; \n");
 
-        instanceBean += beanColumn + " = new " + TableBean + "(); \n";
-        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(beanColumn) + "(" + TableBean + " " + beanColumn + "){"
-                + "this." + beanColumn + "=" + beanColumn + ";} \n");
-        gettersAndSetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(beanColumn) + "(){" + "return " + beanColumn + ";} \n";
+        instanceBean += "this." + columnName + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
+        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(columnName) + "(" + dataType + " " + columnName + "){ \n"
+                + "this." + columnName + "=" + columnName + ";} \n");
+        gettersAndSetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columnName) + "(){ \n"
+                + "return " + columnName + ";} \n";
+        encryptContent += "this."+columnName + " = "+"Security.encrypt("+columnName+"); \n";
+        decryptContent += "this."+columnName + " = "+"Security.decrypt("+columnName+"); \n";
 
-        /*security*/
-        encryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
-        decryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
+
+
+        //todo: refactor this
+      //  variables += ("private " + TableBean + " " + beanColumn + "; \n");
+//        instanceBean += "this."+ beanColumn + " = new " + TableBean + "(); \n";
+//        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(beanColumn) + "(" + TableBean + " " + beanColumn + "){"
+//                + "this." + beanColumn + "=" + beanColumn + ";} \n");
+//        gettersAndSetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(beanColumn) + "(){" + "return " + beanColumn + ";} \n";
+
+//        encryptContent += "this."+columnName + " = "+columnName+".encrypt(); \n";
+//        decryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
     }
 
     @Override
@@ -72,7 +85,6 @@ public class JavaBeans extends Template {
         gettersAndSetters += "public " + dataType + "  get" + Conversor.firstCharacterToUpper(columnName) + "(){ \n" + "return " + columnName + ";}";
 
         instanceBean += "this." + columnName + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
-        instanceBean += "this." + columnName + "=" + ToJava.getInstanceByDataType(dataType) + "; \n";
 
         encryptContent += "this."+columnName + " = "+"Security.encrypt("+columnName+"); \n";
         decryptContent += "this."+columnName + " = "+"Security.decrypt("+columnName+"); \n";
@@ -88,7 +100,7 @@ public class JavaBeans extends Template {
         variables += ("@JsonProperty(\""+columna+"\") \n");
         if (dataType.equalsIgnoreCase("date")){
             imports +="import com.fasterxml.jackson.annotation.JsonFormat;";
-            variables += "@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\")";
+            variables += "@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = \"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\") \n";
         }
         variables += ("private " + dataType + " " + columna + "; \n");
 
@@ -110,7 +122,7 @@ public class JavaBeans extends Template {
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
 
         String tableName = table.getName();

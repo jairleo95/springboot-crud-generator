@@ -31,7 +31,7 @@ public class SpringService extends Template {
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
                /*table name - columnList*/
 
@@ -55,6 +55,7 @@ public class SpringService extends Template {
                 + "import "+projectID+".bean."+ beanName + ";"
                 +"import java.util.Map;\n");
         content += ("import java.util.Collection;");
+        content += ("import java.util.stream.Collectors;");
         content += ("import "+projectID+".util.Security;");
         content += ("import org.springframework.beans.factory.annotation.Autowired;");
         content += ("import org.springframework.stereotype.Component;");
@@ -120,17 +121,17 @@ public class SpringService extends Template {
         content += ("} \n");
         content += ("\n\n");
 
+        //todo: repair findBYID in mapper
         content += ("public " + beanName + " getByID("+pkMethVarInput+"){ \n");
-        content += (pkDecrypt+" \n");
+
+        //content += (pkDecrypt+" \n");
+
         content += ("return mapper.getById("+pkinput+"); \n");
         content += ("} \n");
 
         content += ("public Collection<" + beanName + "> getAll(){ \n");
-        content += ("List<"+beanName+"> list = mapper.read();\n" +
-                "        for (int i = 0; i < list.size(); i++) {\n" +
-                "            list.set(i,  list.get(i).encrypt());\n" +
-                "        }\n" +
-                "        return list; \n");
+        content += ("return  mapper.read().stream().map("+beanName+"::encrypt).collect(Collectors.toList()); \n");
+
         content += ("} \n");
 
         content += ("} \n");

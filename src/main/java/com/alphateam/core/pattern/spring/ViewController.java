@@ -57,14 +57,14 @@ public class ViewController extends Template {
                 + "import javax.servlet.http.HttpServletRequest;"
                 + "import javax.servlet.http.HttpServletResponse;"
                 + "import javax.servlet.http.HttpSession;"
-                + "import org.apache.logging.log4j.LogManager;\n" +
-                "import org.apache.logging.log4j.Logger;"
+                + "import org.apache.logging.log4j.LogManager;\n"
+                + "import org.apache.logging.log4j.Logger;"
                 + "import org.springframework.ui.ModelMap;"
                 + "import org.springframework.web.bind.annotation.*;"
                 + "import java.util.Collection;"
                 + "import org.springframework.http.MediaType;"
-                + "import com.google.gson.Gson;" +
-                "import org.springframework.http.ResponseEntity;import org.springframework.web.servlet.ModelAndView;";
+                + "import com.google.gson.Gson;"
+                + "import org.springframework.http.ResponseEntity;import org.springframework.web.servlet.ModelAndView;";
         content += ("import "+projectID+".util.Security;");
         content += ("\n");
         content += (imports);

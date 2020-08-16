@@ -69,7 +69,7 @@ public class StoreProcedure extends Template {
 
 
     @Override
-    public void buildMethods(Table tnc, List<String> pks) {
+    public void buildMethods(Table tnc, List<Column> pks) {
         super.buildMethods(tnc, pks);
 
         //Remove commas from params
@@ -102,9 +102,9 @@ public class StoreProcedure extends Template {
 
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 }
             }
             methods += ";";
@@ -117,9 +117,9 @@ public class StoreProcedure extends Template {
             methods += "DELETE FROM " + tnc.getName() + " where ";
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
+                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t));
+                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 }
             }
             methods += ";";

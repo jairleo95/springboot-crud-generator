@@ -32,18 +32,17 @@ public class Process {
 
         //build code
 
-//        new JavaBeans().build();
-//        new SpringController().build();
-//        new HtmlForm().build();
-//        new JavaScriptsFunctions().build();
+//    new JavaBeans().build();
 //        new Mapper().build();
-//        new MapperXml().build();
+          new MapperXml().build();
 //        new MyBatisConf().build();
-//        new SpringController().build();
-//        new SpringService().build();
+        new SpringController().build();
+        //new SpringService().build();
 //        new StoreProcedure().build();
-//        new ViewController().build();
-        new PageBaseView().build();
+        //new ViewController().build();
+     //   new HtmlForm().build();
+        //new JavaScriptsFunctions().build();
+       // new PageBaseView().build();
 
 
         //compress

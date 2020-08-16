@@ -35,7 +35,7 @@ public class Mapper extends Template {
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
 
         String tableName = table.getName();

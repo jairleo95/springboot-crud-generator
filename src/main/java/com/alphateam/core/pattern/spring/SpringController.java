@@ -34,15 +34,20 @@ public class SpringController extends Template {
 
     String projectID = Global.PACKAGE_NAME;
 
+    String idMatchDecrypt = "";
+
     private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
+
         String tableName = table.getName();
         String columna =pk.getName();
         dataType = ToJava.getDataType(pk.getDataType());
         setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
+
+        idMatchDecrypt += columna+"Decrypt"+".equals("+columna+") &&";
     }
 
     @Override
@@ -71,7 +76,7 @@ public class SpringController extends Template {
     }
 
     @Override
-    public void buildMethods(Table table, List<String> pks) {
+    public void buildMethods(Table table, List<Column> pks) {
         super.buildMethods(table, pks);
 
         String tableName = table.getName();
@@ -124,16 +129,24 @@ public class SpringController extends Template {
         content += ("@ResponseBody \n");
         content += ("\n");
         content += ("public "+beanName+" read("+pkPathVarInput+"){ \n");
+
         /*todo*/
-        //content += ("log.info(\"id;\"+id); \n");
+        //content += ("log.info(\"id requested:\"+id); \n");
+
+        content += (pkDecrypt+" \n");
+
+        content += (" if ("+ idMatchDecrypt.substring(0, (idMatchDecrypt.length() - 2)) +"){\n" +
+                "        return null;\n" +
+                "    } else { \n");
+
         content += (beanName+" x = service.getByID("+pkParams+"); \n");
+
         content += ("if (x== null){\n" +
                 "            return null;\n" +
-             /*   "        }else if(!x.getRecordStatus()){\n" +
-                "            return null;\n" +*/
                 "        }else{\n" +
                 "            return x.encrypt();\n" +
                 "    }\n");
+        content += (" }\n");
         content += (" }\n");
 
         /*add*/
@@ -190,6 +203,7 @@ public class SpringController extends Template {
     @Override
     public void resetValues() {
         super.resetValues();
+        idMatchDecrypt = "";
         setters = "";
         imports = "";
         content = "";

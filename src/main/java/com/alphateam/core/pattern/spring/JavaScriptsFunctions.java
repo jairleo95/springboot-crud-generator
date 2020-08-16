@@ -40,7 +40,15 @@ public class JavaScriptsFunctions extends Template {
     }
 
     @Override
-    public void buildMethods(Table tnc, List<String> pks) {
+    public void primaryKeys(Table table, Column pk) {
+        super.primaryKeys(table, pk);
+
+        String columna = pk.getName();
+        tableColumns +="{\"data\": \""+columna+"\"},\n";
+    }
+
+    @Override
+    public void buildMethods(Table tnc, List<Column> pks) {
         super.buildMethods(tnc, pks);
 
         String tableName = tnc.getName();
@@ -124,7 +132,7 @@ public class JavaScriptsFunctions extends Template {
                 "                \"data\": null,\n" +
                 "                \"defaultContent\": \"\"\n" +
                 "            },\n" +
-                tableColumns +
+                             tableColumns +
                 "        ],\n" +
                 "        \"sDom\": \"<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>\" +\n" +
                 "        \"t\" +\n" +
@@ -150,7 +158,6 @@ public class JavaScriptsFunctions extends Template {
                 "            htmlTD += '   <li>'\n" +
                 "                + '<a href=\"javascript:void(0);\" class=\"btn-update\"><i class=\"fa fa-pencil\"></i> Update</a>'\n" +
                 "                + '<a href=\"javascript:void(0);\" class=\"btn-remove\"><i class=\"fa fa-trash\"></i> Delete</a>'\n" +
-                "                + '<a href=\"javascript:void(0);\" class=\"btn-password\"><i class=\"fa fa-lock\"></i> Password</a>'\n" +
                 "                + '</li>';\n" +
                 "            htmlTD += ' </ul>'\n" +
                 "                + '</div>';\n" +
@@ -164,7 +171,7 @@ public class JavaScriptsFunctions extends Template {
                 "            });\n" +
                 "            $('.btn-remove').click(function () {\n" +
                 "                id = $(this).data('id');\n" +
-                "\n" +
+                " console.log(id); \n" +
                 "                $('.dialog_simple').dialog('open');\n" +
                 "                return false;\n" +
                 "            });\n" +
@@ -172,12 +179,7 @@ public class JavaScriptsFunctions extends Template {
                 "                id = $(this).parent().find('.btn-update').data('id');\n" +
                 "                showDetails();\n" +
                 "            });\n" +
-                "            $('.btn-password').click(function () {\n" +
-                "                id = $(this).data('id');\n" +
-                "                initModal('Change password');\n" +
-                "                modalBody.load('change-pwd', function () {\n" +
-                "                    initFormPWDChange();\n" +
-                "                });\n" +
+
                 "            });\n" +
                 "        }\n" +
                 "    });\n" +
