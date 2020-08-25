@@ -28,6 +28,7 @@ public class Template extends Core implements Methods{
     public String pkVariables="";
     public String pkDecrypt="";
     public String pkinput="";
+    public String pkParamDecrypt="";
     public String pkMethVarInput ="";
     public String pkPathVarInput ="";
     public String pkParams ="";
@@ -154,7 +155,7 @@ public class Template extends Core implements Methods{
         String columnName = pk.getName();
 
         pkinput+=  columnName+",";
-        pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+");";
+
 
         //todo:refactor this hardcode
         dataType = "String";
@@ -168,6 +169,8 @@ public class Template extends Core implements Methods{
         pkPathVarInput +=  "@PathVariable String "+columnName+",";
 
         pkDecrypt+= "String " + columnName+"Decrypt" + " = Security.decrypt("+columnName+"); \n";
+        pkParamDecrypt+= columnName+"Decrypt,";
+        pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+"Decrypt);";
         pkMapVarInput +=  "@Param(\""+columnName+"\") String "+columnName+",";
     }
 
@@ -198,6 +201,7 @@ public class Template extends Core implements Methods{
         pkParameters = clearLastComma(pkParameters);
         pkVariables = clearLastComma(pkVariables);
         pkinput = clearLastComma(pkinput);
+        pkParamDecrypt = clearLastComma(pkParamDecrypt);
         pkMethVarInput = clearLastComma(pkMethVarInput);
         pkPathVarInput = clearLastComma(pkPathVarInput);
         pkParams = clearLastComma(pkParams);
@@ -213,6 +217,7 @@ public class Template extends Core implements Methods{
         pkVariables="";
         pkDecrypt="";
         pkinput="";
+        pkParamDecrypt="";
         pkMethVarInput ="";
         pkPathVarInput ="";
         pkParams ="";

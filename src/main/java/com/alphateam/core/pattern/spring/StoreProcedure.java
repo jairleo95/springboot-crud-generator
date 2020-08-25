@@ -45,8 +45,8 @@ public class StoreProcedure extends Template {
             methodParams = "sp" + Conversor.firstCharacterToUpper(column);
             params += ToSql.headerParamsProcedure(methodParams, c, database);
 
-            tableColumns += c.getName() + ",";
-            updateComparission += c.getName() + "=" + methodParams + ", ";
+            tableColumns += c.getRawName() + ",";
+            updateComparission += c.getRawName() + "=" + methodParams + ",";
             colsParams += methodParams + ",";
     }
 
@@ -81,7 +81,7 @@ public class StoreProcedure extends Template {
 
         //Insert record procedure
         methods += ToSql.headerProcedure("spi_" + tnc.getName().toLowerCase(), params, database);
-        methods += "INSERT INTO " + tnc.getName() + "(" + tableColumns + ") values (" + colsParams + ")";
+        methods += "INSERT INTO " + tnc.getRawName() + "(" + tableColumns + ") values (" + colsParams + ")";
 
         //ruturn id
         log.debug("buildMethods.pks.size():"+pks.size());
@@ -95,16 +95,16 @@ public class StoreProcedure extends Template {
                 //END Insert procedure
 
             //Update procedure
-            methods += ToSql.headerProcedure("spu_" + tnc.getName().toLowerCase(), params+", "+pkParams, database);
+            methods += ToSql.headerProcedure("spu_" + tnc.getName().toLowerCase(), pkParams +", "+params, database);
             //procedure body
-            methods += "UPDATE " + tnc.getName() + " set " + updateComparission + " where ";
+            methods += "UPDATE " + tnc.getRawName() + " set " + updateComparission + " where ";
             log.debug("pks.size():"+pks.size());
 
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
+                    methods += pks.get(t).getRawName() + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
+                    methods += " and " + pks.get(t).getRawName() + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 }
             }
             methods += ";";
@@ -114,12 +114,12 @@ public class StoreProcedure extends Template {
             //DELETE procedure
             methods += ToSql.headerProcedure("spd_" + tnc.getName().toLowerCase(), pkParams, database);
                 //body
-            methods += "DELETE FROM " + tnc.getName() + " where ";
+            methods += "DELETE FROM " + tnc.getRawName() + " where ";
             for (int t = 0; t < pks.size(); t++) {
                 if (t == 0) {
-                    methods += pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
+                    methods += pks.get(t).getRawName() + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 } else {
-                    methods += " and " + pks.get(t) + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
+                    methods += " and " + pks.get(t).getRawName() + " = " + "sp" + Conversor.firstCharacterToUpper(pks.get(t).getName());
                 }
             }
             methods += ";";

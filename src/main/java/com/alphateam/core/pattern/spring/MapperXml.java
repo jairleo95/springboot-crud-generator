@@ -38,6 +38,7 @@ public class MapperXml extends Template {
         String columna = pk.getName();
         parameters += ("       <id property=\"" + columna + "\" column=\"" + pk.getRawName() + "\" />\n");
         paramsPrimaryKey += "#{" +columna + "},";
+        paramsMethods += "#{" + columna + "},";
     }
 
     @Override
@@ -66,7 +67,9 @@ public class MapperXml extends Template {
 
            // associatonColumns += "</association>\n";
 
-            paramsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
+            //paramsMethods += "#{" + columna + "" + ForeignColumnBean + "},";
+
+            paramsMethods += "#{" + columna + "},";
 
     }
 

@@ -72,7 +72,7 @@ public class ToSql {
                 }
                 return sql;
             case Factory.ORACLE:
-                sql += parametersProcedure + " " + c.getTableName()+"."+c.getName()+"%type" + ",";
+                sql += parametersProcedure + " " + c.getTableName()+"."+c.getRawName()+"%type" + ",";
                 return sql;
             default:
                 return sql;

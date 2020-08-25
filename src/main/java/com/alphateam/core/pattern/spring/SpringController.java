@@ -139,7 +139,7 @@ public class SpringController extends Template {
                 "        return null;\n" +
                 "    } else { \n");
 
-        content += (beanName+" x = service.getByID("+pkParams+"); \n");
+        content += (beanName+" x = service.getByID("+pkParamDecrypt+"); \n");
 
         content += ("if (x== null){\n" +
                 "            return null;\n" +
@@ -147,6 +147,7 @@ public class SpringController extends Template {
                 "            return x.encrypt();\n" +
                 "    }\n");
         content += (" }\n");
+
         content += (" }\n");
 
         /*add*/
@@ -164,35 +165,50 @@ public class SpringController extends Template {
         content += ("\n");
 
         /*update*/
-        content += (" @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.PUT},consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
+        content += " @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.PUT},consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
                 "    @ResponseBody\n" +
-                "    public ResponseEntity<?> update ("+pkPathVarInput+", @RequestBody "+beanName+" "+tableName+"){\n" +
-                "      "+pkSetter+"\n" +
+                "    public ResponseEntity<?> update ("+pkPathVarInput+", @RequestBody "+beanName+" "+tableName+"){\n" ;
+                content += (pkDecrypt+" \n") ;
+
+                content += (" if ("+ idMatchDecrypt.substring(0, (idMatchDecrypt.length() - 2)) +"){\n" +
+                "        return null;\n" +
+                "    } else { \n");
+                content += pkSetter+"\n" +
                 "        log.debug(\"Request received:\"+"+tableName+".toString());\n" +
-                "        if (service.getByID("+pkParams+")!=null){\n" +
-                "            return new ResponseEntity<>(service.update("+tableName+"),HttpStatus.OK);\n" +
-                "        }else{\n" +
-                "            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n" +
-                "        }\n" +
-                "    } \n");
+
+                    "        if (service.getByID("+pkParamDecrypt+")!=null){\n" +
+                    "            return new ResponseEntity<>(service.update("+tableName+"),HttpStatus.OK);\n" +
+                    "        }  else{\n" +
+                    "            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n" +
+                    "          }\n" +
+                "       }\n" +
+                "    } \n";
 
         /*delete*/
 
-        content += (" @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.DELETE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
-                "    public ResponseEntity<?> delete("+pkPathVarInput+"){\n" +
-              //  "        log.info(\"id received:\"+id);\n" +
-                "        "+beanName+" x = service.getByID("+pkParams+");\n" +
-                "        if (x==null){\n" +
-                "            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n" +
-                "        }" +
-                //"else if (!x.getRecordStatus()){\n" +
-                //"            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);\n" +
-                //"        }" +
-                "else{\n" +
-                "            String response = service.delete("+pkParams+");\n" +
-                "            return new ResponseEntity<>(response, HttpStatus.OK);\n" +
-                "        }\n" +
-                "    } \n");
+        content += " @RequestMapping(value = \""+pkParamsRequest+"\",method = {RequestMethod.DELETE},produces = {MediaType.APPLICATION_JSON_VALUE})\n" +
+                "    public ResponseEntity<?> delete("+pkPathVarInput+"){\n" ;
+
+            content += (pkDecrypt+" \n");
+
+            content += (" if ("+ idMatchDecrypt.substring(0, (idMatchDecrypt.length() - 2)) +"){\n" +
+                    "        return null;\n" +
+                    "    } else { \n");
+
+            content += (beanName+" x = service.getByID("+pkParamDecrypt+"); \n");
+
+            content += ("if (x== null){ \n"
+                    + "     return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);\n"
+                    +
+                    "        } else {\n" +
+                    "            String response = service.delete("+pkParamDecrypt+");\n" +
+                    "            return new ResponseEntity<>(response, HttpStatus.OK);\n" +
+                    "    }\n");
+
+            content += (" }\n");
+
+            content += (" }\n");
+
 
         content += (" \n");
 
