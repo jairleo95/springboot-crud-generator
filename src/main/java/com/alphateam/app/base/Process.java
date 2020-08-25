@@ -2,9 +2,8 @@ package com.alphateam.app.base;
 
 import com.alphateam.app.configurtions.Config;
 import com.alphateam.app.configurtions.ReadConfig;
-import com.alphateam.core.pattern.spring.*;
-import com.alphateam.core.template.Template;
-import com.alphateam.utiles.ZipUtils;
+import com.alphateam.app.core.pattern.spring.*;
+import com.alphateam.util.ZipUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,10 +34,10 @@ public class Process {
 //    new JavaBeans().build();
 //        new Mapper().build();
           //new MapperXml().build();
-//        new MyBatisConf().build();
+        //new MyBatisConf().build();
         new SpringController().build();
-        //new SpringService().build();
-         new StoreProcedure().build();
+        new SpringService().build();
+        // new StoreProcedure().build();
         //new ViewController().build();
      //   new HtmlForm().build();
         //new JavaScriptsFunctions().build();

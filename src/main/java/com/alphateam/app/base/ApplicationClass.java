@@ -2,11 +2,10 @@ package com.alphateam.app.base;
 
 import com.alphateam.app.configurtions.Config;
 import com.alphateam.app.configurtions.Configuration;
-import com.alphateam.query.Column;
-import com.alphateam.query.DAO;
-import com.alphateam.query.Table;
+import com.alphateam.app.bean.Column;
+import com.alphateam.app.core.persistence.DAO;
+import com.alphateam.app.bean.Table;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

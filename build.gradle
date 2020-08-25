@@ -16,11 +16,11 @@ apply plugin: 'maven'
 
 apply plugin: 'org.springframework.boot'
 
-group 'com.alphateam'
+group 'com.alphateam.app'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 bootRun {
     addResources = true
