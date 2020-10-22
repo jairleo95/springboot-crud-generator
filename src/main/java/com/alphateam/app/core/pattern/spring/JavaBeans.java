@@ -38,11 +38,7 @@ public class JavaBeans extends Builder {
         super.foreignKeys(table, column);
 
         String columnName = column.getName();
-
-        String TableBean = Conversor.firstCharacterToUpper(column.getForeignTable()) + "Bean";
-        String beanColumn = column.getName();
         String dataType = ToJava.getDataType(column.getDataType());
-
 
         variables += ("@JsonProperty(\""+columnName+"\") \n");
         variables += ("private " + dataType + " " + columnName + "; \n");
@@ -55,17 +51,6 @@ public class JavaBeans extends Builder {
         encryptContent += "this."+columnName + " = "+"Security.encrypt("+columnName+"); \n";
         decryptContent += "this."+columnName + " = "+"Security.decrypt("+columnName+"); \n";
 
-
-
-        //todo: refactor this
-      //  variables += ("private " + TableBean + " " + beanColumn + "; \n");
-//        instanceBean += "this."+ beanColumn + " = new " + TableBean + "(); \n";
-//        gettersAndSetters += ("public void set" + Conversor.firstCharacterToUpper(beanColumn) + "(" + TableBean + " " + beanColumn + "){"
-//                + "this." + beanColumn + "=" + beanColumn + ";} \n");
-//        gettersAndSetters += "public " + TableBean + " get" + Conversor.firstCharacterToUpper(beanColumn) + "(){" + "return " + beanColumn + ";} \n";
-
-//        encryptContent += "this."+columnName + " = "+columnName+".encrypt(); \n";
-//        decryptContent += "this."+columnName + " = "+columnName+".decrypt(); \n";
     }
 
     @Override

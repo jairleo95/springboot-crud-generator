@@ -16,7 +16,7 @@ apply plugin: 'maven'
 
 apply plugin: 'org.springframework.boot'
 
-group 'com.alphateam.app'
+group 'com.alphateam'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
