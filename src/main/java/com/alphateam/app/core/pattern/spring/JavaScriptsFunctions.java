@@ -177,7 +177,7 @@ public class JavaScriptsFunctions extends Builder {
                 "            });\n" +
                 "            $('."+tableEntity+"-datatable tbody tr td').dblclick(function () {\n" +
                 "                id = $(this).parent().find('.btn-update').data('id');\n" +
-                "                showDetails();\n" +
+                "                //showDetails();\n" +
                 "            });\n" +
 
                 "            });\n" +

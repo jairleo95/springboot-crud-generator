@@ -3,7 +3,7 @@ package com.alphateam.app.base;
 import com.alphateam.app.configurtions.Config;
 import com.alphateam.app.configurtions.Configuration;
 import com.alphateam.app.bean.Column;
-import com.alphateam.app.core.persistence.DAO;
+import com.alphateam.app.core.persistence.EntityDAO;
 import com.alphateam.app.bean.Table;
 
 import java.util.LinkedList;
@@ -57,8 +57,8 @@ public class ApplicationClass extends Configuration {
     public void loadData() {
        System.out.println("enter to loadData() function");
 
-       List<Table> tList = new DAO().getWithColumnsNumber();
-       List<Column> cList = new DAO().getColumsProperties();
+       List<Table> tList = new EntityDAO().getWithColumnsNumber();
+       List<Column> cList = new EntityDAO().getColumsProperties();
 
         for (int i = 0; i < tList.size(); i++) {
             LinkedList<Column> columns = new LinkedList<>();

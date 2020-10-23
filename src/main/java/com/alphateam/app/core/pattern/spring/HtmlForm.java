@@ -39,7 +39,6 @@ public class HtmlForm extends Builder {
 
         parameters += ("<div class=\"form-group\">");
         parameters += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
-
         parameters += ("<div class=\"col-md-4\">");
 
 
@@ -72,7 +71,7 @@ public class HtmlForm extends Builder {
         String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
-        log.info("/*TABLA :" + table.getName() + " ");
+        log.info("/*Table :" + table.getName() + " ");
 
         if (!paramsMethods.equals("")) {
             paramsMethods = paramsMethods.substring(0, (paramsMethods.length() - 1));
@@ -86,7 +85,24 @@ public class HtmlForm extends Builder {
         content += ("<div class=\"well\">");
 
         content += ("<div class=\"row\">");
-        content += ("<div class=\"col col-sm-9\"><h1>" + tableEntity + "</h1></div>");
+        content += ("<div class=\"col col-sm-12\"><h1>" + tableEntity + "</h1></div>");
+        content += ("</div>");
+
+
+        content += ("\n");
+        content += ("<div class=\"row\">\n"
+                + "<div class=\"col col-sm-12\">");
+        content += ("<form class=\"form-horizontal form"+tableEntity+"\" >");
+        content += (parameters);
+
+        content += ("\n");
+        content += ("</form>");
+
+        content += ("</div>");
+        content += ("</div>");
+        content += ("</div>");
+
+        //buttons
         content += ("<section class=\"col col-sm-3\">");
         content += ("<button type=\"button\" id=\"btn-registrar\"\n"
                 + "						class=\"btn btn-default btn-circle btn-lg btnSave\"\n"
@@ -107,28 +123,18 @@ public class HtmlForm extends Builder {
                 + "						<i class=\"glyphicon glyphicon-remove\"></i>\n"
                 + "					</button>");
         content += ("</section>");
-        content += ("</div>");
-        content += ("<div class=\"row\">\n"
-                + "<div class=\"col col-sm-12\">");
-        content += ("<form class=\"form-horizontal form"+tableEntity+"\" >");
-        content += (parameters);
-        content += ("\n");
-        content += ("</form>");
 
-        content = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<meta charset=\"UTF-8\">\n"
-                + "<title>Title of the document</title>\n"
-                + "</head>\n"
-                + "\n"
-                + "<body>\n"
+        content += ("</div>");
+        content += ("</div>");
+
+        content += ("\n");
+
+        content = ""
                 + content
                 + buildDataTable(tableEntity,tableColumns)
-                + "<script src=\"../../js/business-logic/"+tableEntity+"/"+tableEntity+".js\"></script>"
-                + "</body>\n"
                 + "\n"
-                + "</html>";
+                + "<script src=\"../../js/business-logic/"+tableEntity+"/"+tableEntity+".js\"></script>"
+                ;
 
         generateProject(Global.VIEW_LOCATION + tableEntity + "\\", "form"+tableEntity + ".html");
     }
@@ -178,8 +184,7 @@ public class HtmlForm extends Builder {
      String section =  "<section id=\"widget-grid\">\n" +
                 "<div class=\"row\">\n" +
                 "<div class=\"col-sm-12\">\n" +
-                "<div class=\"well well-light\">\n" +
-                "<button class=\"btn btn-default btn-circle btn-lg pull-right btn-create\"><i class=\"fa fa-plus\"></i></button>"
+                "<div class=\"well well-light\">\n"
                  +"<div class='table-responsive'>" +
                     "<table class=\"table table-bordered table-hover "+tableEntity+"-datatable\" width=\"100%\">"
                         +"<thead>"

@@ -35,11 +35,11 @@ public class Process {
 //        new Mapper().build();
           //new MapperXml().build();
         //new MyBatisConf().build();
-        new SpringController().build();
-        new SpringService().build();
+        //new SpringController().build();
+        //new SpringService().build();
         // new StoreProcedure().build();
         //new ViewController().build();
-     //   new HtmlForm().build();
+       new HtmlForm().build();
         //new JavaScriptsFunctions().build();
        // new PageBaseView().build();
 
