@@ -35,29 +35,7 @@ public class Global {
     public static final String CONTROLLER_LOCATION = PROJECT_NAME_LOCATION + "controller\\";
     public static final String SQL_SCRIPT_LOCATION = "\\sql\\";
 
-    /*change when update server (for cache conflicts)*/
-    // public static String VERSION_CSS = "2.0.3";
-   // public static String VERSION_JS = "2.3.1";
 
     public static final int MAX_CHARACTER_IDENTIFIER= 30;
 
-//    /*oracle bd connection */
-//    public static final String HOSTNAME = AppConfiguration.instance().getConfig().getHostname();
-//    public static final String USER = AppConfiguration.instance().getConfig().getUsername();
-//    public static final String USER_PWD = AppConfiguration.instance().getConfig().getPassword();
-//    public static final String PORT = AppConfiguration.instance().getConfig().getPort();
-//    public static final String SID = AppConfiguration.instance().getConfig().getDbName();
-//
-//
-//
-//    /*Mysql*/
-//    public static final String HOSTNAME_MYSQL = "localhost";
-//    public static final String DATABASE_MYSQL = "alpha_analytics";
-//    public static final String USER_MYSQL = "root";
-//    public static final String PWD_MYSQL = "";
-//    /*posgresql*/
-//    public static final String HOSTNAME_PS = "localhost";
-//    public static final String DATABASE_PS = "venta";
-//    public static final String USER_PS = "postgres";
-//    public static final String PWD_PS = "admin";
 }

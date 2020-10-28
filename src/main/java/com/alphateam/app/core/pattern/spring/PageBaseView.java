@@ -11,8 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class PageBaseView extends Builder {
     private final Logger log = LogManager.getLogger(getClass().getName());
 
-    String list = "";
-    String projectID = Global.PACKAGE_NAME;
+    String li = "";
 
     @Override
     public Table processTable(Table table) {
@@ -23,8 +22,7 @@ public class PageBaseView extends Builder {
 
         log.info("//TABLA :" + table.getName());
 
-        list += " <li>" +"<a href=\"form"+tableEntity+"\"><i class=\"fa fa-lg fa-fw fa-form\"></i> <span class=\"menu-item-parent\">"+tableEntity+"</span></a>" +
-                "<li>\n";
+        li += " <li>" +"<a href=\"form"+tableEntity+"\"><i class=\"fa fa-lg fa-fw fa-form\"></i> <span class=\"menu-item-parent\">"+tableEntity+"</span></a>" + "<li>\n";
 
         return table;
     }
@@ -36,8 +34,7 @@ public class PageBaseView extends Builder {
         String view ="";
         view += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\pageBase.html");
 
-        System.out.println("list:"+list);
-        content = view.replace("{navlist}", list);
+        content = view.replace("{navlist}", li);
 
         generateProject(Global.VIEW_LOCATION  + "\\security\\",  "pageBase.html");
     }

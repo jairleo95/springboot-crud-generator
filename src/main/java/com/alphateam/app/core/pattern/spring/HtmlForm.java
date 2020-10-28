@@ -12,6 +12,7 @@ import com.alphateam.properties.Global;
 import com.alphateam.app.bean.Column;
 import com.alphateam.app.bean.Table;
 import com.alphateam.util.Conversor;
+import com.alphateam.util.FileBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,12 +23,10 @@ import org.apache.logging.log4j.Logger;
 
 public class HtmlForm extends Builder {
 
-    String parameters = "";
-    String associatonColumns = "";
-    String methods = "";
-    String paramsMethods = "";
-    String paramsPrimaryKey = "";
-    String tableColumns = "";
+    private String params = "";
+    private String paramsMethods = "";
+    private String paramsPrimaryKey = "";
+    private String tableColumns = "";
 
     private final Logger log = LogManager.getLogger(getClass().getName());
 
@@ -35,33 +34,35 @@ public class HtmlForm extends Builder {
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table,column);
 
-        String columna = column.getName();
+        String colName = column.getName();
+        params += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\parameter.html");
 
-        parameters += ("<div class=\"form-group\">");
-        parameters += ("<label class=\"col-md-3 control-label\">" + columna + "</label>");
-        parameters += ("<div class=\"col-md-4\">");
+        params = params
+                .replace("{colName}", colName)
+                .replace("{input}", buildInput(column));
 
+    }
 
+    String buildInput(Column column){
+        String html = "";
+        String colName = column.getName();
         String length = "maxlength='"+column.getLength()+"' size='"+column.getLength()+"'";
 
         if (column.getDataType().equalsIgnoreCase("date")||column.getDataType().toLowerCase().contains("timestamp")){
-            parameters += ("<input name='" + columna + "'  type='date' "+length+" class='" + columna + "'/>");
+            html += ("<input name='" + colName + "'  type='date' "+length+" class='" + colName + "'/>");
         }else if (column.getDataType().equalsIgnoreCase("number")){
-            parameters += ("<input name='" + columna + "'  type='number' "+length+" class='" + columna + "'/>");
+            html += ("<input name='" + colName + "'  type='number' "+length+" class='" + colName + "'/>");
         }else{
-            parameters += ("<input name='" + columna + "'  type='text' "+length+" class='" + columna + "'/>");
+            html += ("<input name='" + colName + "'  type='text' "+length+" class='" + colName + "'/>");
         }
-        parameters += ("</div>");
-        parameters += ("</div>");
-
+        return html;
     }
 
     @Override
     public void column(Column column) {
         super.column(column);
-        String columna = column.getName();
         //table headers
-        tableColumns +="<th>"+columna+"</th>";
+        tableColumns +="<th>"+column.getName()+"</th>\n";
     }
 
     @Override
@@ -71,7 +72,7 @@ public class HtmlForm extends Builder {
         String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
 
-        log.info("/*Table :" + table.getName() + " ");
+        log.info("Table :" + table.getName());
 
         if (!paramsMethods.equals("")) {
             paramsMethods = paramsMethods.substring(0, (paramsMethods.length() - 1));
@@ -80,61 +81,13 @@ public class HtmlForm extends Builder {
             paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
         }
 
-        content += ("<div class=\"row\">");
-        content += ("<div class=\"col-sm-12\">");
-        content += ("<div class=\"well\">");
+        content += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\form.html");
+        String datatable = FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\datatable.html");
 
-        content += ("<div class=\"row\">");
-        content += ("<div class=\"col col-sm-12\"><h1>" + tableEntity + "</h1></div>");
-        content += ("</div>");
-
-
-        content += ("\n");
-        content += ("<div class=\"row\">\n"
-                + "<div class=\"col col-sm-12\">");
-        content += ("<form class=\"form-horizontal form"+tableEntity+"\" >");
-        content += (parameters);
-
-        content += ("\n");
-        content += ("</form>");
-
-        content += ("</div>");
-        content += ("</div>");
-        content += ("</div>");
-
-        //buttons
-        content += ("<section class=\"col col-sm-3\">");
-        content += ("<button type=\"button\" id=\"btn-registrar\"\n"
-                + "						class=\"btn btn-default btn-circle btn-lg btnSave\"\n"
-                + "						style=\"float: right; display: none\" rel=\"tooltip\"\n"
-                + "						data-placement=\"top\" data-original-title=\"Guardar\">\n"
-                + "						<i class=\"glyphicon glyphicon-floppy-disk\"></i>\n"
-                + "					</button>\n"
-                + "					<button type=\"button\"\n"
-                + "						class=\"btn btn-primary btn-circle btn-lg btnAdd\"\n"
-                + "						style=\"float: right; display: none\" rel=\"tooltip\"\n"
-                + "						data-placement=\"top\" data-original-title=\"Agregar\">\n"
-                + "						<i class=\"glyphicon glyphicon-plus\"></i>\n"
-                + "					</button>\n"
-                + "					<button type=\"button\"\n"
-                + "						class=\"btn btn-danger btn-circle btn-lg btnCancel\"\n"
-                + "						style=\"float: right; display: none\" rel=\"tooltip\"\n"
-                + "						data-placement=\"top\" data-original-title=\"Cancelar\">\n"
-                + "						<i class=\"glyphicon glyphicon-remove\"></i>\n"
-                + "					</button>");
-        content += ("</section>");
-
-        content += ("</div>");
-        content += ("</div>");
-
-        content += ("\n");
-
-        content = ""
-                + content
-                + buildDataTable(tableEntity,tableColumns)
-                + "\n"
-                + "<script src=\"../../js/business-logic/"+tableEntity+"/"+tableEntity+".js\"></script>"
-                ;
+        content = content.replace("{datatable}", datatable
+                .replace("{headers}", tableColumns))
+                .replace("{formParameters}", params)
+                .replace("{tableEntity}", tableEntity);
 
         generateProject(Global.VIEW_LOCATION + tableEntity + "\\", "form"+tableEntity + ".html");
     }
@@ -143,63 +96,23 @@ public class HtmlForm extends Builder {
     public void foreignKeys(Table tcp, Column fk) {
         super.foreignKeys(tcp, fk);
 
-        String columna = fk.getName();
-        String column = Conversor.firstCharacterToUpper(fk.getName());
+        String colName = fk.getName();
 
-        parameters += ("<div class=\"form-group\">");
-        parameters += ("<label class=\"col-md-3 control-label\">" + column + "</label>");
-        parameters += ("<div class=\"col-md-4\">");
-        parameters += ("<select name='" + columna + "' class='select" + column + "'>");
-        parameters += ("<option></option>");
-        parameters += ("</select>");
-        parameters += ("</br>");
+        params += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\parameter.html");
+        String select = "<select name='" + colName + "' class='select" + colName + "'>" + "<option></option>" +"</select>";
 
-        parameters += ("</div>");
-        parameters += ("</div>");
+        params = params.replace("{colName}", colName)
+                .replace("{input}", select);
 
-        //tableColumns +="<th>"+fk.getForeignColumn()+"</th>";
-    }
-
-    @Override
-    public void primaryKeys(Table table, Column pk) {
-        super.primaryKeys(table, pk);
-
-        String columna = pk.getName();
-       // parameters += ("<input name='" + columna + "' type='hidden' />");
-        //tableColumns +="<th>"+columna+"</th>";
     }
 
     @Override
     public void resetValues() {
         super.resetValues();
-         parameters = "";
-         associatonColumns = "";
-         methods = "";
+         params = "";
          paramsMethods = "";
          paramsPrimaryKey = "";
          tableColumns = "";
     }
 
-    String buildDataTable(String tableEntity,String headers){
-     String section =  "<section id=\"widget-grid\">\n" +
-                "<div class=\"row\">\n" +
-                "<div class=\"col-sm-12\">\n" +
-                "<div class=\"well well-light\">\n"
-                 +"<div class='table-responsive'>" +
-                    "<table class=\"table table-bordered table-hover "+tableEntity+"-datatable\" width=\"100%\">"
-                        +"<thead>"
-                                +"<tr>"
-                                 +"<th>Actions</th>"
-                                 +"<th>Nro</th>"
-                                + headers
-                                +"</tr>"
-                            +"</thead>"
-                        +"</table>"
-                 +" </div>\n"
-                 +"</div>\n"
-                 +"</div>\n"
-                 +"</div>\n"
-                 +"</section>";
-          return section;
-    }
 }
