@@ -6,6 +6,7 @@
 package com.alphateam.app.core.persistence;
 
 import com.alphateam.app.bean.Column;
+import com.alphateam.app.bean.StoreProcedure;
 import com.alphateam.app.bean.Table;
 import com.alphateam.connection.Connection;
 import com.alphateam.connection.Factory;
@@ -14,8 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -41,18 +41,17 @@ public class EntityDAO {
                         c.setForeignTable(rs.getString(3));
                         c.setForeignColumn(rs.getString(4));
                     }
-                    rs.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e.getMessage());
                 } catch (Exception e) {
                     throw new RuntimeException("ERROR");
                 } finally {
                     try {
-                this.conn.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
+                        this.conn.close();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                 }
         return c;
     }
     public Boolean isForeignKey(String table, String column) {
@@ -65,7 +64,6 @@ public class EntityDAO {
             this.conn = Factory.open(database);
             ResultSet rs = this.conn.query(sql);
             x = rs.next();
-            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         } catch (Exception e) {
@@ -105,8 +103,8 @@ public class EntityDAO {
         return x;
     }
 
-    public List<Column> getColumsProperties(/*String tableName*/ ) {
-        List<Column> x = new ArrayList<>();
+    public Set<Column> getColumsProperties() {
+        Set<Column> x = new HashSet<>();
         String sql = Query.getTableXColumsProperties(database);
         try {
             this.conn = Factory.open(database);
@@ -158,6 +156,41 @@ public class EntityDAO {
                 table.setRawName(rs.getString(1));
                 table.setNumColumns(Integer.parseInt(rs.getString(2)));
                 x.add(table);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("ERROR");
+        } finally {
+            try {
+                this.conn.close();
+            } catch (Exception e) {
+                log.error(e);
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return x;
+    }
+
+    public List<StoreProcedure> getStoredProcedures() {
+        String sql =  Query.spObjectMappingORACLE;
+        List<StoreProcedure> x = new ArrayList<>();
+        try {
+            this.conn = Factory.open(database);
+            ResultSet rs = this.conn.query(sql);
+
+            while (rs.next()) {
+                StoreProcedure s = new StoreProcedure();
+                s.setObject(rs.getString(1));
+                s.setArgument(rs.getString(2));
+                s.setDataType(rs.getString(3));
+                s.setInout(rs.getString(4));
+                s.setPosition(rs.getString(5));
+                s.setDataLength(rs.getString("data_length"));
+                s.setDataPrecision(rs.getString("data_precision"));
+                s.setDataScale(rs.getString("data_scale"));
+                x.add(s);
             }
             rs.close();
         } catch (SQLException e) {

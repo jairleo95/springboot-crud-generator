@@ -87,8 +87,8 @@ public class MapperXml extends Builder {
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
-        super.buildMethods(table, pks);
+    public void buildMethods(Table table) {
+        super.buildMethods(table);
 
         String tableName = table.getName();
         String tableBean = Conversor.firstCharacterToUpper(tableName)+"Bean";
@@ -125,19 +125,20 @@ public class MapperXml extends Builder {
         //*FIND BY ID
         methods += "<select id=\"getById\"  parameterType=\""+tableBean+"\" resultMap=\"" + tableName + "Map" + "\">\n";
         methods += "select * from " + table.getRawName() + " where ";
-        for (int ii = 0; ii < pks.size(); ii++) {
-            if (ii == 0) {
-                methods += pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
-            } else {
-                methods += " and " + pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
-            }
-
-        }
+        //todo:fix
+//        for (int ii = 0; ii < pks.size(); ii++) {
+//            if (ii == 0) {
+//                methods += pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
+//            } else {
+//                methods += " and " + pks.get(ii).getRawName() + " = " + "#{" + pks.get(ii).getName() + "} ";
+//            }
+//
+//        }
         methods += "</select>\n";
        // String content = "";
 
         //Print
-        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        //System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         content += ("<!DOCTYPE mapper    PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n");
         content += ("<mapper namespace=\""+Global.PACKAGE_NAME+".mapper."  + Conversor.firstCharacterToUpper(tableName) + "Mapper\">\n");
         content += ("   <resultMap id=\"" +tableName + "Map\" type=\"" + tableBean + "\">\n");

@@ -31,8 +31,8 @@ public class SpringService extends Builder {
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
-        super.buildMethods(table, pks);
+    public void buildMethods(Table table) {
+        super.buildMethods(table);
                /*table name - columnList*/
 
         String tableName = table.getName();

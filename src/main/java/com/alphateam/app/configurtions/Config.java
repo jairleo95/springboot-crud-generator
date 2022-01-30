@@ -1,5 +1,7 @@
 package com.alphateam.app.configurtions;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Config {
 
     private String hostname;
@@ -11,6 +13,17 @@ public class Config {
 
     private String outputLocation;
     private String zipFile;
+
+    @JsonProperty("template")
+    private TemplateConfig templateConfig;
+
+    public TemplateConfig getTemplateConfig() {
+        return templateConfig;
+    }
+
+    public void setTemplateConfig(TemplateConfig templateConfig) {
+        this.templateConfig = templateConfig;
+    }
 
     public String getDb() {
         return db;
@@ -87,6 +100,7 @@ public class Config {
                 ", password='" + password + '\'' +
                 ", outputLocation='" + outputLocation + '\'' +
                 ", zipFile='" + zipFile + '\'' +
+                ", templateConfig=" + templateConfig +
                 '}';
     }
 }

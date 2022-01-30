@@ -17,7 +17,7 @@ interface Methods {
     void primaryKeys(Table table, Column pk);
 
     void buildParameters(Table table, Column column);
-    void buildMethods(Table tnc, List<Column> pks);
+    void buildMethods(Table tnc);
     void resetValues();
     void generateProject(String path, String filename);
 }

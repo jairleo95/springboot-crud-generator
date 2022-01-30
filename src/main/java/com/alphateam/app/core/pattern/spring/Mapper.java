@@ -28,14 +28,13 @@ public class Mapper extends Builder {
     private final Logger log = LogManager.getLogger(getClass().getName());
     @Override
     public void primaryKeys(Table table, Column pk) {
-        String tableName = table.getName();
-        super.primaryKeys(table, pk);
-        String dataType = ToJava.getDataType(pk.getDataType());
+        String columnName = pk.getName();
+        pkMapVarInput +=  "@Param(\""+columnName+"\") String "+columnName+",";
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
-        super.buildMethods(table, pks);
+    public void buildMethods(Table table) {
+        super.buildMethods(table);
 
         String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);

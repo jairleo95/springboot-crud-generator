@@ -14,6 +14,6 @@ public class CRUDGeneratorApplication implements CommandLineRunner {
 
      @Override
      public void run(String... args) throws Exception {
-          new Process().build(null);
+          //new Process().build(null);
      }
 }

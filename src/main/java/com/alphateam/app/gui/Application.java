@@ -10,7 +10,6 @@ import mdlaf.utils.MaterialColors;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.util.Random;
 import java.util.UUID;
 
 
@@ -135,7 +134,7 @@ public class Application extends JPanel implements ActionListener {
                     config.setOutputLocation(tfPath.getText()+"project-"+uuid);
                     config.setZipFile(tfPath.getText()+"project-"+uuid+".zip");
 
-                new Process().build(config);
+                //new Process().build(config);
 
                 JOptionPane optionPane = new JOptionPane();
                 optionPane.showMessageDialog(content, "El codigo fuente ha sido generado.", "INFO", JOptionPane.INFORMATION_MESSAGE);

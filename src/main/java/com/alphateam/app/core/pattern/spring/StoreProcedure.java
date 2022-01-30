@@ -43,12 +43,12 @@ public class StoreProcedure extends Builder {
 
         column = c.getName();
 
-            methodParams = "sp" + Conversor.firstCharacterToUpper(column);
-            params += ToSql.headerParamsProcedure(methodParams, c, database);
+        methodParams = "sp" + Conversor.firstCharacterToUpper(column);
+        params += ToSql.headerParamsProcedure(methodParams, c, database);
 
-            tableColumns += c.getRawName() + ",";
-            updateComparission += c.getRawName() + "=" + methodParams + ",";
-            colsParams += methodParams + ",";
+        tableColumns += c.getRawName() + ",";
+        updateComparission += c.getRawName() + "=" + methodParams + ",";
+        colsParams += methodParams + ",";
     }
 
     @Override
@@ -72,9 +72,9 @@ public class StoreProcedure extends Builder {
 
 
     @Override
-    public void buildMethods(Table tnc, List<Column> pks) {
-        super.buildMethods(tnc, pks);
-
+    public void buildMethods(Table tnc) {
+        super.buildMethods(tnc);
+/*
         //Remove commas from params
         params = clearLastComma(params);
         pkParams = clearLastComma(pkParams);
@@ -130,7 +130,7 @@ public class StoreProcedure extends Builder {
         content = methods;
         generateProject(Global.SQL_SCRIPT_LOCATION, tnc.getName() + ".sql");
         //log.debug(methods);
-
+*/
     }
 
     @Override

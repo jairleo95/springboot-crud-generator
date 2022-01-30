@@ -16,7 +16,7 @@ import java.util.List;
  * @author JAIR
  */
 public class ToSql {
-
+    //for procedures
     public static String getDataType(String dataType, Integer typeDB) {
         switch (typeDB) {
             case Factory.POSGRESQL:
@@ -33,6 +33,15 @@ public class ToSql {
 
                 break;
             case Factory.ORACLE:
+                if (dataType.equalsIgnoreCase("VARCHAR2") || dataType.equalsIgnoreCase("VARCHAR")){
+                    dataType="VARCHAR";
+                } else if(dataType.equalsIgnoreCase("DATE")){
+                    dataType = "DATE";
+                } else if(dataType.equalsIgnoreCase("TIMESTAMP")){
+                    dataType = "DATE";
+                }  else if (dataType.equalsIgnoreCase("NUMBER") || dataType.equalsIgnoreCase("NUMERIC")){
+                    dataType= "NUMERIC";
+                }
 
                 break;
             default:

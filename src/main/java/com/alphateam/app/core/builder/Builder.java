@@ -7,9 +7,6 @@ package com.alphateam.app.core.builder;
 
 import com.alphateam.app.core.persistence.EntityDAO;
 import com.alphateam.connection.Factory;
-
-
-
 import com.alphateam.app.bean.Column;
 
 import com.alphateam.app.bean.Table;
@@ -19,23 +16,21 @@ import com.alphateam.util.ToJava;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Builder extends Core implements Methods{
 
-    public String pkParameters ="";
-    public String pkVariables="";
-    public String pkDecrypt="";
-    public String pkinput="";
-    public String pkParamDecrypt="";
-    public String pkMethVarInput ="";
-    public String pkPathVarInput ="";
-    public String pkParams ="";
-    public String pkParamsRequest ="";
-    public String pkSetter ="";
-    public String pkMapVarInput ="";
+    protected String pkParameters ="";
+    protected String pkVariables="";
+    protected String pkinput="";
+    protected String pkParamDecrypt="";
+    protected String pkMethVarInput ="";
+    protected String pkPathVarInput ="";
+    protected String pkParams ="";
+    protected String pkParamsRequest ="";
+    protected String pkSetter ="";
+    protected String pkMapVarInput ="";
 
     private final Logger log = LogManager.getLogger(getClass().getName());
 
@@ -56,60 +51,63 @@ public class Builder extends Core implements Methods{
     }
 
     public void loadData() {
-        System.out.println("enter to loadData() function");
+        //System.out.println("enter to loadData() function");
 
-        List<Table> tList = new EntityDAO().getWithColumnsNumber();
-        List<Column> cList = new EntityDAO().getColumsProperties();
+        Set<Column> columsProperties = new EntityDAO().getColumsProperties();
 
-        for (int i = 0; i < tList.size(); i++) {
-            LinkedList<Column> columns = new LinkedList<>();
+        tables = new EntityDAO().getWithColumnsNumber()
+                .stream()
+                .map(table -> {
+                    LinkedList<Column> columns = new LinkedList<>();
+                    columsProperties.forEach(column -> {
+                        if (column.getTableName().equals(table.getName())) {
+                            columns.add(column);
+                        }
+                    });
 
-            for(int j = 0; j < cList.size(); j++) {
-                if (cList.get(j).getTableName().equals(tList.get(i).getName())){
-                    columns.add(cList.get(j));
-                }
-            }
-            tList.get(i).setColumn(columns);
-        }
-        tables = tList;
+                    table.setColumn(columns);
+                    return table;
+                })
+                .collect(Collectors.toList());;
 
     }
     //refactoring
     @Override
     public void build() {
         init();
-        //List<Table> tables = app.getTableList();
 
-        for (int r = 0; r < tables.size(); r++) {
-            List<Column> pks = new ArrayList<>();
+        tables.forEach(value -> {
 
-            Table table = processTable(tables.get(r));
+            Set<Column> pks = new HashSet<>();
 
-            /*iterate columnList*/
-            for (int h = 0; h < table.getColumn().size(); h++) {
-                //make threads
-                Column column = table.getColumn().get(h).format();
+            Table table = processTable(value);
 
-                    if (column.isPrimaryKey()){
+                table.getColumn().forEach(columns -> {
+
+                    //todo: make threads
+                    Column column = columns.format();
+
+                    if (column.isPrimaryKey()) {
                         pks.add(column);
                         //listener
                         primaryKeys(table, column);
 
-                   } else if (column.isForeignKey()) {
+                    } else if (column.isForeignKey()) {
                         //listener
-                        foreignKeys(table,column);
-                    }else if (!column.isForeignKey() && !column.isPrimaryKey()) {
-                        buildParameters(table,column);
+                        foreignKeys(table, column);
+                    } else{
+                        buildParameters(table, column);
                     }
                     //setting new data
-                     column(column);
+                    column(column);
                     //table.getColumn().set(h, column);
-            }
-            buildMethods(table, pks);
+                });
+
+            buildMethods(table);
             //generateProject("","");
             //setting new data
             resetValues();
-        }
+        });
 
     }
 
@@ -119,7 +117,7 @@ public class Builder extends Core implements Methods{
         //check primary keys
         boolean x = false;
         for (Column column: t.getColumn()) {
-            if (column.isPrimaryKey()){
+            if(column.isPrimaryKey()){
                 x=true;
             }
         }
@@ -157,7 +155,6 @@ public class Builder extends Core implements Methods{
 
         pkinput+=  columnName+",";
 
-
         //todo:refactor this hardcode
         dataType = "String";
         pk.setDataType("char");
@@ -169,10 +166,9 @@ public class Builder extends Core implements Methods{
         pkMethVarInput +=  "String "+columnName+",";
         pkPathVarInput +=  "@PathVariable String "+columnName+",";
 
-        pkDecrypt+= "String " + columnName+"Decrypt" + " = Security.decrypt("+columnName+"); \n";
         pkParamDecrypt+= columnName+"Decrypt,";
         pkSetter+=  tableName +".set"+Conversor.firstCharacterToUpper(columnName)+"("+columnName+"Decrypt);";
-        pkMapVarInput +=  "@Param(\""+columnName+"\") String "+columnName+",";
+
     }
 
     @Override
@@ -182,9 +178,9 @@ public class Builder extends Core implements Methods{
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
+    public void buildMethods(Table table) {
 
-        if (pks.size()==0){
+//        if (pks.size()==0){
             //todo: refator
 /*            String tableName = Conversor.toJavaFormat(table.getName(), "_");
             pkSetter+=  tableName +".setId(\"id\");";
@@ -197,7 +193,7 @@ public class Builder extends Core implements Methods{
             pkPathVarInput +=  "@PathVariable String id";
 
             pkDecrypt+= "id = Security.decrypt(id); \n";*/
-        }
+//        }
 
         pkParameters = clearLastComma(pkParameters);
         pkVariables = clearLastComma(pkVariables);
@@ -216,7 +212,6 @@ public class Builder extends Core implements Methods{
 
         pkParameters="";
         pkVariables="";
-        pkDecrypt="";
         pkinput="";
         pkParamDecrypt="";
         pkMethVarInput ="";
@@ -257,17 +252,3 @@ public class Builder extends Core implements Methods{
         return string;
     }
 }
-
-//final class Task implements Runnable {
-//    private Table table;
-//
-//    public Task(Table table)
-//    {
-//        this.table = table;
-//    }
-//
-//    @Override
-//    public void run(){
-//        System.out.println("Task ID : " + this.table.toString() + " performed by " + Thread.currentThread().getName());
-//    }
-//}

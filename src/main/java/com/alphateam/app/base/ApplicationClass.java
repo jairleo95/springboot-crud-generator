@@ -8,6 +8,7 @@ import com.alphateam.app.bean.Table;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class ApplicationClass extends Configuration {
 
@@ -15,15 +16,15 @@ public class ApplicationClass extends Configuration {
 
     private List<Table> tableList;
 
-    private List<Table> xList;
-
-    public List<Table> getxList() {
-        return xList;
-    }
-
-    public List<Table> getTableList() {
-        return tableList;
-    }
+//    private List<Table> xList;
+//
+//    public List<Table> getxList() {
+//        return xList;
+//    }
+//
+//    public List<Table> getTableList() {
+//        return tableList;
+//    }
 
     public void setTableList(List<Table> tableList) {
         this.tableList = tableList;
@@ -55,22 +56,22 @@ public class ApplicationClass extends Configuration {
     }
 
     public void loadData() {
-       System.out.println("enter to loadData() function");
+       //System.out.println("enter to loadData() function");
 
        List<Table> tList = new EntityDAO().getWithColumnsNumber();
-       List<Column> cList = new EntityDAO().getColumsProperties();
+       Set<Column> cList = new EntityDAO().getColumsProperties();
 
-        for (int i = 0; i < tList.size(); i++) {
+        for (Table table : tList) {
             LinkedList<Column> columns = new LinkedList<>();
-
-            for(int j = 0; j < cList.size(); j++) {
-                if (cList.get(j).getTableName().equals(tList.get(i).getName())){
-                    columns.add(cList.get(j));
+            for (Column column : cList) {
+                if (column.getTableName().equals(table.getName())) {
+                    columns.add(column);
                 }
             }
-            tList.get(i).setColumn(columns);
+            table.setColumn(columns);
         }
         setTableList(tList);
+        //System.out.println("list: " +tList.toString());
        // this.xList = new DAO().getWithColumnsNumber();
     }
 

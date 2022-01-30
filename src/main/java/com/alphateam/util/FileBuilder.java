@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import com.alphateam.app.base.ApplicationClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 
 public class FileBuilder {
     private final Logger log = LogManager.getLogger(getClass().getName());
@@ -33,7 +34,9 @@ public class FileBuilder {
         return content;
     }
 
+    @Async
     public Boolean writeFolderAndFile(String directory, String file, String content) {
+        log.info("writeFolderAndFile thread");
 
         String location = ApplicationClass.instance().getConfig().getOutputLocation();
 

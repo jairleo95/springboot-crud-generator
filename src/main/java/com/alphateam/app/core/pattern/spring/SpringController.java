@@ -31,6 +31,7 @@ public class SpringController extends Builder {
     String dataType = "";
     String setters = "";
     String imports = "";
+    String pkDecrypt="";
 
     String projectID = Global.PACKAGE_NAME;
 
@@ -39,15 +40,21 @@ public class SpringController extends Builder {
     private final Logger log = LogManager.getLogger(getClass().getName());
 
     @Override
+    public void column(Column column) {
+        super.column(column);
+    }
+
+    @Override
     public void primaryKeys(Table table, Column pk) {
         super.primaryKeys(table, pk);
 
         String tableName = table.getName();
-        String columna =pk.getName();
+        String columnName =pk.getName();
         dataType = ToJava.getDataType(pk.getDataType());
-        setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columna) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columna + "\"))); \n");
+        pkDecrypt+= "String " + columnName+"Decrypt" + " = Security.decrypt("+columnName+"); \n";
+        setters += (tableName + ".set" + Conversor.firstCharacterToUpper(columnName) + " ( " + ToJava.getParseByDataType(dataType) + "(request.getParameter(\"" + columnName + "\"))); \n");
 
-        idMatchDecrypt += columna+"Decrypt"+".equals("+columna+") &&";
+        idMatchDecrypt += columnName+"Decrypt"+".equals("+columnName+") &&";
     }
 
     @Override
@@ -76,8 +83,8 @@ public class SpringController extends Builder {
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
-        super.buildMethods(table, pks);
+    public void buildMethods(Table table) {
+        super.buildMethods(table);
 
         String tableName = table.getName();
 
@@ -219,6 +226,7 @@ public class SpringController extends Builder {
     @Override
     public void resetValues() {
         super.resetValues();
+        pkDecrypt="";
         idMatchDecrypt = "";
         setters = "";
         imports = "";

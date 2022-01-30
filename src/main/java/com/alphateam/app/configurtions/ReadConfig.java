@@ -4,16 +4,25 @@ import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ReadConfig {
 
     private Logger log = LogManager.getLogger(getClass().getName());
 
-    public Config loadConfigFile(String filename) throws FileNotFoundException {
+    public Config loadConfigFile(String filename) {
+        Reader reader = null;
+        try {
+            log.debug("fileName:" + filename);
+            reader = Files.newBufferedReader(Paths.get(filename));
+            System.out.println("fileName:"+reader.toString());
+        } catch (Exception ex) {
+             ex.printStackTrace();
+         }
 
-       log.debug("fileName:" + filename);
-       return  new Gson().fromJson(new FileReader(filename), Config.class);
+       return new Gson().fromJson(reader, Config.class);
     }
 }

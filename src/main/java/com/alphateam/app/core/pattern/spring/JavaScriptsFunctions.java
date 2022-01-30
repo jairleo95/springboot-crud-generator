@@ -48,8 +48,8 @@ public class JavaScriptsFunctions extends Builder {
     }
 
     @Override
-    public void buildMethods(Table tnc, List<Column> pks) {
-        super.buildMethods(tnc, pks);
+    public void buildMethods(Table tnc) {
+        super.buildMethods(tnc);
 
         String tableName = tnc.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);

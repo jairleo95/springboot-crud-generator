@@ -6,46 +6,44 @@ import com.alphateam.app.core.pattern.spring.*;
 import com.alphateam.util.ZipUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
-
+@Component
 public class Process {
 
     private final Logger log = LogManager.getLogger(getClass().getName());
 
-    public void build(Config input){
+    public void build(String configFile){
+        log.info("file: "+(configFile));
 
-
-        if (input == null){
-            try {
-                input = new ReadConfig()
-                        .loadConfigFile("D:\\Software Development\\crud-generator-project\\config.json");
-                log.debug("input: "+ input.toString());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (input == null){
+           Config input = new ReadConfig().loadConfigFile(configFile);
+            log.debug("input: "+ input.toString());
+//        }
         //initialize app
         ApplicationClass.initialize(input);
         ApplicationClass.instance().loadData();
 
         //build code
 
-//    new JavaBeans().build();
+        //new SPMapper().build();
+        new JavaBeans().build();
 //        new Mapper().build();
-          //new MapperXml().build();
-        //new MyBatisConf().build();
-        //new SpringController().build();
-        //new SpringService().build();
-        // new StoreProcedure().build();
-        //new ViewController().build();
-       new HtmlForm().build();
-        //new JavaScriptsFunctions().build();
-       // new PageBaseView().build();
+//        new MapperXml().build();
+//        new MyBatisConf().build();
+//        new SpringController().build();
+//        new SpringService().build();
+         //new StoreProcedure().build();//fix
+//        new ViewController().build();
+//        new HtmlForm().build();
+//        new JavaScriptsFunctions().build();
+//        new PageBaseView().build();
 
 
         //compress
-        Config c = ApplicationClass.instance().getConfig();
-        new ZipUtils(c.getOutputLocation(), c.getZipFile()).generateZip();
+//        Config c = ApplicationClass.instance().getConfig();
+//        System.out.println("configuration file json:" +c.toString());
+//        new ZipUtils(c.getOutputLocation(), c.getZipFile()).generateZip();
     }
 }

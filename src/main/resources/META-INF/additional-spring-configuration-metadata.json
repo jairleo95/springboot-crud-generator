@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "app.config.file",
+      "type": "java.lang.String",
+      "description": "Description for app.config.file."
+  }
+] }

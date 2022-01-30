@@ -30,7 +30,6 @@ public class Factory {
     public static Connection open(int typeDB) {
         Config c = ApplicationClass.instance().getConfig();
 
-        System.out.println("configuration file json:" +c.toString());
 
         String[] configMYSQL = {c.getHostname(), c.getDbName(), c.getUsername(), c.getPassword()};
 

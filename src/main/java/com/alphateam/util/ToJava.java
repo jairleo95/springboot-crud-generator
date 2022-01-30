@@ -44,6 +44,7 @@ public class ToJava {
                 }
                 break;
             case Factory.ORACLE:
+                //todo: validate the length for decimal types
                 /*mysql*/
                 if (dataType.equalsIgnoreCase("NUMBER")) {
                     dataType = "long";

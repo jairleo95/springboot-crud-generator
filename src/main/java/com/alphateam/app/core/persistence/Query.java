@@ -42,6 +42,25 @@ public class Query {
 
     public static final String tableColumnsPrimaryKeyPropertiesORACLE = "SELECT cols.table_name, cols.column_name, cols.position, cons.status, cons.owner FROM user_constraints cons, user_cons_columns cols WHERE cols.table_name = '{table}' AND cons.constraint_type = 'P' AND cons.constraint_name = cols.constraint_name AND cons.owner = cols.owner and cons.owner = '{schema}' and cols.table_name = '{table}' and cols.column_name = '{column}' ORDER BY cols.table_name, cols.position";
 
+//    public static final String spObjectMappingORACLE = " SELECT object_name, argument_name, data_type, in_out, position, data_length, data_precision, data_scale\n" +
+//            "  FROM SYS.ALL_ARGUMENTS  \n" +
+//            "  where object_name  = 'SP_INS_ITEM'\n" +
+//            "  and owner = 'ORDERS' and package_name ='NP_ORDERS01_PKG'" +
+//            " and subprogram_id =16" +
+//            " and data_level = 0" +
+//            " order by position asc";
+    public static final String spObjectMappingORACLE = "  select object_name, argument_name, data_type, in_out, position, data_length, data_precision, data_scale\n" +
+            "  FROM SYS.ALL_ARGUMENTS  \n" +
+            "  where object_name  = 'SP_GET_DETAIL_BYPHONE_BYSPECIF'\n" +
+            "  and owner = 'ORDERS' and package_name ='NP_ORDERS07_PKG' \n" +
+            "  order by position asc";
+
+
+//    public static final String spObjectMappingORACLE = " SELECT object_name, argument_name, data_type, in_out, position\n" +
+//            "  FROM SYS.ALL_ARGUMENTS  \n" +
+//            "  where object_name  = 'SP_CREATE_ORDER'\n" +
+//            "  and owner = 'ORDERS' and package_name ='NP_ORDERS05_PKG' and data_level = 0 order by position asc";
+
 
     public static String getSQLTableXNumColums(int database) {
         String sql = "";

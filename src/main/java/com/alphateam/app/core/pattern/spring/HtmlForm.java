@@ -30,12 +30,16 @@ public class HtmlForm extends Builder {
 
     private final Logger log = LogManager.getLogger(getClass().getName());
 
+    String parameterFile = "D:\\Software Development\\crud-generator-project\\template\\parameter.html";
+    String formFile = "D:\\Software Development\\crud-generator-project\\template\\form.html";
+    String datatableFile = "D:\\Software Development\\crud-generator-project\\template\\datatable.html";
+
     @Override
     public void buildParameters(Table table, Column column) {
         super.buildParameters(table,column);
 
         String colName = column.getName();
-        params += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\parameter.html");
+        params += FileBuilder.readAllBytes(parameterFile);
 
         params = params
                 .replace("{colName}", colName)
@@ -50,7 +54,7 @@ public class HtmlForm extends Builder {
 
         if (column.getDataType().equalsIgnoreCase("date")||column.getDataType().toLowerCase().contains("timestamp")){
             html += ("<input name='" + colName + "'  type='date' "+length+" class='" + colName + "'/>");
-        }else if (column.getDataType().equalsIgnoreCase("number")){
+        } else if (column.getDataType().equalsIgnoreCase("number")){
             html += ("<input name='" + colName + "'  type='number' "+length+" class='" + colName + "'/>");
         }else{
             html += ("<input name='" + colName + "'  type='text' "+length+" class='" + colName + "'/>");
@@ -66,8 +70,8 @@ public class HtmlForm extends Builder {
     }
 
     @Override
-    public void buildMethods(Table table, List<Column> pks) {
-        super.buildMethods(table, pks);
+    public void buildMethods(Table table) {
+        super.buildMethods(table);
 
         String tableName = table.getName();
         String tableEntity = Conversor.firstCharacterToUpper(tableName);
@@ -81,8 +85,8 @@ public class HtmlForm extends Builder {
             paramsPrimaryKey = paramsPrimaryKey.substring(0, (paramsPrimaryKey.length() - 1));
         }
 
-        content += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\form.html");
-        String datatable = FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\datatable.html");
+        content += FileBuilder.readAllBytes(formFile);
+        String datatable = FileBuilder.readAllBytes(datatableFile);
 
         content = content.replace("{datatable}", datatable
                 .replace("{headers}", tableColumns))
@@ -98,7 +102,7 @@ public class HtmlForm extends Builder {
 
         String colName = fk.getName();
 
-        params += FileBuilder.readAllBytes("D:\\Software Development\\crud-generator-project\\template\\parameter.html");
+        params += FileBuilder.readAllBytes(parameterFile);
         String select = "<select name='" + colName + "' class='select" + colName + "'>" + "<option></option>" +"</select>";
 
         params = params.replace("{colName}", colName)
